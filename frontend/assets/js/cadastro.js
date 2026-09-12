@@ -43,8 +43,14 @@ function initCadastroValidation() {
           this.classList.add('has-error');
           if(errBox) errBox.classList.remove('d-none');
         } else {
-          // Remover o genérico, mas pode continuar com erro se não bater a RegEx.
-          // O submit faz o catch completo.
+          if (id === 'senhaConfirma') {
+            const s1 = document.getElementById('senhaUser').value;
+            if (this.value !== s1) {
+              this.classList.add('has-error');
+              if(errBox) errBox.classList.remove('d-none');
+              return;
+            }
+          }
           this.classList.remove('has-error');
           if(errBox) errBox.classList.add('d-none');
         }
@@ -172,7 +178,7 @@ function initCadastroValidation() {
 
     if (senha1 !== senha2) {
       senha2Input.classList.add('has-error');
-      return showError('A senha de confirmação está diferente da senha principal.');
+      return showError('A senha de baixo não está igual a de cima.');
     }
 
     if (!aceiteTermos || !aceitePrivacidade || !aceiteProjeto) {
