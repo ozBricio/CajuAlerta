@@ -1,27 +1,36 @@
 ﻿import io
-import re
 
-with io.open('frontend/assets/js/login.js', 'r', encoding='utf-8', errors='ignore') as f:
+with io.open('frontend/assets/js/cadastro.js', 'r', encoding='utf-8', errors='ignore') as f:
     c = f.read()
 
-new_logic = """      const userCredential = await window.auth.signInWithEmailAndPassword(email, senha);
-      
-      // Bloqueio de e-mail não verificado
-      if (!userCredential.user.emailVerified && !email.includes('admin')) {
-        await window.auth.signOut();
-        throw new Error('Acesso negado: Você ainda não confirmou seu e-mail. Verifique sua caixa de entrada.');
-      }
-      
-      const returnTo = new URLSearchParams(window.location.search).get('returnTo');
-      
-      // Checa se é admin
-      if (email.includes('admin')) {
-        window.location.href = '/admin/dashboard.html';
-      } else {
-        window.location.href = returnTo || '/';
-      }"""
+new_logic = """function initCadastroValidation() {
+  const form = document.getElementById('cadastroForm');
+  if (!form) return;
 
-c = re.sub(r'await window\.auth\.signInWithEmailAndPassword\(email, senha\);.*?\} else \{\s*window\.location\.href = returnTo \|\| \'/\';\s*\}', new_logic, c, flags=re.MULTILINE|re.DOTALL)
+  const senhaInput = document.getElementById('senhaUser');
+  const reqLength = document.getElementById('reqLength');
+  const reqUpper = document.getElementById('reqUpper');
+  const reqLower = document.getElementById('reqLower');
+  const reqSpecial = document.getElementById('reqSpecial');
 
-with io.open('frontend/assets/js/login.js', 'w', encoding='utf-8') as f:
+  if (senhaInput) {
+    senhaInput.addEventListener('input', (e) => {
+      const v = e.target.value;
+      if (v.length >= 8) reqLength.classList.add('valid');
+      else reqLength.classList.remove('valid');
+      
+      if (/[A-Z]/.test(v)) reqUpper.classList.add('valid');
+      else reqUpper.classList.remove('valid');
+      
+      if (/[a-z]/.test(v)) reqLower.classList.add('valid');
+      else reqLower.classList.remove('valid');
+      
+      if (/[^A-Za-z0-9]/.test(v)) reqSpecial.classList.add('valid');
+      else reqSpecial.classList.remove('valid');
+    });
+  }"""
+
+c = c.replace("function initCadastroValidation() {\\n  const form = document.getElementById('cadastroForm');\\n  if (!form) return;", new_logic)
+
+with io.open('frontend/assets/js/cadastro.js', 'w', encoding='utf-8') as f:
     f.write(c)

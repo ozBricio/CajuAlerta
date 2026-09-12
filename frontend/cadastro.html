@@ -60,8 +60,13 @@
 
           <div class="form-group">
             <label for="senhaUser">Senha <span class="req">*</span></label>
-            <input type="password" id="senhaUser" class="form-input" placeholder="Mínimo de 8 caracteres" required minlength="8">
-            <small class="field-hint">Obrigatório: letra maiúscula, minúscula e caractere especial.</small>
+            <input type="password" id="senhaUser" class="form-input" placeholder="Ex: Senh@Forte1" required minlength="8">
+            <ul class="password-reqs" id="passwordReqs">
+              <li id="reqLength" class="req-item">8 caracteres</li>
+              <li id="reqUpper" class="req-item">Letra maiúscula</li>
+              <li id="reqLower" class="req-item">Letra minúscula</li>
+              <li id="reqSpecial" class="req-item">Caractere especial</li>
+            </ul>
           </div>
 
           <div class="form-group">
