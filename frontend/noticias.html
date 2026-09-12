@@ -31,7 +31,10 @@
       <h1>Portal de Notícias</h1>
       <p>Entenda como os golpes estão acontecendo, quais estratégias os criminosos usam e como se proteger.</p>
     </div>
-    <section class="news-empty" aria-live="polite">
+    
+    <div id="newsContainer" class="alertas-grid" style="display: none;"></div>
+
+    <section id="newsEmptyState" class="news-empty" aria-live="polite">
       <h2>Nenhuma notícia publicada ainda</h2>
       <p>Quando houver uma atualização de segurança, ela aparecerá aqui.</p>
     </section>
@@ -73,5 +76,6 @@
     </div>
   </footer>
   <script src="assets/js/common.js"></script>
+  <script src="assets/js/noticias.js"></script>
 </body>
 </html>
