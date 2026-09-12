@@ -54,7 +54,7 @@ function initCadastroValidation() {
 }
 
 function isValidEmailForCaju(email) {
-  if (email.includes('+')) return false;
+  // if (email.includes('+')) return false; // Liberado para testes
   const parts = email.split('@');
   if (parts.length !== 2) return false;
   const userPart = parts[0];
