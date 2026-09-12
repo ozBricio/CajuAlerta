@@ -1,60 +1,16 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const searchInput = document.getElementById('searchInputSecondary');
   const valueParam = urlParams.get('valor') || urlParams.get('numero');
   const typeParam = urlParams.get('tipo') || 'telefone';
 
-  if (valueParam) {
-    if (searchInput) searchInput.value = typeParam === 'e-mail' ? valueParam : formatPhoneNumber(valueParam);
-    performSearch(valueParam, typeParam);
+  if (!valueParam) {
+    // Acesso direto negado, redireciona para a home
+    window.location.replace('/');
+    return;
   }
 
-  const form = document.getElementById('secondarySearchForm');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const search = classifySearch(searchInput.value);
-      if (!search) {
-        searchInput.setCustomValidity('Digite um telefone com DDD, um e-mail válido ou um site como exemplo.com.br.');
-        searchInput.reportValidity();
-        return;
-      }
-      searchInput.setCustomValidity('');
-      window.history.pushState({}, '', `?tipo=${search.type}&valor=${encodeURIComponent(search.value)}`);
-      performSearch(search.value, search.type);
-    });
-
-    searchInput.addEventListener('input', (e) => {
-      if (e.target.value.includes('@')) return;
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 11) value = value.slice(0, 11);
-      e.target.value = formatPhoneNumber(value);
-    });
-  }
+  performSearch(valueParam, typeParam);
 });
-
-function classifySearch(value) {
-  const normalizedValue = value.trim().toLowerCase();
-  const phoneDigits = normalizedValue.replace(/\D/g, '');
-  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedValue);
-  const isSite = /^(https?:\/\/)?(www\.)?[a-z0-9-]+(\.[a-z0-9-]+)+(\/[^\s]*)?$/i.test(normalizedValue);
-
-  if (isEmail) return { type: 'e-mail', value: normalizedValue };
-  if (isSite) return { type: 'site', value: normalizedValue.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '') };
-  if (/^\d[\d\s().-]*$/.test(normalizedValue) && phoneDigits.length >= 10 && phoneDigits.length <= 11) {
-    return { type: 'telefone', value: phoneDigits };
-  }
-  return null;
-}
-
-function formatPhoneNumber(value) {
-  let formatted = '';
-  if (value.length > 0) formatted = '(' + value.substring(0, 2);
-  if (value.length > 2) formatted += ') ' + value.substring(2, 7);
-  if (value.length > 7) formatted += '-' + value.substring(7, 11);
-  return formatted;
-}
 
 function formatDisplayMasked(num) {
   if(num.length === 11) {
@@ -69,8 +25,8 @@ async function performSearch(value, type = 'telefone') {
   const errorState = document.getElementById('errorState');
   const errorMessage = document.getElementById('errorMessage');
 
-  card.style.display = 'none';
-  errorState.style.display = 'none';
+  card.classList.add('d-none');
+  errorState.classList.add('d-none');
   loading.style.display = 'flex';
 
   try {
@@ -82,7 +38,7 @@ async function performSearch(value, type = 'telefone') {
   } catch (error) {
     loading.style.display = 'none';
     errorMessage.textContent = error.message;
-    errorState.style.display = 'block';
+    errorState.classList.remove('d-none');
   }
 }
 
@@ -95,7 +51,7 @@ function renderResult(value, type, result) {
   const lastReport = document.getElementById('lastReport');
   const categories = document.getElementById('categories');
 
-  card.style.display = 'block';
+  card.classList.remove('d-none');
   const labels = { telefone: 'Número consultado', 'e-mail': 'E-mail consultado', site: 'Site consultado' };
   document.getElementById('resultLabel').textContent = labels[type] || 'Consulta realizada';
   document.getElementById('displayNumber').textContent = type === 'telefone' ? formatDisplayMasked(value) : value;
