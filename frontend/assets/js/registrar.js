@@ -51,7 +51,7 @@ function initFormSubmit() {
     }
     const isHuman = typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0;
     if (!isHuman) {
-      alert('Conclua o reCAPTCHA antes de enviar.');
+      alert('Você esqueceu de marcar a caixa "Não sou um robô"!');
       return;
     }
     requestLocationAndSubmit(form);
