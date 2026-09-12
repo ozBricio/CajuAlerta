@@ -81,9 +81,9 @@ function initCadastroValidation() {
       if (/[a-z]/.test(v)) reqLower.classList.add('valid');
       else reqLower.classList.remove('valid');
       
-      if (/[^A-Za-z0-9]/.test(v)) reqSpecial.classList.add('valid');
+      if (/[!@#\$%^&*(),.?":{}|<>\\-_=\+\\/\[\]~]/.test(v)) reqSpecial.classList.add('valid');
       else reqSpecial.classList.remove('valid');
-      if (v.length >= 8 && /[A-Z]/.test(v) && /[a-z]/.test(v) && /[^A-Za-z0-9]/.test(v)) {
+      if (v.length >= 8 && /[A-Z]/.test(v) && /[a-z]/.test(v) && /[!@#\$%^&*(),.?":{}|<>\\-_=\+\\/\[\]~]/.test(v)) {
         senhaInput.classList.add('valid-input');
         senhaInput.classList.remove('has-error');
       } else {
