@@ -49,7 +49,7 @@ function initFormSubmit() {
       alert('A descrição é muito curta. Explique o ocorrido com no mínimo 6 palavras.');
       return;
     }
-    const isHuman = typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0;
+    const isHuman = typeof grecaptcha !== 'undefined' && ((grecaptcha.getResponse && grecaptcha.getResponse().length > 0) || (grecaptcha.enterprise && grecaptcha.enterprise.getResponse().length > 0));
     if (!isHuman) {
       alert('Você esqueceu de marcar a caixa "Não sou um robô"!');
       return;
