@@ -1,6 +1,5 @@
 
-const isLocalEnvironment = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-window.CAJU_API_BASE_URL = window.CAJU_API_BASE_URL || (isLocalEnvironment ? '' : 'https://SEU-BACKEND.example.com');
+window.CAJU_API_BASE_URL = window.CAJU_API_BASE_URL || '';
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();

@@ -7,7 +7,7 @@
 *   **Stack Tecnológico (Arquitetura):**
     *   **Frontend (Interface):** HTML5, CSS3, JavaScript Vanilla (Sem frameworks pesados para garantir velocidade).
     *   **Backend & Banco de Dados:** **Supabase** (Backend as a Service - PostgreSQL).
-    *   **Hospedagem (Deploy):** **GitHub Pages** para o frontend estático.
+    *   **Hospedagem (Deploy):** **Vercel** para o frontend e a API serverless.
 
 ---
 
@@ -30,12 +30,12 @@
 ---
 
 ## ⏸️ 3. Onde Paramos (O Ponto de Retorno)
-O projeto está na etapa de preparação para deploy. O Supabase é o sistema principal de autenticação, banco e Storage; o GitHub Pages hospeda apenas o frontend estático. O backend Node/Express precisa de uma hospedagem própria.
+O projeto está na etapa de preparação para deploy. A Vercel hospeda o frontend e executa a API serverless; o Supabase fornece autenticação, banco e Storage.
 
 **Status de Ação:** O Fabrício está criando o projeto no [Supabase](https://supabase.com).
 
 ### 🔑 Configuração necessária no ambiente:
-1. **Backend:** hospedar o Node/Express em um serviço próprio e configurar `SUPABASE_URL`, `SUPABASE_KEY` e `ADMIN_EMAILS`; o Supabase não executa diretamente o `server.js`.
+1. **Vercel:** configurar `SUPABASE_URL`, `SUPABASE_KEY` e `ADMIN_EMAILS` nas variáveis de ambiente.
 2. **Supabase:** executar `backend/schema.sql` no SQL Editor.
 3. **Segurança:** nunca versionar `backend/.env` ou chaves secretas.
 
@@ -45,7 +45,7 @@ O projeto está na etapa de preparação para deploy. O Supabase é o sistema pr
 Preparação realizada e próximos passos:
 
 1. **Banco:** executar o schema e configurar as políticas RLS restantes para suporte e notícias.
-2. **GitHub Pages:** ativar o workflow de publicação do frontend.
+2. **Vercel:** conectar o repositório `ozBricio/CajuAlerta` com a branch `main`.
 3. **Teste:** validar login, consulta, registro, suporte e publicação de notícias.
 4. **Fontes externas:** importar dados somente por jobs controlados, com fonte e data registradas; não puxar dados diretamente no navegador.
 
