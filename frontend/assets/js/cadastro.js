@@ -34,6 +34,8 @@ function initCadastroValidation() {
       return showError('E-mail não permitido. Utilize contas limpas do Gmail, Hotmail ou Outlook. Sem sub-endereços.');
     }
 
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}/.test(senha1)) { return showError('A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial.'); }
+
     if (senha1 !== senha2) {
       return showError('As senhas não coincidem.');
     }
