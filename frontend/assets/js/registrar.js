@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function checkAuthAndBlock() {
   const formWrapper = document.querySelector('.form-wrapper');
 
-  fetch('/api/auth/me')
+  fetch(window.apiUrl('/api/auth/me'), { credentials: 'include' })
     .then(response => {
       if (!response.ok) throw new Error('Sessão inválida');
       return response.json();
@@ -97,7 +97,7 @@ function requestLocationAndSubmit(form) {
     (position) => {
       btn.textContent = 'Enviando registro criptografado...';
 
-      fetch('/api/registrar', {
+      fetch(window.apiUrl('/api/registrar'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

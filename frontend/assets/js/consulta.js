@@ -74,7 +74,7 @@ async function performSearch(value, type = 'telefone') {
   loading.style.display = 'flex';
 
   try {
-    const response = await fetch(`/api/consulta?tipo=${encodeURIComponent(type)}&valor=${encodeURIComponent(value)}`);
+    const response = await fetch(window.apiUrl(`/api/consulta?tipo=${encodeURIComponent(type)}&valor=${encodeURIComponent(value)}`));
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || 'Não foi possível consultar o banco de dados.');
     loading.style.display = 'none';

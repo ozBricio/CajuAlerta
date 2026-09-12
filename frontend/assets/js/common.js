@@ -1,4 +1,6 @@
 
+const isLocalEnvironment = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+window.CAJU_API_BASE_URL = window.CAJU_API_BASE_URL || (isLocalEnvironment ? '' : 'https://SEU-BACKEND.example.com');
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
@@ -7,13 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initPlatformAccess();
 });
 
+window.apiUrl = path => `${window.CAJU_API_BASE_URL || ''}${path}`;
+
 async function initPlatformAccess() {
   const navList = document.querySelector('.nav-list');
   if (!navList || navList.querySelector('.platform-entry')) return;
 
   let authenticated = false;
   try {
-    const response = await fetch('/api/auth/me', { credentials: 'same-origin' });
+    const response = await fetch(window.apiUrl('/api/auth/me'), { credentials: 'include' });
     authenticated = response.ok;
   } catch (error) {
     authenticated = false;

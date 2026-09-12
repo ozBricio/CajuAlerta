@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadTickets() {
     try {
-      const response = await fetch('/api/support/tickets');
+      const response = await fetch(window.apiUrl('/api/support/tickets'), { credentials: 'include' });
       const result = await response.json();
       if (response.status === 401) return window.location.replace(`/login?returnTo=${encodeURIComponent('/suporte')}`);
       if (!response.ok) throw new Error(result.error || 'Não foi possível carregar o suporte.');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     const replyForm = event.currentTarget;
     const message = new FormData(replyForm).get('message');
-    const response = await fetch(`/api/support/tickets/${replyForm.dataset.ticketId}/messages`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message }) });
+    const response = await fetch(window.apiUrl(`/api/support/tickets/${replyForm.dataset.ticketId}/messages`), { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message }) });
     const result = await response.json();
     if (!response.ok) return showError(result.error || 'Não foi possível enviar a resposta.');
     replyForm.reset();
@@ -44,13 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    const response = await fetch('/api/support/tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: document.getElementById('supportSubject').value, message: document.getElementById('supportMessage').value }) });
+    const response = await fetch(window.apiUrl('/api/support/tickets'), { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: document.getElementById('supportSubject').value, message: document.getElementById('supportMessage').value }) });
     const result = await response.json();
     if (!response.ok) return showError(result.error || 'Não foi possível abrir a solicitação.');
     form.reset();
     loadTickets();
   });
   document.getElementById('refreshSupport').addEventListener('click', loadTickets);
-  document.getElementById('logoutButton').addEventListener('click', async () => { await fetch('/api/auth/logout', { method: 'POST' }); window.location.replace('/'); });
+  document.getElementById('logoutButton').addEventListener('click', async () => { await fetch(window.apiUrl('/api/auth/logout'), { method: 'POST', credentials: 'include' }); window.location.replace('/'); });
   loadTickets();
 });

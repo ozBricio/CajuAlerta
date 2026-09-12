@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     button.textContent = 'Entrando...';
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(window.apiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })

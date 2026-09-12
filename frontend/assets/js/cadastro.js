@@ -84,7 +84,7 @@ async function processRegistration(nome, email, senha, consentimentos) {
   btn.textContent = 'Criando conta...';
 
   try {
-    const response = await fetch('/api/auth/signup', {
+    const response = await fetch(window.apiUrl('/api/auth/signup'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome, email, senha, consentimentos })

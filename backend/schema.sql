@@ -67,3 +67,36 @@ create policy "usuario pode criar o proprio registro"
 create policy "usuario pode consultar registros"
   on public.registros for select
   using (true);
+
+create table if not exists public.fontes_externas (
+  id uuid primary key default gen_random_uuid(),
+  nome varchar(120) not null,
+  url text not null,
+  tipo varchar(40) not null,
+  ativa boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.ocorrencias_externas (
+  id uuid primary key default gen_random_uuid(),
+  fonte_id uuid not null references public.fontes_externas(id) on delete restrict,
+  identificador_externo text not null,
+  indicador text not null,
+  tipo varchar(20) not null check (tipo in ('telefone', 'e-mail', 'site')),
+  categoria text,
+  data_fonte timestamptz,
+  importado_em timestamptz not null default now(),
+  unique (fonte_id, identificador_externo)
+);
+
+create index if not exists ocorrencias_externas_indicador_idx on public.ocorrencias_externas (indicador);
+alter table public.fontes_externas enable row level security;
+alter table public.ocorrencias_externas enable row level security;
+
+create policy "fontes externas ativas podem ser lidas"
+  on public.fontes_externas for select
+  using (ativa = true);
+
+create policy "ocorrencias externas podem ser lidas"
+  on public.ocorrencias_externas for select
+  using (true);
