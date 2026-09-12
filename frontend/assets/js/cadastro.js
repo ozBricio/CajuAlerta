@@ -6,37 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-const BLOCKED_WORDS = [
-  'macaco', 'burro', 'cavalo', 'rato', 'porco', 'vaca', 'cachorro', 'cadela', 'lixo', 'merda', 'bosta',
-  'computador', 'celular', 'televisao', 'tv', 'radio', 'telefone', 'geladeira', 'fogao', 'microondas',
-  'administrador', 'moderador', 'caju', 'cajualerta', 'suporte', 'sistema', 'root', 'master', 'admin',
-  'preconceito', 'viado', 'bicha', 'sapatão', 'sapatela', 'crioulo', 'preto', 'macaca', 'safado', 'vagabundo',
-  'puta', 'puto', 'caralho', 'buceta', 'piroca', 'pica', 'cu', 'arrombado', 'corno', 'idiota', 'imbecil',
-  'retardado', 'mongol', 'mongoloide', 'autista', 'cego', 'surdo', 'mudo', 'aleijado', 'deficiente',
-  'maconheiro', 'drogado', 'bebado', 'ladrão', 'assassino', 'estuprador', 'pedofilo', 'nazista', 'fascista',
-  'racista', 'homofobico', 'machista', 'feminazi', 'abortista', 'comunista', 'petista', 'bolsonarista',
-  'teste', 'testando', '123', 'abc', 'qwe', 'asd', 'zxc', 'fake', 'falso', 'anonimo', 'nobody', 'ninguem',
-  'deus', 'jesus', 'diabo', 'satanas', 'lucifer', 'capeta', 'demonio', 'inferno', 'ceu', 'anjo', 'santo',
-  'brasil', 'saopaulo', 'riodejaneiro', 'belohorizonte', 'salvador', 'fortaleza', 'brasilia', 'curitiba',
-  'manaus', 'recife', 'portoalegre', 'belem', 'goiania', 'guarulhos', 'campinas', 'saoluis', 'saogoncalo',
-  'maceio', 'duquedecaxias', 'natal', 'teresina', 'saobernardodocampo', 'campogrande', 'osasco', 'joaopessoa',
-  'santoandre', 'saojosedoscampos', 'jaboataodosguararapes', 'ribeiraopreto', 'uberlandia', 'contagem',
-  'sorocaba', 'aracaju', 'feira de santana', 'cuiaba', 'joinville', 'juiz de fora', 'londrina', 'niteroi',
-  'aparecida de goiania', 'ananindeua', 'porto velho', 'serra', 'caxias do sul', 'macapa', 'florianopolis',
-  'vila velha', 'maua', 'sao joao de meriti', 'sao jose do rio preto', 'mogi das cruzes', 'betim', 'santos',
-  'diadema', 'maringa', 'jundiai', 'campina grande', 'montes claros', 'rio branco', 'piracicaba', 'carapicuiba',
-  'olinda', 'corumba', 'macae', 'petropolis', 'voltar edonda', 'franca', 'canoas', 'pelotas', 'vitoria',
-  'barueri', 'taubate', 'blumenau', 'franco da rocha', 'itaquaquecetuba', 'caucaia', 'vitoria da conquista',
-  'caruaru', 'petrolina', 'boa vista', 'uberaba', 'guaruja', 'praia grande', 'sao vicente', 'itapipoca'
-];
-
-function isProfaneOrReserved(text) {
-  const normalized = text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-  for (let word of BLOCKED_WORDS) {
-    if (normalized.includes(word)) return true;
-  }
-  return false;
-}
 
 /**
  * Validação extrema de front-end
@@ -60,6 +29,27 @@ function initCadastroValidation() {
         btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>'; // Eye-on
       }
     });
+  });
+
+
+  // Blur Validations
+  const inputs = ['nomeCompleto', 'emailUser', 'senhaUser', 'senhaConfirma'];
+  inputs.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) {
+      el.addEventListener('blur', function() {
+        const errBox = document.getElementById('err-' + id);
+        if(!this.value.trim()) {
+          this.classList.add('has-error');
+          if(errBox) errBox.classList.remove('d-none');
+        } else {
+          // Remover o genérico, mas pode continuar com erro se não bater a RegEx.
+          // O submit faz o catch completo.
+          this.classList.remove('has-error');
+          if(errBox) errBox.classList.add('d-none');
+        }
+      });
+    }
   });
 
   const senhaInput = document.getElementById('senhaUser');
@@ -227,13 +217,22 @@ function hideError() {
   if(errorBox) errorBox.style.display = 'none';
 }
 
+
 async function processRegistration(nome, email, senha, consentimentos) {
+  // Rate Limit Client-Side Simples
+  const lastSignup = localStorage.getItem('cajuLastSignup');
+  const now = Date.now();
+  if (lastSignup && (now - parseInt(lastSignup)) < 60000) {
+    return showError('Por segurança, aguarde um minuto antes de tentar criar outra conta.');
+  }
+
   const btn = document.getElementById('btnSubmitCadastro');
   btn.disabled = true;
   btn.textContent = 'Criando conta...';
 
   try {
     // 1. Criar no Firebase Auth
+    localStorage.setItem('cajuLastSignup', Date.now().toString());
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
     const user = userCredential.user;
 
@@ -252,11 +251,14 @@ async function processRegistration(nome, email, senha, consentimentos) {
     // Desloga para obrigar a validar o e-mail antes de logar
     await firebase.auth().signOut();
 
-    // Redireciona com aviso
-    alert('✅ Conta criada com sucesso!
-
-⚠️ IMPORTANTE: Enviamos um link de confirmação para o seu e-mail. Você só poderá fazer login após clicar no link para verificar sua identidade.');
-    window.location.href = '/login';
+    // Mostra o quadro verde na própria página
+    document.getElementById('cadastroForm').style.display = 'none';
+    const successBox = document.getElementById('successBox');
+    successBox.classList.remove('d-none');
+    
+    // Rola pro topo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {
       showError('Esse e-mail já está cadastrado em nossa base.');

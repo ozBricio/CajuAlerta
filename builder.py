@@ -1,14 +1,24 @@
 ﻿import io
+import re
 
 with io.open('frontend/assets/js/cadastro.js', 'r', encoding='utf-8', errors='ignore') as f:
-    c = f.read()
+    cjs = f.read()
 
-# Fix special character regex to only match symbols, not accents
-# Old: /[^A-Za-z0-9]/.test(v)
-# New: /[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};':\"\\|,.<>\/?]/.test(v)
+rl_logic = """
+async function processRegistration(nome, email, senha, consentimentos) {
+  // Rate Limit Client-Side Simples
+  const lastSignup = localStorage.getItem('cajuLastSignup');
+  const now = Date.now();
+  if (lastSignup && (now - parseInt(lastSignup)) < 60000) {
+    return showError('Por segurança, aguarde um minuto antes de tentar criar outra conta.');
+  }
 
-c = c.replace('/[^A-Za-z0-9]/.test(v)', '/[!@#\$%^&*(),.?":{}|<>\\\-_=\+\\\/\[\]~]/.test(v)')
-c = c.replace('/[^A-Za-z0-9]/.test(senha1)', '/[!@#\$%^&*(),.?":{}|<>\\\-_=\+\\\/\[\]~]/.test(senha1)')
+  const btn = document.getElementById('btnSubmitCadastro');"""
+
+cjs = cjs.replace("async function processRegistration(nome, email, senha, consentimentos) {\n  const btn = document.getElementById('btnSubmitCadastro');", rl_logic)
+
+# Guard against successful signup rewriting rate limit
+cjs = cjs.replace('const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);', "localStorage.setItem('cajuLastSignup', Date.now().toString());\n    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);")
 
 with io.open('frontend/assets/js/cadastro.js', 'w', encoding='utf-8') as f:
-    f.write(c)
+    f.write(cjs)

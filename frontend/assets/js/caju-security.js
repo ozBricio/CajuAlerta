@@ -23,8 +23,8 @@ const CajuSecurity = {
 
   createModal: function() {
     const modalHTML = `
-      <div id="cajuSecurityModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; font-family: Roboto, sans-serif;">
-        <div style="background:#fff; width:360px; border-radius:8px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.5); animation: cajuPop 0.3s ease;">
+      <div id="cajuSecurityModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:flex-start; overflow-y:auto; padding:20px 0; font-family: Roboto, sans-serif;">
+        <div style="background:#fff; width:360px; margin:auto; border-radius:8px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.5); animation: cajuPop 0.3s ease;">
           <div style="background:#ff9900; color:#fff; padding:18px;">
             <h3 style="margin:0; font-size:14px; font-weight:normal; opacity:0.9;">Missão de Segurança: Selecione os 3 corretos</h3>
             <h2 id="cajuTargetName" style="margin:8px 0 0 0; font-size:18px; font-weight:bold; line-height:1.3;">...</h2>
@@ -44,7 +44,7 @@ const CajuSecurity = {
     const style = document.createElement('style');
     style.textContent = `
       @keyframes cajuPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-      .caju-item { aspect-ratio: 1; display:flex; justify-content:center; align-items:center; font-size:45px; cursor:pointer; background:#fff; border: 1px solid #d1d5db; border-radius:4px; transition:all 0.15s; user-select:none; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+      .caju-item { aspect-ratio: 1; display:flex; justify-content:center; align-items:flex-start; overflow-y:auto; padding:20px 0; font-size:45px; cursor:pointer; background:#fff; border: 1px solid #d1d5db; border-radius:4px; transition:all 0.15s; user-select:none; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
       .caju-item:hover { background:#f3f4f6; }
       .caju-item.selected { transform: scale(0.85); box-shadow: 0 0 0 4px #ff9900; background:#fff; border-color:transparent; }
       .caju-item.selected::after { content: '✓'; position:absolute; bottom:2px; right:4px; font-size:16px; color:#ff9900; font-weight:bold; background:#fff; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
