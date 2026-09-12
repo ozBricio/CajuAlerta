@@ -1,0 +1,15 @@
+/* contato.css */
+.page-main { padding-top: 120px; min-height: calc(100vh - 300px); }
+.contact-wrapper { max-width: 600px; margin: 0 auto 80px; background: var(--surface-color); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--surface-border); }
+.contact-wrapper h1 { font-size: 2.5rem; text-align: center; margin-bottom: 16px; color: var(--text-main); }
+.contact-wrapper p { text-align: center; color: var(--text-muted); margin-bottom: 40px; }
+.form-group { margin-bottom: 24px; }
+.form-group label { display: block; margin-bottom: 8px; color: var(--text-main); font-size: 0.95rem; }
+.form-input { width: 100%; background: var(--bg-color); border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: 14px 16px; color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: 0.2s; }
+.form-input:focus { border-color: var(--primary-green); }
+textarea.form-input { resize: vertical; min-height: 120px; }
+.btn-full { width: 100%; }
+
+.select-wrapper { position: relative; }
+.select-wrapper::after { content: ''; position: absolute; top: 50%; right: 16px; transform: translateY(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid var(--text-muted); pointer-events: none; }
+select.form-input { appearance: none; -webkit-appearance: none; padding-right: 40px; cursor: pointer; }

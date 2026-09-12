@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Ocorrência | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/registrar.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="registration-page">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="noticias" class="nav-link">Portal de Notícias</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <section class="form-section">
+      <div class="container">
+        <div class="form-header animate-hidden">
+          <h1>Registrar Ocorrência</h1>
+          <p>Recebeu contato suspeito? Registre o número. O sistema cruza os dados com outros usuários para criar alertas.</p>
+        </div>
+        <div class="form-wrapper animate-hidden delay-100">
+          <div class="alert-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <div>
+              <strong>Responsabilidade & LGPD</strong>
+              <p>Ao enviar, você concorda com o uso de sua Geolocalização e IP criptografados. Falsa comunicação de crime tem implicações legais.</p>
+            </div>
+          </div>
+          <form id="denunciaForm" class="denuncia-form">
+            <div class="form-row">
+              <div class="form-group"><label>Número de telefone <span class="req">*</span></label><input type="tel" id="numeroInfrator" class="form-input" required></div>
+              <div class="form-group"><label>Data aproximada <span class="req">*</span></label><input type="date" id="dataOcorrencia" class="form-input" required></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Categoria principal <span class="req">*</span></label><div class="select-wrapper"><select id="tipoOcorrencia" class="form-input" required><option value="" disabled selected>Selecione...</option><option value="golpe">Golpe Financeiro</option><option value="spam">Spam</option><option value="outro">Outro</option></select></div></div>
+              <div class="form-group"><label>Plataforma <span class="req">*</span></label><div class="select-wrapper"><select id="plataformaOrigem" class="form-input" required><option value="" disabled selected>Onde aconteceu?</option><option value="whatsapp">WhatsApp</option><option value="ligacao">Ligação Telefônica</option></select></div></div>
+            </div>
+            <div class="form-group"><label>Descrição do ocorrido <span class="req">*</span></label><textarea id="descricaoRelato" class="form-input" required></textarea></div>
+            <div class="recaptcha-container">
+              <div class="g-recaptcha" data-sitekey="6Lcm47UtAAAAAKkrYEurGBmGaX76Vr72IfxVdrLQ"></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn-primary" id="btnSubmitDenuncia">Enviar Registro Criptografado</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/registrar.js"></script>
+</body>
+</html>

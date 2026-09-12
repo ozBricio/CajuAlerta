@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Dashboard | Caju Alerta</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="dash-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Admin Caju
+    </div>
+    <nav>
+      <a href="#" class="nav-link active">Dashboard</a>
+      <a href="#" class="nav-link">Denúncias (Pendente)</a>
+      <a href="#" class="nav-link">Base de Números</a>
+      <a href="#" class="nav-link">Gerenciar Alertas</a>
+      <a href="support.html" class="nav-link">Solicitações de suporte</a>
+      <a href="index.html" class="nav-link" style="margin-top: auto; color: #ef4444;">Sair</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="header">
+      <h1>Visão Geral</h1>
+      <div class="user-info">
+        <span>Admin</span>
+        <div class="avatar"></div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total de Consultas (Hoje)</div>
+        <div class="stat-value">1,248</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Novas Denúncias</div>
+        <div class="stat-value text-yellow">42</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Números Bloqueados</div>
+        <div class="stat-value text-red">89</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Taxa de Spam</div>
+        <div class="stat-value">14%</div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <h2>Últimas Denúncias (Aprovação Manual)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Número</th>
+            <th>Categoria</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>(85) 99999-1111</td>
+            <td>Falso Banco</td>
+            <td>Hoje, 10:45</td>
+            <td><span class="badge pending">Pendente</span></td>
+            <td class="actions"><button>Verificar</button></td>
+          </tr>
+          <tr>
+            <td>(11) 98888-2222</td>
+            <td>Falso Familiar (PIX)</td>
+            <td>Hoje, 09:12</td>
+            <td><span class="badge pending">Pendente</span></td>
+            <td class="actions"><button>Verificar</button></td>
+          </tr>
+          <tr>
+            <td>(21) 97777-3333</td>
+            <td>Spam / Telemarketing</td>
+            <td>Ontem, 16:30</td>
+            <td><span class="badge approved">Aprovado</span></td>
+            <td class="actions"><button>Detalhes</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

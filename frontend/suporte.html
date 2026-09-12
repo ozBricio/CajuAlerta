@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suporte | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/suporte.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <nav class="main-nav"><ul class="nav-list"><li><a href="/" class="nav-link">Início</a></li><li><a href="/suporte" class="nav-link active">Suporte</a></li><li><button id="logoutButton" class="nav-link support-logout">Sair</button></li></ul></nav>
+    </div>
+  </header>
+  <main class="support-page">
+    <div class="container">
+      <div class="support-heading"><p class="section-kicker">Ajuda dentro do sistema</p><h1>Como podemos ajudar?</h1><p>Abra uma solicitação, acompanhe as respostas do suporte e encontre orientação para usar o Caju Alerta.</p></div>
+      <div id="supportError" class="support-message error" hidden></div>
+      <div class="support-layout">
+        <section class="support-panel">
+          <h2>Falar com o suporte</h2>
+          <form id="supportForm">
+            <label for="supportSubject">Assunto</label>
+            <input id="supportSubject" maxlength="120" required placeholder="Ex.: Não consigo registrar uma ocorrência">
+            <label for="supportMessage">Mensagem</label>
+            <textarea id="supportMessage" maxlength="4000" required placeholder="Explique o que aconteceu para o suporte poder ajudar."></textarea>
+            <button class="btn-primary" type="submit">Enviar solicitação</button>
+          </form>
+        </section>
+        <section class="support-panel"><div class="panel-heading"><h2>Minhas solicitações</h2><button id="refreshSupport" class="text-button" type="button">Atualizar</button></div><div id="ticketsList" class="tickets-list"><p class="empty-state">Carregando solicitações...</p></div></section>
+      </div>
+      <section class="support-channels"><h2>Outros canais</h2><div><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.tiktok.com/" target="_blank" rel="noreferrer">TikTok</a><a href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube</a></div></section>
+    </div>
+  </main>
+  <script src="assets/js/suporte.js"></script>
+</body>
+</html>

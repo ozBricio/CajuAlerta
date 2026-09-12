@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultado da Consulta | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/consulta.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="noticias" class="nav-link">Portal de Notícias</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <section class="result-section">
+      <div class="container">
+        <div class="search-header animate-hidden">
+          <h2>Nova Consulta</h2>
+          <form id="secondarySearchForm" class="search-form-inline">
+            <input type="text" id="searchInputSecondary" class="search-input" placeholder="Digite telefone, e-mail ou site" required>
+            <button type="submit" class="btn-primary">Consultar</button>
+          </form>
+        </div>
+
+        <div id="resultCard" class="result-card animate-hidden delay-100" style="display: none;">
+          <div class="result-header">
+            <p class="result-label" id="resultLabel">Consulta realizada</p>
+            <h1 class="consulted-number" id="displayNumber">--</h1>
+          </div>
+          <div class="status-banner" id="statusBanner">
+            <div class="status-icon" id="statusIcon"></div>
+            <h2 class="status-text" id="statusText">Aguardando...</h2>
+          </div>
+          <div class="details-grid">
+            <div class="detail-box"><span class="detail-label">Nível de Alerta</span><strong class="detail-value" id="alertLevel">--</strong></div>
+            <div class="detail-box"><span class="detail-label">Qtd. de Registros</span><strong class="detail-value" id="reportCount">--</strong></div>
+            <div class="detail-box"><span class="detail-label">Último Registro</span><strong class="detail-value" id="lastReport">--</strong></div>
+            <div class="detail-box"><span class="detail-label">Principais Categorias</span><strong class="detail-value" id="categories">--</strong></div>
+          </div>
+          <div class="report-summary">
+            <h3>Resumo dos Registros</h3>
+            <p id="reportSummaryText">Buscando informações no banco de dados...</p>
+          </div>
+          <div class="result-actions">
+            <a href="registrar" class="btn-primary" id="btnDenounceFromQuery">Registrar Ocorrência</a>
+            <a href="central-seguranca" class="btn-secondary">O que fazer agora?</a>
+          </div>
+        </div>
+
+        <div id="loadingState" class="loading-state animate-hidden">
+          <div class="spinner"></div><p>Analisando número na base de dados...</p>
+        </div>
+
+        <div id="errorState" class="error-state" style="display: none;" role="alert">
+          <h2>Consulta indisponível</h2>
+          <p id="errorMessage">Não foi possível acessar o banco de dados.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/consulta.js"></script>
+</body>
+</html>

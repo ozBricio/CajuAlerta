@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta | Caju Alerta</title>
+  
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/cadastro.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    .recaptcha-mock { display: flex; align-items: center; justify-content: space-between; background: #fafafa; border: 1px solid #d3d3d3; border-radius: 3px; padding: 10px 14px; width: 304px; margin: 0 auto 24px; color: #555; font-family: Roboto, sans-serif; }
+    .recaptcha-mock-left { display: flex; align-items: center; gap: 12px; }
+    .recaptcha-checkbox { width: 28px; height: 28px; border: 2px solid #c1c1c1; border-radius: 2px; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+    .recaptcha-checkbox.checked { border-color: transparent; }
+    .recaptcha-checkbox.checked::after { content: ''; width: 28px; height: 28px; background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%234285F4" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>') center/contain no-repeat; }
+    .recaptcha-label { font-size: 14px; font-weight: 400; }
+    .recaptcha-mock-right { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .recaptcha-logo { width: 32px; height: 32px; background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%234285F4" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-10-5v9.98L12 22l10-7.52V9.5l-10 5z"/></svg>') center/contain no-repeat; opacity: 0.6; }
+    .recaptcha-terms { font-size: 10px; color: #999; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <nav class="main-nav" id="mainNav"><ul class="nav-list">
+        <li><a href="/" class="nav-link">Início</a></li><li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+      </ul></nav>
+    </div>
+  </header>
+
+  <main class="page-main auth-main">
+    <section class="container">
+      <div class="auth-wrapper animate-hidden">
+        <div class="auth-header">
+          <h1>Crie sua Conta</h1>
+          <p>Para registrar uma ocorrência, precisamos confirmar sua identidade. É rápido e seguro.</p>
+        </div>
+
+        <div id="errorBox" class="alert-box error" style="display: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span id="errorMessage">Erro ao validar dados.</span>
+        </div>
+
+        <form id="cadastroForm" class="auth-form">
+          
+          <div class="form-group">
+            <label for="nomeCompleto">Nome e Sobrenome <span class="req">*</span></label>
+            <input type="text" id="nomeCompleto" class="form-input" placeholder="Ex: Maria Silva" required autocomplete="name">
+            <small class="field-hint">Não é permitido o uso de números ou símbolos.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="emailUser">E-mail <span class="req">*</span></label>
+            <input type="email" id="emailUser" class="form-input" placeholder="seu.email@gmail.com" required autocomplete="email">
+            <small class="field-hint">Apenas Gmail, Hotmail ou Outlook. Sem caracteres especiais.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="senhaUser">Senha <span class="req">*</span></label>
+            <input type="password" id="senhaUser" class="form-input" placeholder="Mínimo de 8 caracteres" required minlength="8">
+          </div>
+
+          <div class="form-group">
+            <label for="senhaConfirma">Confirmar Senha <span class="req">*</span></label>
+            <input type="password" id="senhaConfirma" class="form-input" placeholder="Digite a senha novamente" required minlength="8">
+          </div>
+
+          <div class="recaptcha-container">
+            <div class="g-recaptcha" data-sitekey="6Lcm47UtAAAAAKkrYEurGBmGaX76Vr72IfxVdrLQ"></div>
+          </div>
+
+          <fieldset class="terms-group">
+            <legend>Consentimentos obrigatórios</legend>
+            <label class="checkbox-label">
+              <input type="checkbox" id="aceiteTermos" required>
+              <span class="checkbox-custom"></span>
+              <span class="terms-text">Declaro que li e concordo com os <a href="termos-de-uso" target="_blank" rel="noopener">Termos de Uso</a>.</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="aceitePrivacidade" required>
+              <span class="checkbox-custom"></span>
+              <span class="terms-text">Declaro que li e concordo com a <a href="politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>, conforme a Lei nº 13.709/2018 (LGPD).</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="aceiteProjeto" required>
+              <span class="checkbox-custom"></span>
+              <span class="terms-text">Confirmo que entendi que o Caju Alerta é um projeto acadêmico gratuito, voltado à prevenção de golpes, e autorizo o uso dos dados conforme os documentos acima.</span>
+            </label>
+            <p class="terms-required" id="termsRequiredMessage" hidden>Leia os documentos e marque os três consentimentos para continuar.</p>
+          </fieldset>
+
+          <button type="submit" class="btn-primary btn-full" id="btnSubmitCadastro">Criar Conta Segura</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Já possui uma conta? <a href="login">Fazer login</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/cadastro.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Central de Segurança | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/central.css">
+  <style>
+    .security-page { max-width: 1100px; margin: 0 auto; padding: 150px 24px 90px; }
+    .security-intro { max-width: 720px; margin-bottom: 42px; }
+    .security-intro p, .security-card p, .security-note p { color: var(--text-muted); }
+    .security-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 28px; }
+    .security-card, .security-note { background: var(--surface-color); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 24px; }
+    .security-card h2 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-green); }
+    .security-card p { font-size: 0.95rem; }
+    .security-note { border-color: rgba(250, 204, 21, 0.3); }
+    .security-note h2 { margin-bottom: 12px; }
+    .security-list { margin-top: 14px; padding-left: 20px; color: var(--text-muted); }
+    .security-list li { list-style: disc; margin-bottom: 8px; }
+    @media (max-width: 800px) { .security-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="security-page">
+    <div class="security-intro">
+      <h1>Central de Segurança</h1>
+      <p>Informações para reconhecer golpes, avaliar relatos e agir com mais segurança antes de fazer uma compra ou responder a um contato.</p>
+    </div>
+    <div class="security-grid">
+      <article class="security-card">
+        <h2>Recebi um contato suspeito</h2>
+        <p>Não clique em links, não envie códigos e confirme a identidade usando um canal oficial da empresa.</p>
+      </article>
+      <article class="security-card">
+        <h2>Vou comprar em um site</h2>
+        <p>Confira o domínio, o endereço da empresa, os canais de atendimento e os relatos disponíveis antes de pagar.</p>
+      </article>
+      <article class="security-card">
+        <h2>Passei meus dados</h2>
+        <p>Troque senhas, avise seu banco, registre o ocorrido e procure os canais oficiais de atendimento.</p>
+      </article>
+    </div>
+    <section class="security-note">
+      <h2>Como interpretar uma consulta</h2>
+      <p>Os resultados reúnem relatos registrados no Caju Alerta e informações públicas de fontes identificadas. Eles são sinais de atenção, não uma declaração definitiva de crime.</p>
+      <ul class="security-list">
+        <li>Uma denúncia isolada não confirma uma fraude.</li>
+        <li>Relatos independentes e fontes convergentes podem elevar o nível de alerta.</li>
+        <li>A fonte e a data do dado devem aparecer sempre que estiverem disponíveis.</li>
+        <li>Informações de terceiros devem ser verificadas na fonte original.</li>
+      </ul>
+    </section>
+    <section class="security-note" style="margin-top: 18px;">
+      <h2>Privacidade e remoção</h2>
+      <p>Dados pessoais usados para segurança e prevenção a abusos devem ter acesso restrito e finalidade definida. Para solicitar correção ou remoção de um registro mantido pelo Caju Alerta, entre em contato e informe o endereço consultado e a justificativa. Registros de fontes externas não são apagados por nós; a solicitação deve ser feita também ao responsável pela fonte.</p>
+      <p style="margin-top: 12px;">Este é um projeto acadêmico em desenvolvimento. As informações não substituem orientação jurídica, atendimento bancário, autoridade policial ou decisão judicial.</p>
+    </section>
+  </main>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

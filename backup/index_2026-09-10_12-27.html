@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caju Alerta - Consulte números de telefone e descubra se já foram denunciados por possíveis golpes ou spam.">
+  <title>Caju Alerta | Segurança Digital</title>
+  
+  <!-- CSS Obrigatório -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+
+  <!-- HEADER GLOBAL -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="Ir para a página inicial do Caju Alerta">
+        <span class="logo-icon">
+          <!-- Ícone de escudo simplificado representando o Caju Alerta -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </span>
+        Caju Alerta
+      </a>
+
+      <!-- Botão Mobile -->
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Navegação Principal -->
+      <nav class="main-nav" id="mainNav" aria-label="Menu principal">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link active">Início</a></li>
+          <li><a href="consulta.html" class="nav-link">Consultar</a></li>
+          <li><a href="denunciar.html" class="nav-link">Denunciar</a></li>
+          <li><a href="central-seguranca.html" class="nav-link">Segurança</a></li>
+          <li><a href="alertas.html" class="nav-link">Alertas</a></li>
+          <li><a href="aprenda.html" class="nav-link">Aprenda</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        
+        <!-- Bloco de Texto e Ação -->
+        <div class="hero-content">
+          <div class="hero-tag animate-hidden">Consulta de Segurança Gratuita</div>
+          <h1 class="hero-title animate-hidden delay-100">Recebeu uma ligação <span>suspeita?</span></h1>
+          <p class="hero-subtitle animate-hidden delay-200">
+            Consulte o número e descubra se outras pessoas já denunciaram possíveis golpes ou spam.
+          </p>
+          
+          <div class="search-box animate-hidden delay-300">
+            <form id="heroSearchForm" class="search-form">
+              <input 
+                type="tel" 
+                id="searchPhoneInput" 
+                class="search-input" 
+                placeholder="Digite um número com DDD" 
+                required 
+                minlength="14" 
+                maxlength="15"
+                autocomplete="tel"
+                aria-label="Número de telefone para consulta"
+              >
+              <button type="submit" class="btn-search" id="btnConsultar">
+                Consultar
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </form>
+          </div>
+          
+          <div class="hero-disclaimer animate-hidden delay-400">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            Antes de cair no golpe, verifique.
+          </div>
+        </div>
+
+        <!-- Bloco da Imagem / Mascote -->
+        <div class="hero-image-wrapper animate-hidden delay-300">
+          <div class="caju-placeholder float-anim">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px; color: var(--primary-green);">
+              <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+              <path d="M12 12 2.1 7.1"></path>
+              <path d="M12 12l9.9 4.9"></path>
+            </svg>
+            <span>Ilustração do<br>Caju Alerta aqui</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER GLOBAL -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </span>
+            Caju Alerta
+          </a>
+          <p class="footer-slogan">Segurança digital sem enrolação.</p>
+        </div>
+        
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Início</a></li>
+            <li><a href="consulta.html" class="footer-link">Consultar número</a></li>
+            <li><a href="denunciar.html" class="footer-link">Denunciar número</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="central-seguranca.html" class="footer-link">Central de Segurança</a></li>
+            <li><a href="alertas.html" class="footer-link">Alertas recentes</a></li>
+            <li><a href="aprenda.html" class="footer-link">Aprenda com o Caju</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-nav">
+          <h4 class="footer-title">Projeto</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html" class="footer-link">Sobre o projeto</a></li>
+            <li><a href="contato.html" class="footer-link">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="legal-warning">
+          As informações apresentadas são baseadas em relatos e fontes disponíveis. Um número denunciado não significa necessariamente que seu proprietário seja um golpista.
+        </p>
+        <p class="copyright">&copy; 2026 Caju Alerta. Todos os direitos reservados. Projeto Acadêmico.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Obrigatório -->
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>

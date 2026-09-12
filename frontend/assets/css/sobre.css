@@ -1,0 +1,10 @@
+/* sobre.css */
+.page-main { padding-top: 120px; min-height: calc(100vh - 300px); }
+.about-header { text-align: center; margin-bottom: 60px; }
+.about-header h1 { font-size: 3rem; margin-bottom: 16px; color: var(--text-main); }
+.about-content { max-width: 800px; margin: 0 auto; background: var(--surface-color); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--surface-border); line-height: 1.8; color: var(--text-muted); }
+.about-content h2 { color: var(--text-main); font-size: 1.5rem; margin: 30px 0 16px; }
+.about-content p { margin-bottom: 20px; font-size: 1.05rem; }
+.about-content strong { color: var(--text-main); }
+.tcc-badge { display: inline-block; background: rgba(249, 115, 22, 0.1); color: var(--primary-orange); padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; }
+.back-action { margin-top: 40px; text-align: center; }

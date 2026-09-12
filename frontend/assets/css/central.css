@@ -1,0 +1,119 @@
+/* ==========================================================================
+   CENTRAL DE SEGURANÇA CSS
+   ========================================================================== */
+
+.page-main {
+  padding-top: 120px;
+  min-height: calc(100vh - 300px);
+}
+
+.central-hero {
+  text-align: center;
+  padding: 40px 0;
+  margin-bottom: 20px;
+}
+
+.header-content h1 {
+  font-size: 3rem;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+.header-content p {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.situation-card {
+  background: var(--surface-color);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.situation-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-green);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-green);
+  margin-bottom: 20px;
+}
+
+.situation-card h3 {
+  font-size: 1.3rem;
+  color: var(--text-main);
+  margin-bottom: 24px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.info-block strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.info-block p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.info-block.danger strong {
+  color: #ef4444; /* red-500 */
+}
+
+.help-action {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255,255,255,0.02);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--surface-border);
+}
+
+.help-action p {
+  margin-bottom: 20px;
+  color: var(--text-main);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 767px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-content h1 {
+    font-size: 2.2rem;
+  }
+}

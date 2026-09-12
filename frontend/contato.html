@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Contato | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <style>
+    .contact-page { max-width: 900px; margin: 0 auto; padding: 150px 24px 90px; }
+    .contact-intro { max-width: 680px; margin-bottom: 36px; }
+    .contact-intro p, .contact-card p { color: var(--text-muted); }
+    .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .contact-card { background: var(--surface-color); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 24px; }
+    .contact-card h2 { font-size: 1.15rem; margin-bottom: 10px; color: var(--primary-green); }
+    .contact-card a { color: var(--primary-orange); }
+    @media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <nav class="main-nav" id="mainNav"><ul class="nav-list">
+        <li><a href="/" class="nav-link">Início</a></li><li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+      </ul></nav>
+    </div>
+  </header>
+  <main class="contact-page">
+    <div class="contact-intro">
+      <h1>Contato e solicitações</h1>
+      <p>O Caju Alerta é um projeto acadêmico desenvolvido para ajudar pessoas no Brasil a identificar sinais de golpes e tomar decisões mais seguras.</p>
+    </div>
+    <div class="contact-grid">
+      <section class="contact-card">
+        <h2>Solicitar correção ou remoção</h2>
+        <p>Informe o telefone, e-mail ou site, explique a solicitação e inclua elementos que ajudem na análise. Registros próprios podem ser revisados conforme a finalidade, a origem e a situação do dado.</p>
+      </section>
+      <section class="contact-card">
+        <h2>Dados de fontes externas</h2>
+        <p>Não controlamos bancos de dados de terceiros. Quando o resultado vier de outra fonte, a correção deve ser solicitada também ao responsável original. A fonte deve ser indicada no resultado sempre que disponível.</p>
+      </section>
+      <section class="contact-card">
+        <h2>Privacidade</h2>
+        <p>Dados de conta, segurança e registros devem ser tratados com acesso restrito e finalidade definida. Não envie senhas, códigos de autenticação ou documentos por mensagens públicas.</p>
+      </section>
+      <section class="contact-card">
+        <h2>Em caso de golpe</h2>
+        <p>Fale imediatamente com seu banco pelos canais oficiais, registre ocorrência quando necessário e preserve comprovantes, mensagens e endereços envolvidos.</p>
+      </section>
+    </div>
+  </main>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+Crie o site oficial do projeto “Caju Alerta”, uma plataforma brasileira de conscientização e segurança digital.
+
+O projeto possui um personagem chamado Caju Alerta, representado visualmente por um caju com aparência amigável, inteligente e tecnológica. O personagem representa a identidade nordestina do projeto e tem como missão ajudar as pessoas a identificar golpes, spam, tentativas de fraude e outros problemas relacionados à segurança na internet.
+
+O site deve ter aparência profissional, moderna, tecnológica e confiável, mas também amigável e fácil de entender para pessoas que não possuem conhecimento técnico.
+
+NÃO criar um site com aparência genérica de empresa de tecnologia.
+NÃO exagerar nos efeitos.
+NÃO utilizar excesso de textos.
+NÃO deixar o site infantil.
+NÃO utilizar visual de hacker, código verde, caveiras ou estética de “hacker sombrio”.
+
+IDENTIDADE VISUAL:
+
+Utilizar a identidade visual do Caju Alerta.
+
+Cores principais:
+
+* Verde: representação do caju e da identidade nordestina
+* Laranja: cor principal de destaque, relacionada ao caju
+* Amarelo: usado pontualmente para alertas e elementos de destaque
+* Preto/grafite: tecnologia, contraste e elementos estruturais
+* Branco: fundo, espaço e legibilidade
+
+A paleta deve ser equilibrada.
+O laranja e o verde devem aparecer como cores de identidade, não como preenchimento exagerado de toda a interface.
+
+Utilizar cantos levemente arredondados, sombras discretas, boa hierarquia visual e bastante espaço em branco.
+
+O site deve funcionar perfeitamente em computador, tablet e celular.
+
+==================================================
+PÁGINA INICIAL
+==============
+
+Criar uma página inicial com uma apresentação clara.
+
+Hero principal:
+
+Título:
+
+“Recebeu uma ligação suspeita?”
+
+Subtítulo:
+
+“Consulte o número e descubra se outras pessoas já denunciaram possíveis golpes ou spam.”
+
+Campo de consulta:
+
+“Digite um número de telefone”
+
+Botão:
+
+“Consultar número”
+
+A área de consulta deve ser o elemento mais importante da página.
+
+Ao lado ou próximo da área principal, apresentar o personagem Caju Alerta de maneira discreta e profissional.
+
+O personagem pode aparecer segurando um celular, utilizando um notebook ou analisando um número suspeito.
+
+Adicionar uma chamada:
+
+“Antes de cair no golpe, verifique.”
+
+==================================================
+CONSULTA DE NÚMERO
+==================
+
+Criar uma página específica para consulta de números.
+
+O usuário informa um número de telefone.
+
+O sistema deve normalizar o número antes da pesquisa, removendo espaços, parênteses, hífens e outros caracteres desnecessários.
+
+Exemplo:
+
+(85) 99999-9999
+
+deve ser tratado internamente como um número padronizado.
+
+Mostrar o resultado de maneira simples.
+
+Exemplo:
+
+“Número consultado”
+
+“85 99999-9999”
+
+Status:
+
+“Sem denúncias encontradas”
+
+ou
+
+“Possíveis denúncias encontradas”
+
+ou
+
+“Alto número de denúncias”
+
+Mostrar:
+
+* quantidade de denúncias;
+* quantidade de relatos;
+* categorias dos relatos;
+* data da última denúncia;
+* nível de alerta;
+* resumo dos relatos.
+
+Não afirmar que um número é definitivamente criminoso.
+
+Utilizar expressões como:
+
+“Possíveis golpes”
+“Relatos de usuários”
+“Número denunciado”
+“Possível spam”
+
+Deixar claro que as informações são baseadas nos relatos registrados na plataforma.
+
+==================================================
+DENUNCIAR NÚMERO
+================
+
+Criar uma página chamada:
+
+“Denunciar número”
+
+Explicar:
+
+“Recebeu uma ligação, mensagem ou contato suspeito? Ajude outras pessoas registrando o ocorrido.”
+
+Formulário:
+
+* Número de telefone
+* Tipo de ocorrência
+* Data aproximada
+* Descrição do ocorrido
+* Plataforma utilizada
+* Região/estado, quando necessário
+* Campo para informações adicionais
+
+Categorias:
+
+* Golpe
+* Spam
+* Falsa cobrança
+* Falso banco
+* Falso suporte técnico
+* Falso familiar
+* WhatsApp
+* PIX
+* Phishing
+* Telemarketing abusivo
+* Outro
+
+Antes de enviar, mostrar um aviso explicando que denúncias falsas ou informações sem fundamento podem prejudicar outras pessoas.
+
+Implementar mecanismos básicos para evitar spam e registros duplicados.
+
+==================================================
+CENTRAL DE SEGURANÇA
+====================
+
+Criar uma área chamada:
+
+“Central de Segurança”
+
+Essa área deve apresentar conteúdos rápidos para ajudar o usuário em situações reais.
+
+Criar cards como:
+
+“Recebi um PIX suspeito”
+“Cliquei em um link estranho”
+“Meu WhatsApp pode ter sido invadido”
+“Recebi uma ligação do banco”
+“Passei meus dados para alguém”
+“Recebi uma mensagem suspeita”
+“Clonaram meu WhatsApp”
+“Recebi um pedido urgente de dinheiro”
+
+Cada conteúdo deve apresentar:
+
+1. O que aconteceu
+2. Qual pode ser o risco
+3. O que fazer agora
+4. O que não fazer
+5. Quando procurar ajuda
+
+Os textos devem ser curtos e fáceis de entender.
+
+==================================================
+ALERTAS RECENTES
+================
+
+Criar uma seção:
+
+“Alertas recentes”
+
+Essa área será utilizada para publicar golpes e ameaças que estejam acontecendo atualmente.
+
+Cada alerta deve possuir:
+
+* título;
+* data;
+* categoria;
+* descrição curta;
+* nível de atenção;
+* fonte;
+* conteúdo completo.
+
+Exemplo:
+
+“Golpe utilizando falsa central bancária”
+
+“Golpistas estão entrando em contato com vítimas se passando por funcionários de instituições financeiras.”
+
+Sempre permitir indicar a fonte da informação.
+
+==================================================
+APRENDA COM O CAJU
+==================
+
+Criar uma área de conteúdos educativos.
+
+O personagem Caju Alerta será utilizado para apresentar explicações rápidas.
+
+Categorias:
+
+* Golpes
+* WhatsApp
+* PIX
+* Senhas
+* Privacidade
+* Redes sociais
+* Inteligência artificial
+* Phishing
+* Segurança do celular
+* Segurança no computador
+
+O conteúdo deve ser apresentado de forma visual, com cards e textos curtos.
+
+==================================================
+INTEGRAÇÃO COM O CANAL
+======================
+
+Criar uma seção:
+
+“Veja os últimos vídeos do Caju Alerta”
+
+Mostrar os vídeos publicados no YouTube.
+
+Criar botão:
+
+“Ver canal no YouTube”
+
+Também preparar a estrutura para futuramente adicionar Instagram e TikTok.
+
+A identidade visual deve ser igual em todas as plataformas.
+
+==================================================
+SISTEMA DE DENÚNCIAS
+====================
+
+O projeto deverá possuir uma base de dados online para armazenar:
+
+* números;
+* denúncias;
+* categorias;
+* datas;
+* quantidade de ocorrências;
+* relatos;
+* informações necessárias para análise.
+
+Criar estrutura preparada para crescimento futuro.
+
+Evitar armazenar informações pessoais desnecessárias.
+
+Implementar proteção contra:
+
+* spam;
+* denúncias duplicadas;
+* cadastros automáticos;
+* abuso do sistema;
+* informações inconsistentes.
+
+Uma mesma pessoa não deve conseguir gerar centenas de denúncias falsas facilmente.
+
+Criar sistema de moderação para denúncias.
+
+==================================================
+LOCALIZAÇÃO
+===========
+
+Durante uma denúncia, o sistema poderá solicitar informações de localização para auxiliar na análise dos registros.
+
+Não solicitar localização precisa sem necessidade.
+
+Preferir informações como:
+
+* estado;
+* cidade;
+* região aproximada.
+
+Explicar ao usuário por que essa informação está sendo solicitada.
+
+==================================================
+PAINEL ADMINISTRATIVO
+=====================
+
+Criar uma área administrativa separada.
+
+O administrador poderá:
+
+* visualizar denúncias;
+* aprovar denúncias;
+* rejeitar denúncias;
+* editar informações;
+* visualizar números mais denunciados;
+* visualizar categorias;
+* identificar registros suspeitos;
+* gerenciar alertas;
+* cadastrar conteúdos educativos;
+* visualizar estatísticas.
+
+Criar níveis de acesso adequados.
+
+==================================================
+SEGURANÇA
+=========
+
+O próprio site é um projeto de segurança digital, portanto deve seguir boas práticas de segurança.
+
+Implementar:
+
+* validação de dados;
+* sanitização;
+* autenticação segura;
+* proteção contra SQL Injection;
+* proteção contra XSS;
+* controle de acesso;
+* rate limiting;
+* proteção contra abuso;
+* logs administrativos;
+* armazenamento seguro de senhas;
+* tratamento adequado de erros.
+
+Nunca mostrar dados internos do sistema ao usuário.
+
+==================================================
+RODAPÉ
+======
+
+Criar rodapé com:
+
+Caju Alerta
+
+“Segurança digital sem enrolação.”
+
+Links:
+
+Início
+Consultar número
+Denunciar número
+Central de Segurança
+Alertas
+Sobre o projeto
+Contato
+
+Adicionar aviso:
+
+“As informações apresentadas são baseadas em relatos e fontes disponíveis. Um número denunciado não significa necessariamente que seu proprietário seja um golpista.”
+
+==================================================
+ESTILO DA INTERFACE
+===================
+
+O site deve transmitir:
+
+SEGURANÇA
+TECNOLOGIA
+CONFIANÇA
+NORDESTE
+SIMPLICIDADE
+
+Utilizar o personagem Caju Alerta como elemento de identidade, mas sem colocá-lo em absolutamente todas as telas.
+
+O usuário deve conseguir consultar um número em poucos segundos.
+
+Prioridade da página inicial:
+
+1. Consultar número
+2. Entender o resultado
+3. Denunciar
+4. Encontrar orientação de segurança
+5. Acessar conteúdos do Caju Alerta
+
+Criar uma interface moderna, responsiva e profissional.
+
+O resultado deve parecer um produto real que poderia continuar sendo desenvolvido após a conclusão do TCC, e não apenas um protótipo acadêmico.
+
+Utilizar componentes reutilizáveis, código organizado e arquitetura preparada para evolução futura.
+
+Não adicionar funcionalidades que não tenham relação com o objetivo principal do projeto.

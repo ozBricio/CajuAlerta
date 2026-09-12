@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acessar Conta | Caju Alerta</title>
+  
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/cadastro.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <nav class="main-nav" id="mainNav"><ul class="nav-list">
+        <li><a href="/" class="nav-link">Início</a></li><li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+      </ul></nav>
+    </div>
+  </header>
+
+  <main class="page-main auth-main">
+    <section class="container">
+      <div class="auth-wrapper animate-hidden">
+        <div class="auth-header">
+          <h1>Bem-vindo de volta</h1>
+          <p>Acesse sua conta para registrar uma ocorrência.</p>
+        </div>
+
+        <div id="loginErrorBox" class="alert-box error" style="display: none;"><span id="loginErrorMessage"></span></div>
+
+        <form id="loginForm" class="auth-form">
+          
+          <div class="form-group">
+            <label for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" class="form-input" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label for="loginSenha">Senha</label>
+            <input type="password" id="loginSenha" class="form-input" required>
+          </div>
+
+          <button type="submit" class="btn-primary btn-full">Entrar</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Não tem uma conta? <a href="cadastro">Criar agora</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+</html>
