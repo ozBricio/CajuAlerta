@@ -1,66 +1,8 @@
-﻿.registrar-container {
-  min-height: calc(100vh - 80px);
-  padding: 40px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background-color: #0b0d10;
-}
-
-.registrar-box {
-  background: #171a21;
-  border: 1px solid #2d3342;
-  border-radius: 12px;
-  padding: 40px;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.registrar-box h1 {
-  margin: 0 0 10px 0;
-  font-size: 1.8rem;
-  color: #fff;
-}
-
-.subtitle {
+﻿.subtitle {
   color: #9ca3af;
   margin-bottom: 30px;
   font-size: 0.95rem;
   line-height: 1.5;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #d1d5db;
-  font-size: 0.9rem;
-}
-
-.form-input {
-  width: 100%;
-  padding: 14px;
-  background: #0f1115;
-  border: 1px solid #2d3342;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 1rem;
-  transition: all 0.3s;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #ff9900;
-  box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.15);
-}
-
-textarea.form-input {
-  resize: vertical;
 }
 
 .terms-group {
@@ -94,9 +36,6 @@ textarea.form-input {
   accent-color: #ff9900;
 }
 
-.field-error-msg {
-  color: #ef4444;
-  font-size: 0.85rem;
-  margin-top: 8px;
-  font-weight: 600;
+textarea.form-input {
+  resize: vertical;
 }

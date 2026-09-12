@@ -1,11 +1,4 @@
-﻿.perfil-container {
-  min-height: calc(100vh - 80px);
-  padding: 40px 20px;
-  display: flex;
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
+﻿
 
 .perfil-sidebar {
   width: 300px;
@@ -96,7 +89,7 @@
 .modal-actions .btn-danger:hover { background: #dc2626; }
 
 @media (max-width: 768px) {
-  .perfil-container { flex-direction: column; }
+  
   .perfil-sidebar { width: 100%; }
   .denuncia-card { flex-direction: column; align-items: flex-start; gap: 15px; }
 }
