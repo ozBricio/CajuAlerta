@@ -24,11 +24,14 @@
           const docSnap = await firebase.firestore().collection('usuarios').doc(user.uid).get();
           let pName = 'Perfil';
           if (docSnap.exists) {
-            pName = docSnap.data().nome.split(' ')[0]; // Primeiro nome
+            const data = docSnap.data();
+            if (data && data.nome) {
+              pName = data.nome.split(' ')[0]; // Primeiro nome
+            }
           }
 
           // Muda o botão Acessar para Nome do Usuário -> perfil.html
-          accessLink.textContent = Olá, ;
+          accessLink.textContent = `Olá, ${pName}`;
           accessLink.href = 'perfil.html';
           
           // Cria o botão Sair se não existir
