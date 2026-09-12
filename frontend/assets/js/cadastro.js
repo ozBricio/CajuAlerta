@@ -187,7 +187,6 @@ function initCadastroValidation() {
 
     processRegistration(nome, email, senha1, { aceiteTermos, aceitePrivacidade, aceiteProjeto });
   });
-  });
 }
 
 function isValidEmailForCaju(email) {
