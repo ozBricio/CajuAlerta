@@ -4,9 +4,11 @@
 
   firebase.auth().onAuthStateChanged(async (user) => {
     if (!user) {
-      window.location.href = 'login.html';
+      window.location.replace('login.html');
       return;
     }
+    const pc = document.getElementById('protectedContent');
+    if (pc) pc.style.display = 'flex';
     currentUser = user;
     loadUserProfile(user);
     loadUserDenuncias(user);

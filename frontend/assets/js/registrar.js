@@ -1,4 +1,15 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
+  const protectedContent = document.getElementById('protectedContent');
+  
+  // Bloqueio Inicial
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      window.location.replace('login.html'); // Expulsa sumariamente
+    } else {
+      if (protectedContent) protectedContent.style.display = 'block';
+    }
+  });
+
   const form = document.getElementById('formDenuncia');
   const tipoSelect = document.getElementById('tipoDenuncia');
   const groupAlvo = document.getElementById('groupAlvo');
