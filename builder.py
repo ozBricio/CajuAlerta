@@ -1,13 +1,12 @@
 ﻿import io
 import re
 
-for filename in ['frontend/registrar.html', 'frontend/perfil.html']:
-    with io.open(filename, 'r', encoding='utf-8', errors='ignore') as f:
-        html = f.read()
-    
-    html = re.sub(r'assets/js/registrar\.js(\?v=\d+)?', 'assets/js/registrar.js?v=2', html)
-    html = re.sub(r'assets/js/perfil\.js(\?v=\d+)?', 'assets/js/perfil.js?v=2', html)
-    html = re.sub(r'assets/css/registrar\.css(\?v=\d+)?', 'assets/css/registrar.css?v=5', html)
-    
-    with io.open(filename, 'w', encoding='utf-8') as f:
-        f.write(html)
+with io.open('frontend/registrar.html', 'r', encoding='utf-8', errors='ignore') as f:
+    html = f.read()
+
+# Fix literal \n in CSS links
+html = html.replace('\\n  <link rel="stylesheet" href="assets/css/cadastro.css">\\n  <link rel="stylesheet" href="assets/css/animations.css">', '')
+html = html.replace('\\n', '\n')
+
+with io.open('frontend/registrar.html', 'w', encoding='utf-8') as f:
+    f.write(html)
