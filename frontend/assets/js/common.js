@@ -12,29 +12,30 @@ window.apiUrl = path => `${window.CAJU_API_BASE_URL || ''}${path}`;
 
 async function initPlatformAccess() {
   const navList = document.querySelector('.nav-list');
-  if (!navList || navList.querySelector('.platform-entry')) return;
+  if (!navList) return;
 
-  let authenticated = false;
-  try {
-    const response = await fetch(window.apiUrl('/api/auth/me'), { credentials: 'include' });
-    authenticated = response.ok;
-  } catch (error) {
-    authenticated = false;
-  }
+  if (window.auth) {
+    window.auth.onAuthStateChanged((user) => {
+      // Remove botões antigos
+      const existing = navList.querySelectorAll('.platform-entry, .logout-entry');
+      existing.forEach(e => e.remove());
 
-  const platformLi = document.createElement('li');
-  platformLi.className = 'platform-entry';
-  platformLi.innerHTML = `<a class="nav-link platform-link" href="${authenticated ? '/suporte' : '/login'}">${authenticated ? 'Minha conta' : 'Acessar'}</a>`;
-  navList.appendChild(platformLi);
+      const platformLi = document.createElement('li');
+      platformLi.className = 'platform-entry';
+      platformLi.innerHTML = `<a class="nav-link platform-link" href="${user ? '/registrar' : '/login'}">${user ? 'Minha conta' : 'Acessar'}</a>`;
+      navList.appendChild(platformLi);
 
-  if (authenticated) {
-      const logoutLi = document.createElement('li');
-      logoutLi.innerHTML = `<button id="globalLogoutBtn" class="nav-link support-logout">Sair</button>`;
-      navList.appendChild(logoutLi);
-      document.getElementById('globalLogoutBtn').addEventListener('click', async () => { 
-          await fetch(window.apiUrl('/api/auth/logout'), { method: 'POST', credentials: 'include' }); 
-          window.location.replace('/'); 
-      });
+      if (user) {
+        const logoutLi = document.createElement('li');
+        logoutLi.className = 'logout-entry';
+        logoutLi.innerHTML = `<button id="globalLogoutBtn" class="nav-link support-logout">Sair</button>`;
+        navList.appendChild(logoutLi);
+        document.getElementById('globalLogoutBtn').addEventListener('click', async () => { 
+            await window.auth.signOut(); 
+            window.location.replace('/'); 
+        });
+      }
+    });
   }
 }
 

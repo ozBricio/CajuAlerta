@@ -16,17 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     button.textContent = 'Entrando...';
 
     try {
-      // Simulação do comportamento nativo do Firebase Auth / Firestore (Arquitetura Serverless)
-      // Quando integrado ao Firebase, essa verificação checa o Documento do Usuário na coleção 'users'
-      let role = 'user';
-      if (email.includes('admin')) {
-        role = 'admin'; // Simula leitura do role 'admin' no banco
-      }
-
-      // Sucesso simulado
+      await window.auth.signInWithEmailAndPassword(email, senha);
+      
       const returnTo = new URLSearchParams(window.location.search).get('returnTo');
       
-      if (role === 'admin') {
+      // Checa se é admin
+      if (email.includes('admin')) {
         window.location.href = '/admin/dashboard.html';
       } else {
         window.location.href = returnTo || '/';
