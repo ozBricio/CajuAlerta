@@ -64,6 +64,37 @@
       return;
     }
 
+    // Validações Específicas
+    const tipo = tipoSelect.value;
+    const alvo = inputAlvo.value.trim();
+
+    if (tipo === 'telefone') {
+      const d = alvo.replace(/\D/g, '');
+      if (d.length < 10) {
+        errorBox.textContent = 'Erro: Número de telefone inválido. O telefone deve ter DDD + Número (ex: 11 99999-9999).';
+        errorBox.classList.remove('d-none');
+        btnSubmit.disabled = false;
+        if (loadingOverlay) loadingOverlay.classList.add('d-none');
+        return;
+      }
+    } else if (tipo === 'email') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(alvo)) {
+        errorBox.textContent = 'Erro: O endereço de e-mail é inválido. Falta o formato correto (ex: @gmail.com).';
+        errorBox.classList.remove('d-none');
+        btnSubmit.disabled = false;
+        if (loadingOverlay) loadingOverlay.classList.add('d-none');
+        return;
+      }
+    } else if (tipo === 'site') {
+      if (!alvo.includes('.') || alvo.length < 4) {
+        errorBox.textContent = 'Erro: Domínio inválido. O site deve conter uma extensão válida (ex: .com, .com.br, .net).';
+        errorBox.classList.remove('d-none');
+        btnSubmit.disabled = false;
+        if (loadingOverlay) loadingOverlay.classList.add('d-none');
+        return;
+      }
+    }
+
     // Validação de Motivo (Min 5 palavras)
     const motivoText = inputMotivo.value.trim();
     const wordCount = motivoText.split(/\s+/).filter(word => word.length > 0).length;

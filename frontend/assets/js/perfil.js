@@ -21,7 +21,11 @@
         const data = doc.data();
         document.getElementById('userName').textContent = data.nome;
         document.getElementById('userEmail').textContent = data.email;
-        document.getElementById('userRole').textContent = data.role === 'staff' ? 'Administrador' : 'Usuário';
+        document.getElementById('userRole').textContent = data.role === 'staff' ? 'Administrador (Staff)' : 'Usuário';
+        if (data.role === 'staff') {
+          const btnAdmin = document.getElementById('btnAdminDash');
+          if (btnAdmin) btnAdmin.classList.remove('d-none');
+        }
         document.getElementById('userInitial').textContent = data.nome.charAt(0).toUpperCase();
       }
     } catch (e) {
