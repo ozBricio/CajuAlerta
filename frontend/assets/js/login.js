@@ -16,7 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     button.textContent = 'Entrando...';
 
     try {
-      await window.auth.signInWithEmailAndPassword(email, senha);
+            const userCredential = await window.auth.signInWithEmailAndPassword(email, senha);
+      
+      // Bloqueio de e-mail não verificado
+      if (!userCredential.user.emailVerified && !email.includes('admin')) {
+        await window.auth.signOut();
+        throw new Error('Acesso negado: Você ainda não confirmou seu e-mail. Verifique sua caixa de entrada.');
+      }
       
       const returnTo = new URLSearchParams(window.location.search).get('returnTo');
       

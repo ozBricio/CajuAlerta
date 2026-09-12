@@ -86,18 +86,36 @@ async function processRegistration(nome, email, senha, consentimentos) {
   btn.textContent = 'Criando conta...';
 
   try {
-    const response = await fetch(window.apiUrl('/api/auth/signup'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, email, senha, consentimentos })
-    });
-    const result = await response.json();
-    if (!response.ok) return showError(result.error || 'Não foi possível criar a conta.');
+    // 1. Criar no Firebase Auth
+    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
+    const user = userCredential.user;
 
-    alert(result.message);
+    // 2. Disparar E-mail de Verificação (A regra de bloqueio)
+    await user.sendEmailVerification();
+
+    // 3. Salvar os dados no Firestore (Banco de Dados)
+    await firebase.firestore().collection('usuarios').doc(user.uid).set({
+      nome: nome,
+      email: email,
+      consentimentos: consentimentos,
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+      authRole: 'user'
+    });
+
+    // Desloga para obrigar a validar o e-mail antes de logar
+    await firebase.auth().signOut();
+
+    // Redireciona com aviso
+    alert('✅ Conta criada com sucesso!
+
+⚠️ IMPORTANTE: Enviamos um link de confirmação para o seu e-mail. Você só poderá fazer login após clicar no link para verificar sua identidade.');
     window.location.href = '/login';
   } catch (error) {
-    showError('Não foi possível conectar ao servidor.');
+    if (error.code === 'auth/email-already-in-use') {
+      showError('Esse e-mail já está cadastrado em nossa base.');
+    } else {
+      showError('Erro ao criar conta: ' + error.message);
+    }
   } finally {
     btn.disabled = false;
     btn.textContent = 'Criar Conta Segura';
