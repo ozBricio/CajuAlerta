@@ -1,123 +1,76 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="/assets/img/logo2.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrar Ocorrência | Caju Alerta</title>
+  <title>Registrar Denúncia - Caju Alerta</title>
   <link rel="stylesheet" href="assets/css/common.css">
-  <link rel="stylesheet" href="assets/css/animations.css">
-  <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/registrar.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
 </head>
-<body class="registration-page">
-
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
-      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainNav">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="main-nav" id="mainNav">
-        <ul class="nav-list">
-          <li><a href="/" class="nav-link">Início</a></li>
-          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
-          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo"><img src="assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html" class="nav-link">Início</a></li>
+          <li class="platform-entry"><a href="login.html" class="platform-link" id="platformAccessLink">Acessar</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="page-main">
-    <section class="form-section">
-      <div class="container">
-        <div class="form-header animate-hidden">
-          <h1>Registrar Ocorrência</h1>
-          <p>Recebeu contato suspeito? Registre o número. O sistema cruza os dados com outros usuários para criar alertas.</p>
+  <main class="registrar-container">
+    <div class="registrar-box">
+      <h1>Registrar Ocorrência</h1>
+      <p class="subtitle">Forneça os dados do golpe. Essas informações poderão ser usadas em processos judiciais.</p>
+
+      <form id="formDenuncia" novalidate>
+        <div class="form-group">
+          <label for="tipoDenuncia">O que você deseja denunciar?</label>
+          <select id="tipoDenuncia" class="form-input" required>
+            <option value="" disabled selected>Selecione o tipo...</option>
+            <option value="telefone">Número de Telefone / WhatsApp</option>
+            <option value="email">Endereço de E-mail</option>
+            <option value="site">Site / Link Falso</option>
+          </select>
         </div>
-        <div class="form-wrapper animate-hidden delay-100">
-          <div class="alert-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <div>
-              <strong>Responsabilidade & LGPD</strong>
-              <p>Ao enviar, você concorda com o uso de sua Geolocalização e IP criptografados. A inserção de informações falsas sujeita o usuário à responsabilização civil.</p>
-            </div>
-          </div>
-          <form id="registroForm" class="registro-form">
-            <div class="form-row">
-              <div class="form-group"><label>Alvo (Telefone, E-mail ou Site) <span class="req">*</span></label><input type="text" id="numeroInfrator" class="form-input" placeholder="Ex: (11) 99999-9999 ou site.com" required></div>
-              <div class="form-group"><label>Data aproximada <span class="req">*</span></label><input type="date" id="dataOcorrencia" class="form-input" required></div>
-            </div>
-            <div class="form-row">
-              <div class="form-group"><label>Categoria principal <span class="req">*</span></label><div class="select-wrapper"><select id="tipoOcorrencia" class="form-input" required><option value="" disabled selected>Selecione...</option><option value="golpe">Golpe Financeiro</option><option value="spam">Spam</option><option value="outro">Outro</option></select></div></div>
-              <div class="form-group"><label>Plataforma <span class="req">*</span></label><div class="select-wrapper"><select id="plataformaOrigem" class="form-input" required><option value="" disabled selected>Onde aconteceu?</option><option value="whatsapp">WhatsApp</option><option value="ligacao">Ligação Telefônica</option></select></div></div>
-            </div>
-            <div class="form-group"><label>Descrição do ocorrido <span class="req">*</span></label><textarea id="descricaoRelato" class="form-input" required></textarea></div>
-            <div class="recaptcha-container">
-              <div class="native-captcha" id="nativeCaptcha">
-                <label class="captcha-label">
-                  <input type="checkbox" id="captchaCheckbox">
-                  <div class="captcha-box"></div>
-                  <span>Não sou um robô</span>
-                </label>
-                <div class="captcha-brand">
-                  <img src="assets/img/logo2.png" alt="Caju Security">
-                  <span>Privacidade<br>Termos</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-actions"><button type="submit" class="btn-primary" id="btnSubmitRegistro">Enviar Registro Criptografado</button></div>
-          </form>
+
+        <div class="form-group d-none" id="groupAlvo">
+          <label id="labelAlvo" for="inputAlvo">Alvo</label>
+          <input type="text" id="inputAlvo" class="form-input" required>
         </div>
-      </div>
-    </section>
-  </main>
-  
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
-          <p class="brand-slogan">Caju Alerta</p>
-          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+
+        <div class="form-group">
+          <label for="inputMotivo">Motivo da Denúncia (Mínimo de 5 palavras)</label>
+          <textarea id="inputMotivo" class="form-input" rows="4" placeholder="Descreva detalhadamente o que aconteceu..." required></textarea>
+          <div class="field-error-msg d-none" id="err-motivo">⚠️ A descrição deve ter pelo menos 5 palavras.</div>
         </div>
-        <div class="footer-nav">
-          <h4 class="footer-title">Plataforma</h4>
-          <ul class="footer-links">
-            <li><a href="/" class="footer-link">Início</a></li>
-            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
-          </ul>
+
+        <fieldset class="terms-group">
+          <legend>Termos Legais e Localização</legend>
+          <label class="checkbox-label" style="margin-bottom: 15px;">
+            <input type="checkbox" id="aceiteLegal" required>
+            <span>Declaro que os dados fornecidos são verdadeiros e concordo que minha <strong>Localização Geográfica (GPS)</strong> seja registrada junto à denúncia. <br><small>Esses dados são sigilosos e só serão repassados à Polícia ou à Justiça mediante mandado, conforme a lei.</small></span>
+          </label>
+        </fieldset>
+
+        <button type="submit" id="btnSubmitDenuncia" class="btn btn-primary btn-block" style="margin-top: 20px;">Registrar Denúncia Oficial</button>
+        <div id="errorBox" class="alert-box error d-none" style="margin-top: 15px;"></div>
+        <div id="successBox" class="alert-box success d-none" style="margin-top: 15px;">
+          ✅ Denúncia registrada com sucesso! Ela já consta em nossos sistemas de inteligência.
         </div>
-        <div class="footer-nav">
-          <h4 class="footer-title">Conteúdos</h4>
-          <ul class="footer-links">
-            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
-            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav">
-          <h4 class="footer-title">Jurídico</h4>
-          <ul class="footer-links">
-            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
-            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
-        <p class="copyright">&copy; 2026 Caju Alerta.</p>
-      </div>
+      </form>
     </div>
-  </footer>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
-  <script src="assets/js/firebase-config.js"></script>
+  </main>
+
   <script src="assets/js/common.js"></script>
   <script src="assets/js/registrar.js"></script>
-<script src="assets/js/caju-security.js"></script>
 </body>
 </html>
-
-
-

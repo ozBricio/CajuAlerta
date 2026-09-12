@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/perfil.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo"><img src="assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html" class="nav-link">Início</a></li>
+          <li><a href="registrar.html" class="nav-link">Nova Denúncia</a></li>
+          <li class="platform-entry"><button id="btnSairPerfil" class="btn-action block">Sair da Conta</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="perfil-container">
+    <div class="perfil-sidebar">
+      <div class="user-info">
+        <div class="avatar" id="userInitial">C</div>
+        <h2 id="userName">Carregando...</h2>
+        <p id="userEmail">...</p>
+        <span class="badge" id="userRole">Usuário</span>
+      </div>
+      
+      <div class="perfil-actions">
+        <button class="btn-danger" id="btnDeleteAccount">Excluir Minha Conta</button>
+      </div>
+    </div>
+
+    <div class="perfil-content">
+      <h2>Minhas Denúncias Registradas</h2>
+      <p class="subtitle">Abaixo está o histórico de ocorrências que você registrou. Caso tenha se arrependido, você pode desativar o registro.</p>
+      
+      <div id="denunciasList" class="denuncias-grid">
+        <p style="color: #9ca3af;">Carregando ocorrências...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Exclusão -->
+  <div id="modalDelete" class="modal-overlay d-none">
+    <div class="modal-box">
+      <h3>⚠️ Atenção: Exclusão de Conta</h3>
+      <p>Você está prestes a excluir sua conta. Todos os seus acessos serão revogados.</p>
+      <p><strong>Nota de Privacidade:</strong> Por questões legais e jurídicas, e em conformidade com o Marco Civil da Internet, um registro (log) da sua solicitação será mantido em nossos servidores de segurança para eventuais mandados judiciais.</p>
+      <div class="modal-actions">
+        <button id="btnCancelDelete" class="btn">Cancelar</button>
+        <button id="btnConfirmDelete" class="btn btn-danger">Sim, Excluir Minha Conta</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/perfil.js"></script>
+</body>
+</html>

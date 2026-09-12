@@ -1,133 +1,125 @@
+﻿document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('formDenuncia');
+  const tipoSelect = document.getElementById('tipoDenuncia');
+  const groupAlvo = document.getElementById('groupAlvo');
+  const labelAlvo = document.getElementById('labelAlvo');
+  const inputAlvo = document.getElementById('inputAlvo');
+  const inputMotivo = document.getElementById('inputMotivo');
+  const btnSubmit = document.getElementById('btnSubmitDenuncia');
+  const errorBox = document.getElementById('errorBox');
+  const successBox = document.getElementById('successBox');
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  checkAuthAndBlock();
-  initMasks();
-  autoFillFromQuery();
-  initFormSubmit();
-  
-  const dateInput = document.getElementById('dataOcorrencia');
-  if(dateInput) {
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.setAttribute('max', today);
-  }
-});
-
-function checkAuthAndBlock() {
-  const formWrapper = document.querySelector('.form-wrapper');
-
-  if (window.auth) {
-    window.auth.onAuthStateChanged((user) => {
-      if (!user && formWrapper) {
-        const returnTo = `${window.location.pathname}${window.location.search}`;
-        window.location.replace(`/login?returnTo=${encodeURIComponent(returnTo)}`);
-      }
-    });
-  }
-  return Boolean(formWrapper);
-}
-
-function initMasks() {
-  // Removido: Aceita e-mail e site
-}
-
-function autoFillFromQuery() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const numero = urlParams.get('numero');
-  const input = document.getElementById('numeroInfrator');
-  if (numero && input) input.value = numero;
-}
-
-function initFormSubmit() {
-  const form = document.getElementById('registroForm');
-  if (!form) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const relato = document.getElementById('descricaoRelato').value.trim();
-    if (relato.split(/\s+/).filter(word => word.length > 0).length < 6) {
-      alert('A descrição é muito curta. Explique o ocorrido com no mínimo 6 palavras.');
-      return;
+  // Máscara e mudança dinâmica de label
+  tipoSelect.addEventListener('change', (e) => {
+    groupAlvo.classList.remove('d-none');
+    inputAlvo.value = '';
+    
+    if (e.target.value === 'telefone') {
+      labelAlvo.textContent = 'Número do Telefone (com DDD)';
+      inputAlvo.placeholder = '(11) 99999-9999';
+      inputAlvo.type = 'text';
+    } else if (e.target.value === 'email') {
+      labelAlvo.textContent = 'E-mail do Golpista';
+      inputAlvo.placeholder = 'golpe@email.com';
+      inputAlvo.type = 'email';
+    } else {
+      labelAlvo.textContent = 'Link ou URL do Site';
+      inputAlvo.placeholder = 'https://site-falso.com';
+      inputAlvo.type = 'url';
     }
-    const isHuman = document.getElementById('captchaCheckbox').checked;
-    if (!isHuman) {
-      alert('Você esqueceu de marcar a caixa "Não sou um robô"!');
-      return;
-    }
-    requestLocationAndSubmit(form);
   });
-}
 
-const CriptoCaju = {
-  encrypt: (text, secret) => {
-    let result = '';
-    for (let i = 0; i < text.length; i++) {
-      result += String.fromCharCode(text.charCodeAt(i) ^ secret.charCodeAt(i % secret.length));
+  inputAlvo.addEventListener('input', (e) => {
+    if (tipoSelect.value === 'telefone') {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.substring(0, 11);
+      if (v.length > 2) v = `(${v.substring(0,2)}) ${v.substring(2)}`;
+      if (v.length > 9) v = `${v.substring(0,10)}-${v.substring(10)}`;
+      e.target.value = v;
     }
-    return btoa(result);
-  }
-};
+  });
 
-async function requestLocationAndSubmit(form) {
-  const btn = document.getElementById('btnSubmitRegistro');
-  const originalText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Verificando segurança, IP e localização...';
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.classList.add('d-none');
+    successBox.classList.add('d-none');
 
-  if (!navigator.geolocation) {
-    alert("Geolocalização não é suportada.");
-    btn.disabled = false; btn.textContent = originalText; return;
-  }
+    // Validação de Sessão
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      errorBox.textContent = 'Você precisa estar logado para registrar uma ocorrência.';
+      errorBox.classList.remove('d-none');
+      setTimeout(() => window.location.href = 'login.html', 2000);
+      return;
+    }
 
-  // Capturar IP
-  let userIP = 'Desconhecido';
-  try {
-    const ipRes = await fetch('https://api.ipify.org?format=json');
-    const ipData = await ipRes.json();
-    userIP = ipData.ip;
-  } catch(e) {}
+    // Validação de Motivo (Min 5 palavras)
+    const motivoText = inputMotivo.value.trim();
+    const wordCount = motivoText.split(/\s+/).filter(word => word.length > 0).length;
+    
+    if (wordCount < 5) {
+      document.getElementById('err-motivo').classList.remove('d-none');
+      inputMotivo.classList.add('has-error');
+      return;
+    } else {
+      document.getElementById('err-motivo').classList.add('d-none');
+      inputMotivo.classList.remove('has-error');
+    }
 
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      btn.textContent = 'Criptografando metadados...';
-      
-      const metadadosBrutos = JSON.stringify({
-        ip: userIP,
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        navegador: navigator.userAgent,
-        data: new Date().toISOString()
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Aguardando Localização (GPS)...';
+
+    // Captura Localização Obrigatória
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          await salvarDenuncia(user, position.coords);
+        },
+        (error) => {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Registrar Denúncia Oficial';
+          errorBox.innerHTML = '<strong>Acesso à Localização Negado!</strong><br>Para registrar a denúncia, é obrigatório permitir o acesso ao GPS por questões legais e rastreamento judicial.';
+          errorBox.classList.remove('d-none');
+        }
+      );
+    } else {
+      errorBox.textContent = 'Seu navegador não suporta geolocalização.';
+      errorBox.classList.remove('d-none');
+      btnSubmit.disabled = false;
+    }
+  });
+
+  async function salvarDenuncia(user, coords) {
+    btnSubmit.textContent = 'Registrando no Banco de Dados...';
+
+    const tipo = tipoSelect.value;
+    const alvo = inputAlvo.value.trim();
+    const motivo = inputMotivo.value.trim();
+    const collectionName = tipo === 'telefone' ? 'denuncias_telefones' : (tipo === 'email' ? 'denuncias_emails' : 'denuncias_sites');
+
+    try {
+      await firebase.firestore().collection(collectionName).add({
+        alvo: alvo,
+        motivo: motivo,
+        relator_uid: user.uid,
+        relator_email: user.email,
+        dataDenuncia: firebase.firestore.FieldValue.serverTimestamp(),
+        localizacao: {
+          latitude: coords.latitude,
+          longitude: coords.longitude
+        },
+        status: 'ativa' // Permite "desativar" no futuro pelo próprio usuário
       });
 
-      // Embaralhamento (a chave do admin deverá ser usada depois para ver)
-      const metadadosSeguros = CriptoCaju.encrypt(metadadosBrutos, "CAJU2026_BLINDADO");
-
-      try {
-        const userId = window.auth.currentUser ? window.auth.currentUser.uid : 'anon';
-        
-        await window.db.collection('ocorrencias').add({
-          alvo: document.getElementById('numeroInfrator').value.trim(),
-          data_ocorrencia: document.getElementById('dataOcorrencia').value,
-          categoria: document.getElementById('tipoOcorrencia').value,
-          plataforma: document.getElementById('plataformaOrigem').value,
-          relato: document.getElementById('descricaoRelato').value.trim(),
-          metadados_criptografados: metadadosSeguros, // Salvo apenas criptografado
-          userId: userId,
-          status: 'ativo',
-          created_at: new Date().toISOString()
-        });
-
-        form.parentElement.innerHTML = '<div class="registration-success"><h2>Ocorrência registrada e blindada</h2><p>Obrigado por ajudar outras pessoas. Seus metadados foram selados criptograficamente.</p><a href="/" class="btn-primary">Voltar ao início</a></div>';
-      } catch (error) {
-        alert("Erro no servidor: " + error.message);
-        btn.disabled = false;
-        btn.textContent = originalText;
-      }
-    },
-    (error) => {
-      alert("Acesso à localização negado (LGPD). É obrigatório fornecer sua localização para responsabilização em caso de falsas ocorrências.");
-      btn.disabled = false; btn.textContent = originalText;
-    },
-    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-  );
-}
+      form.reset();
+      groupAlvo.classList.add('d-none');
+      successBox.classList.remove('d-none');
+      btnSubmit.textContent = 'Registrar Nova Denúncia';
+    } catch (error) {
+      errorBox.textContent = 'Erro ao salvar denúncia: ' + error.message;
+      errorBox.classList.remove('d-none');
+    } finally {
+      btnSubmit.disabled = false;
+    }
+  }
+});

@@ -2,56 +2,56 @@
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Função para verificar se o usuário é "staff" (admin/moderador)
     function isStaff() {
       return request.auth != null && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.role == 'staff';
     }
     
-    // Função para garantir que o usuário está logado
     function isAuth() {
       return request.auth != null;
     }
 
     match /usuarios/{userId} {
-      // Usuário pode criar o próprio perfil no cadastro
       allow create: if isAuth() && request.auth.uid == userId;
-      // Usuário pode ler o próprio perfil
       allow read: if isAuth() && request.auth.uid == userId;
-      // Usuário pode atualizar só o "ultimoAcesso" no login
-      allow update: if isAuth() && request.auth.uid == userId && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ultimoAcesso']);
-      // Staff pode ler, atualizar (bloquear), mas não excluir
+      // Permite atualizar ultimoAcesso OU status (exclusão)
+      allow update: if isAuth() && request.auth.uid == userId;
       allow read, update: if isStaff();
-      allow delete: if false; // "não consigo excluir"
+      allow delete: if false;
     }
 
     match /historico_acessos/{logId} {
-      // Sistema (usuário autenticado) pode criar o próprio log
       allow create: if isAuth() && request.resource.data.uid == request.auth.uid;
-      // Somente Staff pode ler os históricos
       allow read: if isStaff();
-      // Ninguém pode alterar ou apagar histórico
+      allow update, delete: if false;
+    }
+
+    match /logs_exclusao/{logId} {
+      allow create: if isAuth() && request.resource.data.uid == request.auth.uid;
+      allow read: if isStaff();
       allow update, delete: if false;
     }
 
     match /denuncias_emails/{docId} {
-      allow create: if isAuth(); // Qualquer logado pode denunciar
-      allow read: if isStaff();  // Só staff pode ver
-      allow update, delete: if false;
+      allow create: if isAuth(); 
+      allow read: if isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
+      allow update: if isAuth() && resource.data.relator_uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if false;
     }
 
     match /denuncias_telefones/{docId} {
       allow create: if isAuth();
-      allow read: if isStaff();
-      allow update, delete: if false;
+      allow read: if isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
+      allow update: if isAuth() && resource.data.relator_uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if false;
     }
 
     match /denuncias_sites/{docId} {
       allow create: if isAuth();
-      allow read: if isStaff();
-      allow update, delete: if false;
+      allow read: if isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
+      allow update: if isAuth() && resource.data.relator_uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if false;
     }
 
-    // Bloqueio default
     match /{document=**} {
       allow read, write: if false;
     }
