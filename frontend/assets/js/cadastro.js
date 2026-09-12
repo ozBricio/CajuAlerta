@@ -23,7 +23,7 @@ function initCadastroValidation() {
     const aceiteTermos = document.getElementById('aceiteTermos').checked;
     const aceitePrivacidade = document.getElementById('aceitePrivacidade').checked;
     const aceiteProjeto = document.getElementById('aceiteProjeto').checked;
-    const isHuman = typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0;
+    const isHuman = document.getElementById('captchaCheckbox').checked;
 
     const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:\s[A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
     if (!nameRegex.test(nome)) {
@@ -106,3 +106,5 @@ function defenseConsoleWarning() {
   setTimeout(console.log.bind(console, '%c🚨 ALERTA DE SEGURANÇA 🚨', 'color: #ef4444; font-size: 40px; font-weight: bold; text-shadow: 2px 2px 0 #000;'));
   setTimeout(console.log.bind(console, '%cQualquer tentativa de injeção será bloqueada e o IP registrado conforme LGPD e Marco Civil.', 'font-size: 14px; font-weight: bold; color: #facc15;'));
 }
+
+
