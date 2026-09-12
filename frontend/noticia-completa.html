@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/assets/img/logo2.png">
+  <title>Alertas | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/noticias.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="news-page article-page">
+    <div class="article-hero" id="articleHero">
+      <span class="alerta-badge loading" id="articleBadge">...</span>
+      <h1 id="articleTitle">Carregando notícia...</h1>
+      <div class="article-meta">
+        <span id="articleAuthor"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Por Caju Alerta</span>
+        <span id="articleDate"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> --/--/----</span>
+      </div>
+    </div>
+    
+    <article class="article-content" id="articleContent">
+      <p>Buscando os detalhes desta matéria no banco de dados...</p>
+    </article>
+
+    <div class="article-actions">
+      <a href="/noticias" class="btn-secondary">&larr; Voltar para as Notícias</a>
+      <button class="btn-primary" onclick="window.print()">Imprimir / Salvar PDF</button>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+          <p class="brand-slogan">Caju Alerta</p>
+          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">Início</a></li>
+            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Jurídico</h4>
+          <ul class="footer-links">
+            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
+        <p class="copyright">&copy; 2026 Caju Alerta.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/noticia-completa.js"></script>
+</body>
+</html>

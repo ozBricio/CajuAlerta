@@ -30,20 +30,7 @@ function checkAuthAndBlock() {
 }
 
 function initMasks() {
-  const input = document.getElementById('numeroInfrator');
-  if (!input) return;
-
-  input.addEventListener('input', (e) => {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length > 11) value = value.slice(0, 11);
-
-    let formatted = '';
-    if (value.length > 0) formatted = '(' + value.substring(0, 2);
-    if (value.length > 2) formatted += ') ' + value.substring(2, 7);
-    if (value.length > 7) formatted += '-' + value.substring(7, 11);
-
-    e.target.value = formatted;
-  });
+  // Removido: A máscara estrita foi retirada pois agora o campo aceita E-mail e Site, não apenas telefone.
 }
 
 function autoFillFromQuery() {
@@ -68,6 +55,14 @@ function initFormSubmit() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    const relato = document.getElementById('descricaoRelato').value.trim();
+    const wordCount = relato.split(/\s+/).filter(word => word.length > 0).length;
+    
+    if (wordCount < 6) {
+      alert('A descrição é muito curta. Explique o ocorrido com no mínimo 6 palavras para o registro ser válido.');
+      return;
+    }
 
     const isHuman = typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0;
     if (!isHuman) {

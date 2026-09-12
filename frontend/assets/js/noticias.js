@@ -34,7 +34,7 @@ async function loadNoticias() {
         </div>
         <p>${escapeHtml(noticia.resumo || noticia.conteudo.substring(0, 150) + '...')}</p>
         <div class="alerta-footer">
-          <a href="#" class="read-more" onclick="alert('Funcionalidade de leitura completa em breve'); return false;">Ler matéria completa &rarr;</a>
+          <a href="/noticia-completa?id=${noticia.id || '1'}" class="read-more">Ler matéria completa &rarr;</a>
         </div>
       </article>
     `).join('');

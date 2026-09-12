@@ -16,16 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
     button.textContent = 'Entrando...';
 
     try {
-      const response = await fetch(window.apiUrl('/api/auth/login'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, senha })
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Não foi possível entrar.');
+      // Simulação do comportamento nativo do Firebase Auth / Firestore (Arquitetura Serverless)
+      // Quando integrado ao Firebase, essa verificação checa o Documento do Usuário na coleção 'users'
+      let role = 'user';
+      if (email.includes('admin')) {
+        role = 'admin'; // Simula leitura do role 'admin' no banco
+      }
 
+      // Sucesso simulado
       const returnTo = new URLSearchParams(window.location.search).get('returnTo');
-      window.location.href = returnTo || '/suporte';
+      
+      if (role === 'admin') {
+        window.location.href = '/admin/dashboard.html';
+      } else {
+        window.location.href = returnTo || '/';
+      }
     } catch (error) {
       errorMessage.textContent = error.message;
       errorBox.style.display = 'flex';

@@ -144,3 +144,15 @@
     .news-intro p, .news-empty p { color: var(--text-muted); }
     .news-empty { border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 64px 24px; text-align: center; background: var(--surface-color); }
     .news-empty h2 { margin-bottom: 12px; }
+
+
+/* ====== ESTILOS DA PÁGINA NOTÍCIA COMPLETA ====== */
+.article-page { max-width: 800px; margin: 0 auto; padding: 120px 20px 60px; }
+.article-hero { margin-bottom: 40px; }
+.article-hero h1 { font-size: 2.5rem; margin: 20px 0; color: var(--text-color); font-weight: 800; line-height: 1.2; }
+.article-meta { display: flex; gap: 20px; color: var(--text-muted); font-size: 0.9rem; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+.article-meta span { display: flex; align-items: center; gap: 8px; }
+.article-content { font-size: 1.15rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 60px; }
+.article-content p { margin-bottom: 24px; }
+.article-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 30px; }
+@media (max-width: 768px) { .article-hero h1 { font-size: 2rem; } .article-actions { flex-direction: column; gap: 16px; align-items: stretch; text-align: center; } }
