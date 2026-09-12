@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificação de Segurança - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/verificacao.css">
+</head>
+<body class="auth-body">
+
+  <main class="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h1 class="auth-logo">Caju <span>Alerta</span></h1>
+        <h2>Verificação de E-mail</h2>
+        <p>Enviamos um código de segurança com 6 dígitos para o seu e-mail. Digite-o abaixo para liberar seu acesso.</p>
+      </div>
+
+      <div class="auth-body-content">
+        <div class="code-inputs" id="codeContainer">
+          <input type="text" maxlength="1" class="code-box" autofocus>
+          <input type="text" maxlength="1" class="code-box">
+          <input type="text" maxlength="1" class="code-box">
+          <input type="text" maxlength="1" class="code-box">
+          <input type="text" maxlength="1" class="code-box">
+          <input type="text" maxlength="1" class="code-box">
+        </div>
+
+        <button id="btnVerificar" class="btn btn-primary btn-block">Confirmar Código</button>
+        <div id="msgBox" class="alert-box d-none" style="margin-top: 15px;"></div>
+
+        <div class="auth-footer" style="margin-top: 20px; text-align: center;">
+          <p>Não recebeu o código? <button id="btnReenviar" class="btn-link">Reenviar E-mail</button></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SDKs Placeholder (Se necessário para Firebase no futuro) -->
+  <script src="assets/js/verificacao.js"></script>
+</body>
+</html>

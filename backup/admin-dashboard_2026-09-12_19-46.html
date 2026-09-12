@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Controle - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+</head>
+<body class="admin-body">
+  
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <h2>🛡️ Caju Admin</h2>
+        <span class="badge-staff">Acesso Restrito</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-target="visao-geral">Visão Geral</button>
+        <button class="nav-item" data-target="usuarios">Gestão de Usuários</button>
+        <button class="nav-item" data-target="denuncias">Denúncias</button>
+        <button class="nav-item" data-target="historico">Histórico de Acessos</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="btnSairAdmin" class="btn-logout">Sair do Painel</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1>Painel de Controle</h1>
+        <div class="admin-user-info">
+          <span id="adminNameDisplay">Carregando...</span>
+        </div>
+      </header>
+
+      <div id="adminContent" class="admin-content-area">
+        
+        <!-- SEC 1: Visão Geral -->
+        <section id="visao-geral" class="admin-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>Total de Usuários</h3>
+              <p class="stat-value" id="statUsers">0</p>
+            </div>
+            <div class="stat-card">
+              <h3>Denúncias Ativas</h3>
+              <p class="stat-value" id="statDenuncias">0</p>
+            </div>
+            <div class="stat-card">
+              <h3>Usuários Bloqueados</h3>
+              <p class="stat-value" id="statBlocked">0</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEC 2: Usuários -->
+        <section id="usuarios" class="admin-section">
+          <h2>Gestão de Usuários</h2>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Status</th>
+                  <th>Cargo</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tableUsersBody">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SEC 3: Denúncias -->
+        <section id="denuncias" class="admin-section">
+          <h2>Central de Denúncias</h2>
+          <p>Em breve: Visualização cruzada de inteligência.</p>
+        </section>
+
+        <!-- SEC 4: Histórico -->
+        <section id="historico" class="admin-section">
+          <h2>Histórico de Acessos</h2>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>E-mail</th>
+                  <th>Data do Acesso</th>
+                  <th>IP / Origem</th>
+                </tr>
+              </thead>
+              <tbody id="tableHistoryBody">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/admin-dashboard.js"></script>
+</body>
+</html>

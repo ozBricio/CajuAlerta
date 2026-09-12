@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Senha - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+</head>
+<body class="auth-body">
+
+  <main class="auth-container">
+    <div class="auth-box" style="max-width: 450px;">
+      <div class="auth-header">
+        <h1 class="auth-logo">Caju <span>Alerta</span></h1>
+        <h2>Recuperação de Acesso</h2>
+        <p>Digite o e-mail cadastrado. Enviaremos um link seguro oficial para você redefinir sua senha.</p>
+      </div>
+
+      <div class="auth-body-content">
+        <!-- Success Box -->
+        <div id="successBox" class="alert-box success d-none" style="background:#ecfdf5; border:1px solid #10b981; color:#065f46; padding:15px; border-radius:6px; margin-bottom:20px;">
+          <strong>✅ E-mail enviado!</strong><br>
+          Verifique sua caixa de entrada (e a pasta de Spam). O link expira em breve por questões de segurança.
+        </div>
+
+        <form id="recuperarForm" class="auth-form" novalidate>
+          <div class="form-group">
+            <label for="emailUser">E-mail Cadastrado</label>
+            <input type="email" id="emailUser" class="form-input" placeholder="seu.email@gmail.com" required autocomplete="email">
+            <div class="field-error-msg d-none" id="err-emailUser">⚠️ E-mail inválido ou necessário.</div>
+          </div>
+
+          <button type="submit" id="btnSubmitRecuperar" class="btn btn-primary btn-block">Enviar Link de Recuperação</button>
+          
+          <div id="errorBox" class="alert-box error d-none" style="margin-top: 15px;">
+            <span id="errorMessage"></span>
+          </div>
+        </form>
+
+        <div class="auth-footer" style="margin-top: 25px; text-align: center;">
+          <p><a href="login.html" class="auth-link">← Voltar para o Login</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/recuperar-senha.js"></script>
+</body>
+</html>

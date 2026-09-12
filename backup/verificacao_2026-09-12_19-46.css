@@ -1,0 +1,61 @@
+﻿/* =========================================
+   CAJU ALERTA - VERIFICAÇÃO 6 DÍGITOS
+   ========================================= */
+
+.code-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.code-box {
+  width: 45px;
+  height: 55px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  background: #0f1115;
+  border: 1px solid #2d3342;
+  color: #fff;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.code-box:focus {
+  outline: none;
+  border-color: #ff9900;
+  box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.2);
+}
+
+.code-box.error {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.code-box.success {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #ff9900;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 400px) {
+  .code-box {
+    width: 38px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
