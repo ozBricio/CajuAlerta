@@ -77,8 +77,10 @@
       inputMotivo.classList.remove('has-error');
     }
 
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) loadingOverlay.classList.remove('d-none');
+    
     btnSubmit.disabled = true;
-    btnSubmit.textContent = 'Aguardando Localização (GPS)...';
 
     // Captura Localização Obrigatória
     if (navigator.geolocation) {
@@ -87,6 +89,7 @@
           await salvarDenuncia(user, position.coords);
         },
         (error) => {
+          if (loadingOverlay) loadingOverlay.classList.add('d-none');
           btnSubmit.disabled = false;
           btnSubmit.textContent = 'Registrar Denúncia Oficial';
           errorBox.innerHTML = '<strong>Acesso à Localização Negado!</strong><br>Para registrar a denúncia, é obrigatório permitir o acesso ao GPS por questões legais e rastreamento judicial.';
@@ -94,14 +97,15 @@
         }
       );
     } else {
+      if (loadingOverlay) loadingOverlay.classList.add('d-none');
       errorBox.textContent = 'Seu navegador não suporta geolocalização.';
       errorBox.classList.remove('d-none');
       btnSubmit.disabled = false;
     }
-  });
+  });;
 
   async function salvarDenuncia(user, coords) {
-    btnSubmit.textContent = 'Registrando no Banco de Dados...';
+    // Overlay já está ativo
 
     const tipo = tipoSelect.value;
     const alvo = inputAlvo.value.trim();
@@ -135,6 +139,8 @@
       errorBox.textContent = 'Erro ao salvar denúncia: ' + error.message;
       errorBox.classList.remove('d-none');
     } finally {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      if (loadingOverlay) loadingOverlay.classList.add('d-none');
       btnSubmit.disabled = false;
     }
   }
