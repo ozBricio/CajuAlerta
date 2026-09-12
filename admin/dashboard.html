@@ -9,17 +9,17 @@
 <body>
 
   <aside class="sidebar">
-    <div class="dash-logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      Admin Caju
+    <div class="dash-logo" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 24px;">
+      <img src="../assets/img/logo2.png" alt="Caju Alerta" style="width: 50px;">
+      <span style="font-size: 0.95rem; color: #a1a1aa;">Olá, <strong id="adminNameDisplay">Administrador</strong></span>
     </div>
     <nav>
-      <a href="#" class="nav-link active">Dashboard</a>
-      <a href="#" class="nav-link">Denúncias (Pendente)</a>
-      <a href="#" class="nav-link">Base de Números</a>
-      <a href="#" class="nav-link">Gerenciar Alertas</a>
-      <a href="support.html" class="nav-link">Solicitações de suporte</a>
-      <a href="index.html" class="nav-link" style="margin-top: auto; color: #ef4444;">Sair</a>
+      <a href="dashboard.html" class="nav-link active">Dashboard Geral</a>
+      <a href="portal-postar.html" class="nav-link">Postar no Portal</a>
+      <a href="portal-lista.html" class="nav-link">Minhas Postagens (Portal)</a>
+      <a href="registros.html" class="nav-link">Registros (Ocorrências)</a>
+      <a href="support.html" class="nav-link">Suporte</a>
+      <a href="#" class="nav-link" id="btnAdminSair" style="margin-top: auto; color: #ef4444;">Sair</a>
     </nav>
   </aside>
 
@@ -38,7 +38,7 @@
         <div class="stat-value">1,248</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Novas Denúncias</div>
+        <div class="stat-label">Novas Registros</div>
         <div class="stat-value text-yellow">42</div>
       </div>
       <div class="stat-card">
@@ -52,7 +52,7 @@
     </div>
 
     <div class="table-container">
-      <h2>Últimas Denúncias (Aprovação Manual)</h2>
+      <h2>Últimas Registros (Aprovação Manual)</h2>
       <table>
         <thead>
           <tr>

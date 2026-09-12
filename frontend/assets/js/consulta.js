@@ -107,9 +107,9 @@ function renderResult(value, type, result) {
 
   if (result.quantidade === 0) {
     banner.classList.add('safe');
-    statusText.textContent = 'Nenhum registro encontrado';
+    statusText.textContent = 'Este número está limpo';
     document.getElementById('alertLevel').textContent = 'Baixo';
-    document.getElementById('reportSummaryText').textContent = `Não há relatos registrados para este ${type === 'e-mail' ? 'e-mail' : type === 'site' ? 'site' : 'número'}.`;
+    document.getElementById('reportSummaryText').textContent = `Este ${type === 'e-mail' ? 'e-mail' : type === 'site' ? 'site' : 'telefone'} está limpo. Ele não tem nenhum registro de golpista.`;
   } else {
     banner.classList.add(result.quantidade >= 5 ? 'danger' : 'warning');
     statusText.textContent = result.quantidade >= 5 ? 'Muitos relatos encontrados' : 'Relatos encontrados';
