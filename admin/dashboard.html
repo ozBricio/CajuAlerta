@@ -51,45 +51,36 @@
       </div>
     </div>
 
-    <div class="table-container">
-      <h2>Últimas Registros (Aprovação Manual)</h2>
-      <table>
+    <div class="table-container" style="margin-top: 30px; background: #fff; padding: 20px; border-radius: 8px;">
+      <h2>Decifrador de Metadados (Nível Restrito)</h2>
+      <p style="color: #666; margin-bottom: 10px;">Insira a Chave Mestra para revelar a geolocalização e os IPs das denúncias na tabela abaixo.</p>
+      <input type="password" id="masterKeyInput" placeholder="Chave Mestra" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 250px;">
+      <button id="btnDecrypt" style="padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">Descriptografar</button>
+    </div>
+
+    <div class="table-container" style="margin-top: 30px;">
+      <h2>Últimos Registros (Aprovação Manual)</h2>
+      <table id="adminTable">
         <thead>
           <tr>
-            <th>Número</th>
+            <th>Alvo / Número</th>
             <th>Categoria</th>
-            <th>Data</th>
+            <th>Metadados (Cripto)</th>
             <th>Status</th>
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>(85) 99999-1111</td>
-            <td>Falso Banco</td>
-            <td>Hoje, 10:45</td>
-            <td><span class="badge pending">Pendente</span></td>
-            <td class="actions"><button>Verificar</button></td>
-          </tr>
-          <tr>
-            <td>(11) 98888-2222</td>
-            <td>Falso Familiar (PIX)</td>
-            <td>Hoje, 09:12</td>
-            <td><span class="badge pending">Pendente</span></td>
-            <td class="actions"><button>Verificar</button></td>
-          </tr>
-          <tr>
-            <td>(21) 97777-3333</td>
-            <td>Spam / Telemarketing</td>
-            <td>Ontem, 16:30</td>
-            <td><span class="badge approved">Aprovado</span></td>
-            <td class="actions"><button>Detalhes</button></td>
-          </tr>
+        <tbody id="adminTableBody">
+          <!-- Linhas dinâmicas -->
         </tbody>
       </table>
     </div>
   </main>
 
-  <script src="../assets/js/admin.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="../assets/js/firebase-config.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
 </body>
 </html>

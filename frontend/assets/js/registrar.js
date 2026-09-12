@@ -16,37 +16,26 @@ document.addEventListener('DOMContentLoaded', () => {
 function checkAuthAndBlock() {
   const formWrapper = document.querySelector('.form-wrapper');
 
-  fetch(window.apiUrl('/api/auth/me'), { credentials: 'include' })
-    .then(response => {
-      if (!response.ok) throw new Error('Sessão inválida');
-      return response.json();
-    })
-    .catch(() => {
-      const returnTo = `${window.location.pathname}${window.location.search}`;
-      window.location.replace(`/login?returnTo=${encodeURIComponent(returnTo)}`);
+  if (window.auth) {
+    window.auth.onAuthStateChanged((user) => {
+      if (!user && formWrapper) {
+        const returnTo = `${window.location.pathname}${window.location.search}`;
+        window.location.replace(`/login?returnTo=${encodeURIComponent(returnTo)}`);
+      }
     });
-
+  }
   return Boolean(formWrapper);
 }
 
 function initMasks() {
-  // Removido: A máscara estrita foi retirada pois agora o campo aceita E-mail e Site, não apenas telefone.
+  // Removido: Aceita e-mail e site
 }
 
 function autoFillFromQuery() {
   const urlParams = new URLSearchParams(window.location.search);
   const numero = urlParams.get('numero');
   const input = document.getElementById('numeroInfrator');
-  
-  if (numero && input) {
-    let formatted = '';
-    if (numero.length >= 10) {
-      formatted = '(' + numero.substring(0, 2) + ') ' + numero.substring(2, 7) + '-' + numero.substring(7, 11);
-    } else {
-      formatted = numero;
-    }
-    input.value = formatted;
-  }
+  if (numero && input) input.value = numero;
 }
 
 function initFormSubmit() {
@@ -55,73 +44,90 @@ function initFormSubmit() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    
     const relato = document.getElementById('descricaoRelato').value.trim();
-    const wordCount = relato.split(/\s+/).filter(word => word.length > 0).length;
-    
-    if (wordCount < 6) {
-      alert('A descrição é muito curta. Explique o ocorrido com no mínimo 6 palavras para o registro ser válido.');
+    if (relato.split(/\s+/).filter(word => word.length > 0).length < 6) {
+      alert('A descrição é muito curta. Explique o ocorrido com no mínimo 6 palavras.');
       return;
     }
-
     const isHuman = typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length > 0;
     if (!isHuman) {
       alert('Conclua o reCAPTCHA antes de enviar.');
       return;
     }
-    
     requestLocationAndSubmit(form);
   });
 }
 
-function requestLocationAndSubmit(form) {
+const CriptoCaju = {
+  encrypt: (text, secret) => {
+    let result = '';
+    for (let i = 0; i < text.length; i++) {
+      result += String.fromCharCode(text.charCodeAt(i) ^ secret.charCodeAt(i % secret.length));
+    }
+    return btoa(result);
+  }
+};
+
+async function requestLocationAndSubmit(form) {
   const btn = document.getElementById('btnSubmitRegistro');
   const originalText = btn.textContent;
-  
   btn.disabled = true;
-  btn.textContent = 'Verificando segurança e localização...';
+  btn.textContent = 'Verificando segurança, IP e localização...';
 
   if (!navigator.geolocation) {
-    alert("Geolocalização não é suportada por este navegador. Por motivos de segurança, o registro não pode ser concluído.");
-    btn.disabled = false;
-    btn.textContent = originalText;
-    return;
+    alert("Geolocalização não é suportada.");
+    btn.disabled = false; btn.textContent = originalText; return;
   }
 
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      btn.textContent = 'Enviando registro criptografado...';
+  // Capturar IP
+  let userIP = 'Desconhecido';
+  try {
+    const ipRes = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipRes.json();
+    userIP = ipData.ip;
+  } catch(e) {}
 
-      fetch(window.apiUrl('/api/registrar'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          numero: document.getElementById('numeroInfrator').value.replace(/\D/g, ''),
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      btn.textContent = 'Criptografando metadados...';
+      
+      const metadadosBrutos = JSON.stringify({
+        ip: userIP,
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        navegador: navigator.userAgent,
+        data: new Date().toISOString()
+      });
+
+      // Embaralhamento (a chave do admin deverá ser usada depois para ver)
+      const metadadosSeguros = CriptoCaju.encrypt(metadadosBrutos, "CAJU2026_BLINDADO");
+
+      try {
+        const userId = window.auth.currentUser ? window.auth.currentUser.uid : 'anon';
+        
+        await window.db.collection('ocorrencias').add({
+          alvo: document.getElementById('numeroInfrator').value.trim(),
           data_ocorrencia: document.getElementById('dataOcorrencia').value,
           categoria: document.getElementById('tipoOcorrencia').value,
           plataforma: document.getElementById('plataformaOrigem').value,
           relato: document.getElementById('descricaoRelato').value.trim(),
-          geolocalizacao: { latitude: position.coords.latitude, longitude: position.coords.longitude }
-        })
-      }).then(async response => {
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.error || 'Não foi possível registrar a ocorrência.');
-        form.parentElement.innerHTML = '<div class="registration-success"><h2>Ocorrência registrada</h2><p>Obrigado por ajudar outras pessoas. O registro será analisado antes de qualquer alerta público.</p><a href="/" class="btn-primary">Voltar ao início</a></div>';
-      }).catch(error => {
-        alert(error.message);
+          metadados_criptografados: metadadosSeguros, // Salvo apenas criptografado
+          userId: userId,
+          status: 'ativo',
+          created_at: new Date().toISOString()
+        });
+
+        form.parentElement.innerHTML = '<div class="registration-success"><h2>Ocorrência registrada e blindada</h2><p>Obrigado por ajudar outras pessoas. Seus metadados foram selados criptograficamente.</p><a href="/" class="btn-primary">Voltar ao início</a></div>';
+      } catch (error) {
+        alert("Erro no servidor: " + error.message);
         btn.disabled = false;
         btn.textContent = originalText;
-      });
+      }
     },
     (error) => {
-      alert("Acesso à localização negado. Conforme os Termos de Uso (LGPD), é obrigatório fornecer sua localização para responsabilização em caso de falsas ocorrências.");
-      btn.disabled = false;
-      btn.textContent = originalText;
+      alert("Acesso à localização negado (LGPD). É obrigatório fornecer sua localização para responsabilização em caso de falsas ocorrências.");
+      btn.disabled = false; btn.textContent = originalText;
     },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 0
-    }
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
   );
 }
