@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel de Registros - Caju Alerta</title>
-  <link rel="stylesheet" href="assets/css/common.css?v=5">
+  <title>Painel do Usuário - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css?v=6">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
-  <link rel="stylesheet" href="assets/css/perfil.css?v=4">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=6">
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
@@ -32,41 +32,66 @@
     </div>
   </header>
 
-
   <main class="page-main animate-hidden">
-    <section class="container" id="protectedContent" style="display:none; gap: 30px; margin-top: 40px; margin-bottom: 60px;" style="display: flex; gap: 30px; margin-top: 40px; margin-bottom: 60px;">
-    <div class="perfil-sidebar">
-      <div class="user-info">
-        <div class="avatar" id="userInitial">C</div>
-        <h2 id="userName">Carregando...</h2>
-        <p id="userEmail">...</p>
-        <span class="badge" id="userRole">Usuário</span>
-      </div>
+    <section class="container" id="protectedContent" style="display:none; gap: 30px; margin-top: 40px; margin-bottom: 60px;">
       
-      <div class="perfil-actions">
-        <button class="btn-danger" id="btnDeleteAccount">Excluir Minha Conta</button>
+      <!-- MENU LATERAL -->
+      <div class="perfil-sidebar" style="display: flex; flex-direction: column; justify-content: flex-start; gap: 20px;">
+        <div class="user-info" style="border-bottom: 1px solid #2d3342; padding-bottom: 20px; text-align: center;">
+          <div class="avatar" id="userInitial">C</div>
+          <h2 id="userName">Carregando...</h2>
+          <p id="userEmail">...</p>
+          <span class="badge" id="userRole">Usuário</span>
+        </div>
+        
+        <nav class="dashboard-nav" style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn btn-tab active" onclick="showTab('tab-inicio', this)" style="text-align: left; background: rgba(255, 153, 0, 0.05); color: #ff9900; border: 1px solid transparent; border-left: 3px solid #ff9900; padding: 10px; cursor:pointer;">🏠 Painel Inicial</button>
+          <button class="btn btn-tab" onclick="window.location.href='registrar.html'" style="text-align: left; background: transparent; color: #d1d5db; border: 1px solid transparent; padding: 10px; cursor:pointer;">📝 Registrar Ocorrência</button>
+          <button class="btn btn-tab" onclick="showTab('tab-registros', this)" style="text-align: left; background: transparent; color: #d1d5db; border: 1px solid transparent; padding: 10px; cursor:pointer;">📋 Meus Registros</button>
+          <button class="btn btn-tab d-none" id="btnAdminDash" onclick="window.location.href='admin-dashboard.html'" style="text-align: left; background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid transparent; padding: 10px; cursor:pointer;">🛡️ Painel Admin</button>
+        </nav>
+        
+        <div class="perfil-actions" style="margin-top: auto; border-top: 1px solid #2d3342; padding-top: 20px;">
+          <button class="btn-danger" id="btnDeleteAccount">Excluir Minha Conta</button>
+        </div>
       </div>
-    </div>
 
-    <div class="perfil-content">
-      <h2>Minhas Denúncias Registradas</h2>
-      <p class="subtitle">Abaixo está o histórico de ocorrências que você registrou. Caso tenha se arrependido, você pode desativar o registro.</p>
-      
-      <div id="denunciasList" class="denuncias-grid">
-        <p style="color: #9ca3af;">Carregando ocorrências...</p>
+      <!-- ÁREA DE CONTEÚDO (INFORMAÇÕES) -->
+      <div class="perfil-content" style="flex: 1; background: #171a21; border: 1px solid #2d3342; border-radius: 12px; padding: 40px;">
+        
+        <!-- Aba: Painel Inicial -->
+        <div id="tab-inicio" class="dash-tab">
+          <h2 style="color:#fff; margin-top:0;">Seja bem-vindo ao Caju Alerta!</h2>
+          <div style="background: rgba(255, 153, 0, 0.05); border-left: 4px solid #ff9900; padding: 20px; border-radius: 4px; margin-top: 20px; color: #d1d5db; line-height: 1.6;">
+            <p style="margin-top: 0;">Aqui é um local passivo de <strong>denúncia aberta</strong>. Nossa missão é proteger a comunidade digital, onde cada denúncia ajuda outras pessoas a não caírem em golpes virtuais.</p>
+            <p>Lembrando que esta plataforma surgiu como um <strong>projeto acadêmico (TCC)</strong>. Antes de prosseguir com qualquer registro, pedimos que leia atentamente nossos Termos de Uso e entenda como suas informações judiciais são tratadas com extrema seriedade.</p>
+            <p style="margin-bottom: 0; color:#ff9900; font-weight:bold;">👉 Utilize o menu ao lado para iniciar uma nova denúncia ou consultar seus registros ativos.</p>
+          </div>
+        </div>
+
+        <!-- Aba: Meus Registros -->
+        <div id="tab-registros" class="dash-tab d-none">
+          <h2 style="color:#fff; margin-top:0;">Meus Registros</h2>
+          <p class="subtitle" style="color: #9ca3af; margin-bottom: 20px;">Abaixo está o histórico de ocorrências que você registrou. Se você desativar um registro, a denúncia sai do sistema de contagem imediatamente, como se tivesse sido excluída.</p>
+          
+          <div id="denunciasList" class="denuncias-grid">
+            <p style="color: #9ca3af;">Carregando ocorrências...</p>
+          </div>
+        </div>
+
       </div>
-    </div>
-    </section>\n  </main>
+    </section>
+  </main>
 
   <!-- Modal de Exclusão -->
   <div id="modalDelete" class="modal-overlay d-none">
     <div class="modal-box">
       <h3>⚠️ Atenção: Exclusão de Conta</h3>
       <p>Você está prestes a excluir sua conta. Todos os seus acessos serão revogados.</p>
-      <p><strong>Nota de Privacidade:</strong> Por questões legais e jurídicas, e em conformidade com o Marco Civil da Internet, um registro (log) da sua solicitação será mantido em nossos servidores de segurança para eventuais mandados judiciais.</p>
+      <p><strong>Nota de Privacidade:</strong> Por questões legais, um log da sua solicitação será mantido em nossos servidores para mandados judiciais.</p>
       <div class="modal-actions">
-        <button id="btnCancelDelete" class="btn">Cancelar</button>
-        <button id="btnConfirmDelete" class="btn btn-danger">Sim, Excluir Minha Conta</button>
+        <button id="btnCancelDelete" class="btn" style="background:#2d3342; color:#fff;">Cancelar</button>
+        <button id="btnConfirmDelete" class="btn btn-danger">Sim, Excluir</button>
       </div>
     </div>
   </div>
@@ -83,21 +108,7 @@
           <h4 class="footer-title">Plataforma</h4>
           <ul class="footer-links">
             <li><a href="/" class="footer-link">Início</a></li>
-            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav">
-          <h4 class="footer-title">Conteúdos</h4>
-          <ul class="footer-links">
-            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
-            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
-          </ul>
-        </div>
-        <div class="footer-nav">
-          <h4 class="footer-title">Jurídico</h4>
-          <ul class="footer-links">
-            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
-            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
+            <li><a href="/registrar.html" class="footer-link">Registrar ocorrência</a></li>
           </ul>
         </div>
       </div>
@@ -107,7 +118,28 @@
       </div>
     </div>
   </footer>
-  <script src="assets/js/common.js?v=5"></script>
+
+  <script src="assets/js/common.js?v=6"></script>
   <script src="assets/js/perfil.js?v=6"></script>
+  
+  <script>
+    function showTab(tabId, btnElement) {
+      // Oculta todas as abas
+      document.querySelectorAll('.dash-tab').forEach(el => el.classList.add('d-none'));
+      // Mostra a selecionada
+      document.getElementById(tabId).classList.remove('d-none');
+      
+      // Reseta botões do menu
+      document.querySelectorAll('.btn-tab').forEach(el => {
+        el.style.borderLeft = '1px solid transparent';
+        el.style.color = '#d1d5db';
+        if (el.id !== 'btnAdminDash') el.style.background = 'transparent';
+      });
+      // Pinta o botão atual
+      btnElement.style.borderLeft = '3px solid #ff9900';
+      btnElement.style.color = '#ff9900';
+      btnElement.style.background = 'rgba(255, 153, 0, 0.05)';
+    }
+  </script>
 </body>
 </html>
