@@ -1,0 +1,94 @@
+﻿.subtitle {
+  color: #9ca3af;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.terms-group {
+  border: 1px solid #2d3342;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.terms-group legend {
+  padding: 0 10px;
+  color: #ff9900;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #d1d5db;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #ff9900;
+}
+
+textarea.form-input {
+  resize: vertical;
+}
+
+/* Fullscreen Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(11, 13, 16, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+
+.loading-overlay.d-none {
+  display: none !important;
+}
+
+.loading-overlay h2 {
+  font-size: 2rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #ff9900;
+  animation: pulse 1.5s infinite;
+}
+
+.loading-overlay p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 153, 0, 0.2);
+  border-top-color: #ff9900;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}

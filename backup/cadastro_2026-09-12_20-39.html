@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/assets/img/logo2.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta | Caju Alerta</title>
+  
+  <link rel="stylesheet" href="assets/css/common.css?v=5">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/cadastro.css">
+  
+  
+  <script src="assets/js/caju-dictionary.js"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main auth-main">
+    <section class="container">
+      <div class="auth-wrapper animate-hidden">
+        <div class="auth-header">
+          <h1>Crie sua Conta</h1>
+          <p>Para registrar uma ocorrência, precisamos confirmar sua identidade. É rápido e seguro.</p>
+        </div>
+
+        <div id="errorBox" class="alert-box error d-none">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span id="errorMessage">Erro ao validar dados.</span>
+        </div>
+
+        
+        <div id="successBox" class="alert-box success d-none" style="background:#ecfdf5; border:1px solid #10b981; color:#065f46; padding:15px; border-radius:6px; margin-bottom:20px;">
+          <strong>✅ Conta criada com sucesso!</strong><br>
+          Enviamos um link de confirmação para o seu e-mail. Você só poderá fazer login após clicar no link para verificar sua identidade.
+        </div>
+        <form id="cadastroForm"
+ class="auth-form" novalidate>
+          
+          <div class="form-group">
+            <label for="nomeCompleto">Nome e Sobrenome <span class="req">*</span></label>
+            <input type="text" id="nomeCompleto" class="form-input" placeholder="Ex: Maria Silva" required autocomplete="name">
+            <small class="field-hint">Não é permitido o uso de números ou símbolos.</small>
+              <div class="field-error-msg d-none" id="err-nomeCompleto">⚠️ Necessário preencher corretamente.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="emailUser">E-mail <span class="req">*</span></label>
+            <input type="email" id="emailUser" class="form-input" placeholder="seu.email@gmail.com" required autocomplete="email">
+            <small class="field-hint">Apenas Gmail, Hotmail ou Outlook. Sem caracteres especiais.</small>
+              <div class="field-error-msg d-none" id="err-emailUser">⚠️ E-mail inválido ou necessário.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="senhaUser">Senha <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input type="password" id="senhaUser" class="form-input" placeholder="Ex: Senh@Forte1" required minlength="8">
+              <button type="button" class="toggle-eye" data-target="senhaUser" aria-label="Mostrar senha">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+            </div>
+            <div class="field-error-msg d-none" id="err-senhaUser" style="margin-top: 4px;">⚠️ Senha fraca ou em branco.</div>
+              <ul class="password-reqs" id="passwordReqs">
+              <li id="reqLength" class="req-item">8 caracteres</li>
+                <li id="reqUpper" class="req-item">Letra maiúscula</li>
+                <li id="reqLower" class="req-item">Letra minúscula</li>
+              <li id="reqSpecial" class="req-item">Caractere especial</li>
+            </ul>
+          </div>
+
+          <div class="form-group">
+            <label for="senhaConfirma">Confirmar Senha <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input type="password" id="senhaConfirma" class="form-input" placeholder="Digite a senha novamente" required minlength="8">
+              <div class="field-error-msg d-none" id="err-senhaConfirma" style="position:absolute; bottom:-22px; left:0;">⚠️ A senha de baixo não está igual a de cima.</div>
+                <button type="button" class="toggle-eye" data-target="senhaConfirma" aria-label="Mostrar senha">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="recaptcha-container">
+            <div class="native-captcha" id="nativeCaptcha">
+              <label class="captcha-label">
+                <input type="checkbox" id="captchaCheckbox">
+                <div class="captcha-box"></div>
+                <span>Não sou um robô</span>
+              </label>
+              <div class="captcha-brand">
+                <img src="assets/img/logo2.png" alt="Caju Security">
+                <span>Privacidade<br>Termos</span>
+              </div>
+            </div>
+            
+          </div>
+
+          <fieldset class="terms-group">
+            <legend>Consentimentos obrigatórios</legend>
+          <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.3); padding: 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem; color: #000000; font-weight: 600;">
+            <strong style="color: #ef4444; display: block; margin-bottom: 8px;">⚠️ Aviso Jurídico de Integração de Dados:</strong>
+            <span style="color: #ef4444; font-weight: 800; font-size: 1rem;">Você está criando esta conta por livre e espontânea vontade, ninguém está forçando. Ao confirmar, seu E-mail, Nome e Acessos ficam registrados no nosso sistema sob criptografia.</span> Nossos dados NÃO são vendidos. Se houver Mandado Judicial, seus dados serão descriptografados e entregues às autoridades sob a Lei Brasileira. Se não quer seus dados aqui, simplesmente não crie a conta. Ao confirmar, seu E-mail, Nome e Acessos ficam registrados no nosso sistema sob criptografia. Nossos dados NÃO são vendidos. Se houver Mandado Judicial, seus dados serão descriptografados e entregues às autoridades sob a Lei Brasileira. Se não quer seus dados aqui, simplesmente não crie a conta.
+          </div>
+            <label class="checkbox-label" style="margin-bottom: 15px;">
+              <input type="checkbox" id="aceiteTermos" required>
+              <span class="checkbox-custom"></span>
+              <span class="terms-text">Declaro que li e concordo com os <a href="termos-de-uso" target="_blank" rel="noopener">Termos de Uso</a>.</span>
+            </label>
+            <label class="checkbox-label" style="margin-bottom: 15px;">
+              <input type="checkbox" id="aceitePrivacidade" required>
+              <span class="checkbox-custom"></span>
+              <span class="terms-text">Declaro que li e concordo com a <a href="politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>, conforme a Lei nº 13.709/2018 (LGPD).</span>
+            </label>
+            <label class="checkbox-label" style="margin-bottom: 15px;">
+              <input type="checkbox" id="aceiteProjeto" required>
+              <span class="checkbox-custom"></span>
+              <span class="terms-text">Confirmo que entendi que o Caju Alerta é um projeto acadêmico gratuito, voltado à prevenção de golpes, e autorizo o uso dos dados conforme os documentos acima.</span>
+            </label>
+            <p class="terms-required" id="termsRequiredMessage" hidden>Leia os documentos e marque os três consentimentos para continuar.</p>
+          </fieldset>
+
+          <button type="submit" class="btn-primary btn-full" id="btnSubmitCadastro">Criar Conta Segura</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Já possui uma conta? <a href="login">Fazer login</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+          <p class="brand-slogan">Caju Alerta</p>
+          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">Início</a></li>
+            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Jurídico</h4>
+          <ul class="footer-links">
+            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
+        <p class="copyright">&copy; 2026 Caju Alerta.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/common.js?v=5"></script>
+  <script src="assets/js/cadastro.js?v=2"></script>
+
+  <script src="assets/js/caju-security.js?v=2"></script>\n</body>
+</html>

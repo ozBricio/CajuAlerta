@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Registros - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css?v=5">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=4">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="page-main animate-hidden">
+    <section class="container" id="protectedContent" style="display:none; gap: 30px; margin-top: 40px; margin-bottom: 60px;" style="display: flex; gap: 30px; margin-top: 40px; margin-bottom: 60px;">
+    <div class="perfil-sidebar">
+      <div class="user-info">
+        <div class="avatar" id="userInitial">C</div>
+        <h2 id="userName">Carregando...</h2>
+        <p id="userEmail">...</p>
+        <span class="badge" id="userRole">Usuário</span>
+      </div>
+      
+      <div class="perfil-actions">
+        <button class="btn-danger" id="btnDeleteAccount">Excluir Minha Conta</button>
+      </div>
+    </div>
+
+    <div class="perfil-content">
+      <h2>Minhas Denúncias Registradas</h2>
+      <p class="subtitle">Abaixo está o histórico de ocorrências que você registrou. Caso tenha se arrependido, você pode desativar o registro.</p>
+      
+      <div id="denunciasList" class="denuncias-grid">
+        <p style="color: #9ca3af;">Carregando ocorrências...</p>
+      </div>
+    </div>
+    </section>\n  </main>
+
+  <!-- Modal de Exclusão -->
+  <div id="modalDelete" class="modal-overlay d-none">
+    <div class="modal-box">
+      <h3>⚠️ Atenção: Exclusão de Conta</h3>
+      <p>Você está prestes a excluir sua conta. Todos os seus acessos serão revogados.</p>
+      <p><strong>Nota de Privacidade:</strong> Por questões legais e jurídicas, e em conformidade com o Marco Civil da Internet, um registro (log) da sua solicitação será mantido em nossos servidores de segurança para eventuais mandados judiciais.</p>
+      <div class="modal-actions">
+        <button id="btnCancelDelete" class="btn">Cancelar</button>
+        <button id="btnConfirmDelete" class="btn btn-danger">Sim, Excluir Minha Conta</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+          <p class="brand-slogan">Caju Alerta</p>
+          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">Início</a></li>
+            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Jurídico</h4>
+          <ul class="footer-links">
+            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
+        <p class="copyright">&copy; 2026 Caju Alerta.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/common.js?v=5"></script>
+  <script src="assets/js/perfil.js?v=6"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-﻿window.CAJU_API_BASE_URL = window.CAJU_API_BASE_URL || '';
+
+window.CAJU_API_BASE_URL = window.CAJU_API_BASE_URL || '';
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
@@ -15,28 +16,24 @@ async function initPlatformAccess() {
 
   if (window.auth) {
     window.auth.onAuthStateChanged((user) => {
+      // Remove botões antigos
       const existing = navList.querySelectorAll('.platform-entry, .logout-entry');
       existing.forEach(e => e.remove());
 
       const platformLi = document.createElement('li');
       platformLi.className = 'platform-entry';
-      
+      platformLi.innerHTML = `<a class="nav-link platform-link" href="${user ? '/registrar' : '/login'}">${user ? 'Minha conta' : 'Acessar'}</a>`;
+      navList.appendChild(platformLi);
+
       if (user) {
-        platformLi.innerHTML = `<a class="nav-link platform-link" href="perfil.html">Minha Conta</a>`;
-        navList.appendChild(platformLi);
-        
         const logoutLi = document.createElement('li');
         logoutLi.className = 'logout-entry';
         logoutLi.innerHTML = `<button id="globalLogoutBtn" class="support-logout">Sair</button>`;
         navList.appendChild(logoutLi);
-        
         document.getElementById('globalLogoutBtn').addEventListener('click', async () => { 
             await window.auth.signOut(); 
-            window.location.replace('index.html'); 
+            window.location.replace('/'); 
         });
-      } else {
-        platformLi.innerHTML = `<a class="nav-link platform-link" href="login.html">Acessar</a>`;
-        navList.appendChild(platformLi);
       }
     });
   }
@@ -44,6 +41,7 @@ async function initPlatformAccess() {
 
 function checkAuthStatus() {
   const navList = document.querySelector('.nav-list');
+  
   if (!navList) return;
 }
 
