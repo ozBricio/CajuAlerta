@@ -235,7 +235,17 @@ async function processRegistration(nome, email, senha, consentimentos) {
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
     const user = userCredential.user;
 
-    // 2. Disparar E-mail de Verificação (A regra de bloqueio)
+    // 2. Criar perfil no Banco de Dados (Firestore)
+    await firebase.firestore().collection('usuarios').doc(user.uid).set({
+      nome: nome,
+      email: email.toLowerCase(),
+      role: 'usuario', // Padrão é usuário. Administradores serão 'staff'
+      status: 'ativo', // Bloqueios mudarão para 'bloqueado'
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+      consentimentos: consentimentos
+    });
+
+    // 3. Disparar E-mail de Verificação
     await user.sendEmailVerification();
 
     // 3. Salvar os dados no Firestore (Banco de Dados)
