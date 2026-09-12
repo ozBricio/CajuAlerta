@@ -51,6 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTickets();
   });
   document.getElementById('refreshSupport').addEventListener('click', loadTickets);
-  document.getElementById('logoutButton').addEventListener('click', async () => { await fetch(window.apiUrl('/api/auth/logout'), { method: 'POST', credentials: 'include' }); window.location.replace('/'); });
+  // globalLogoutBtn is managed by common.js
   loadTickets();
 });

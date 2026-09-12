@@ -24,8 +24,18 @@ async function initPlatformAccess() {
 
   const platformLi = document.createElement('li');
   platformLi.className = 'platform-entry';
-  platformLi.innerHTML = `<a class="platform-link" href="${authenticated ? '/suporte' : '/login'}">${authenticated ? 'Minha conta' : 'Acessar plataforma'}</a>`;
+  platformLi.innerHTML = `<a class="nav-link platform-link" href="${authenticated ? '/suporte' : '/login'}">${authenticated ? 'Minha conta' : 'Acessar'}</a>`;
   navList.appendChild(platformLi);
+
+  if (authenticated) {
+      const logoutLi = document.createElement('li');
+      logoutLi.innerHTML = `<button id="globalLogoutBtn" class="nav-link support-logout">Sair</button>`;
+      navList.appendChild(logoutLi);
+      document.getElementById('globalLogoutBtn').addEventListener('click', async () => { 
+          await fetch(window.apiUrl('/api/auth/logout'), { method: 'POST', credentials: 'include' }); 
+          window.location.replace('/'); 
+      });
+  }
 }
 
 function checkAuthStatus() {
