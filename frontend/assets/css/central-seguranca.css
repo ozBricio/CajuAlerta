@@ -1,0 +1,15 @@
+.security-page { max-width: 1100px; margin: 0 auto; padding: 150px 24px 90px; }
+    .security-intro { max-width: 720px; margin-bottom: 42px; }
+    .security-intro p, .security-card p, .security-note p { color: var(--text-muted); }
+    .security-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 28px; }
+    .security-card, .security-note { background: var(--surface-color); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 24px; }
+    .security-card h2 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-green); }
+    .security-card p { font-size: 0.95rem; }
+    .security-note { border-color: rgba(250, 204, 21, 0.3); }
+    .security-note h2 { margin-bottom: 12px; }
+    .security-list { margin-top: 14px; padding-left: 20px; color: var(--text-muted); }
+    .security-list li { list-style: disc; margin-bottom: 8px; }
+    @media (max-width: 800px) { .security-grid { grid-template-columns: 1fr; } }
+
+.mt-18 { margin-top: 18px; }
+.mt-12 { margin-top: 12px; }

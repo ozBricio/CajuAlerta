@@ -88,7 +88,7 @@ async function performSearch(value, type = 'telefone') {
 
 function renderResult(value, type, result) {
   const card = document.getElementById('resultCard');
-  const btnDenounce = document.getElementById('btnDenounceFromQuery');
+  const btnRegister = document.getElementById('btnRegisterFromQuery');
   const banner = document.getElementById('statusBanner');
   const statusText = document.getElementById('statusText');
   const reportCount = document.getElementById('reportCount');
@@ -100,7 +100,7 @@ function renderResult(value, type, result) {
   document.getElementById('resultLabel').textContent = labels[type] || 'Consulta realizada';
   document.getElementById('displayNumber').textContent = type === 'telefone' ? formatDisplayMasked(value) : value;
   banner.className = 'status-banner';
-  btnDenounce.href = `registrar.html?numero=${encodeURIComponent(value)}`;
+  btnRegister.href = `registrar.html?numero=${encodeURIComponent(value)}`;
   reportCount.textContent = String(result.quantidade);
   lastReport.textContent = result.ultimoRegistro ? new Date(result.ultimoRegistro).toLocaleDateString('pt-BR') : '--';
   categories.textContent = result.categorias.length ? result.categorias.join(', ') : '--';

@@ -206,3 +206,14 @@
     padding: 24px;
   }
 }
+
+/* Extracted from HTML */
+.recaptcha-mock { display: flex; align-items: center; justify-content: space-between; background: #fafafa; border: 1px solid #d3d3d3; border-radius: 3px; padding: 10px 14px; width: 304px; margin: 0 auto 24px; color: #555; font-family: Roboto, sans-serif; }
+    .recaptcha-mock-left { display: flex; align-items: center; gap: 12px; }
+    .recaptcha-checkbox { width: 28px; height: 28px; border: 2px solid #c1c1c1; border-radius: 2px; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+    .recaptcha-checkbox.checked { border-color: transparent; }
+    .recaptcha-checkbox.checked::after { content: ''; width: 28px; height: 28px; background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%234285F4" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>') center/contain no-repeat; }
+    .recaptcha-label { font-size: 14px; font-weight: 400; }
+    .recaptcha-mock-right { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .recaptcha-logo { width: 32px; height: 32px; background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%234285F4" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-10-5v9.98L12 22l10-7.52V9.5l-10 5z"/></svg>') center/contain no-repeat; opacity: 0.6; }
+    .recaptcha-terms { font-size: 10px; color: #999; }

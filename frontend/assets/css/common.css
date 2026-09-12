@@ -311,3 +311,4 @@ ul {
 
 
 .site-logo { max-height: 56px; width: auto; object-fit: contain; }
+.d-none { display: none !important; }

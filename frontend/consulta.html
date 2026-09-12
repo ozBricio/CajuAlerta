@@ -36,7 +36,7 @@
           </form>
         </div>
 
-        <div id="resultCard" class="result-card animate-hidden delay-100" style="display: none;">
+        <div id="resultCard" class="result-card animate-hidden delay-100 d-none">
           <div class="result-header">
             <p class="result-label" id="resultLabel">Consulta realizada</p>
             <h1 class="consulted-number" id="displayNumber">--</h1>
@@ -56,7 +56,7 @@
             <p id="reportSummaryText">Buscando informações no banco de dados...</p>
           </div>
           <div class="result-actions">
-            <a href="registrar" class="btn-primary" id="btnDenounceFromQuery">Registrar Ocorrência</a>
+            <a href="registrar" class="btn-primary" id="btnRegisterFromQuery">Registrar Ocorrência</a>
             <a href="central-seguranca" class="btn-secondary">O que fazer agora?</a>
           </div>
         </div>
@@ -65,7 +65,7 @@
           <div class="spinner"></div><p>Analisando número na base de dados...</p>
         </div>
 
-        <div id="errorState" class="error-state" style="display: none;" role="alert">
+        <div id="errorState" class="error-state d-none" role="alert">
           <h2>Consulta indisponível</h2>
           <p id="errorMessage">Não foi possível acessar o banco de dados.</p>
         </div>

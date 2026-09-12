@@ -8,15 +8,8 @@
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
-  <style>
-    .vazamento-hero { padding: 140px 20px 60px; text-align: center; }
-    .vazamento-hero h1 { font-size: 2.5rem; color: #fff; margin-bottom: 16px; }
-    .vazamento-hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px; }
-    .check-box { max-width: 600px; margin: 0 auto; background: var(--surface-color); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--surface-border); }
-    .status-alert { display: none; margin-top: 24px; padding: 20px; border-radius: var(--radius-md); text-align: left; }
-    .status-alert.clean { display: block; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); }
-    .status-alert.leaked { display: block; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); }
-  </style>
+  
+  <link rel="stylesheet" href="assets/css/vazamentos.css">
 </head>
 <body>
 
@@ -41,56 +34,34 @@
       </div>
 
       <div class="check-box animate-hidden delay-100">
-        <form id="checkLeakForm" style="display: flex; gap: 12px; margin-bottom: 24px;">
-          <input type="email" id="emailCheckInput" style="flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #333; background: #0f1219; color: white;" placeholder="Digite seu e-mail (ex: joao@gmail.com)" required>
+        <form id="checkLeakForm" class="check-leak-form">
+          <input type="email" id="emailCheckInput" class="email-check-input" placeholder="Digite seu e-mail (ex: joao@gmail.com)" required>
           <button type="submit" class="btn-primary">Verificar</button>
         </form>
 
         <!-- Resultados Simulados -->
-        <div id="resultClean" class="status-alert clean" style="display: none;">
-          <h3 style="color: #10b981; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <div id="resultClean" class="status-alert clean d-none">
+          <h3 class="status-clean-title">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             Boas notícias!
           </h3>
-          <p style="color: #cbd5e1; font-size: 0.95rem;">Não encontramos registros de vazamento para este e-mail em nossos bancos de dados parceiros.</p>
+          <p class="status-desc">Não encontramos registros de vazamento para este e-mail em nossos bancos de dados parceiros.</p>
         </div>
 
-        <div id="resultLeaked" class="status-alert leaked" style="display: none;">
-          <h3 style="color: #ef4444; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <div id="resultLeaked" class="status-alert leaked d-none">
+          <h3 class="status-leaked-title">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             Atenção: E-mail encontrado
           </h3>
-          <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 12px;">Este e-mail aparece em listas de vazamentos antigos de outras empresas. Golpistas podem usar isso para enviar mensagens falsas fingindo ser seu banco.</p>
-          <strong style="color: #fff; font-size: 0.9rem;">Recomendação: Ative a autenticação de dois fatores e nunca clique em links suspeitos.</strong>
+          <p class="status-desc leaked-desc">Este e-mail aparece em listas de vazamentos antigos de outras empresas. Golpistas podem usar isso para enviar mensagens falsas fingindo ser seu banco.</p>
+          <strong class="status-strong">Recomendação: Ative a autenticação de dois fatores e nunca clique em links suspeitos.</strong>
         </div>
       </div>
     </div>
   </main>
 
   <script src="assets/js/common.js"></script>
-  <script>
-    document.getElementById('checkLeakForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      const email = document.getElementById('emailCheckInput').value.toLowerCase();
-      
-      btn.disabled = true;
-      btn.textContent = 'Buscando...';
-      document.getElementById('resultClean').style.display = 'none';
-      document.getElementById('resultLeaked').style.display = 'none';
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = 'Verificar';
-        
-        // Simulação TCC: se o email tiver número, diz que vazou.
-        if (/\d/.test(email)) {
-          document.getElementById('resultLeaked').style.display = 'block';
-        } else {
-          document.getElementById('resultClean').style.display = 'block';
-        }
-      }, 1500);
-    });
-  </script>
+  
+  <script src="assets/js/vazamentos.js"></script>
 </body>
 </html>

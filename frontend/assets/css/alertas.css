@@ -137,3 +137,10 @@
     font-size: 2.2rem;
   }
 }
+
+/* Extracted from HTML */
+.news-page { max-width: 920px; margin: 0 auto; padding: 150px 24px 100px; }
+    .news-intro { max-width: 620px; margin-bottom: 48px; }
+    .news-intro p, .news-empty p { color: var(--text-muted); }
+    .news-empty { border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 64px 24px; text-align: center; background: var(--surface-color); }
+    .news-empty h2 { margin-bottom: 12px; }

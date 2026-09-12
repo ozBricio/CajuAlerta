@@ -63,7 +63,7 @@ function autoFillFromQuery() {
 }
 
 function initFormSubmit() {
-  const form = document.getElementById('denunciaForm');
+  const form = document.getElementById('registroForm');
   if (!form) return;
 
   form.addEventListener('submit', (e) => {
@@ -80,7 +80,7 @@ function initFormSubmit() {
 }
 
 function requestLocationAndSubmit(form) {
-  const btn = document.getElementById('btnSubmitDenuncia');
+  const btn = document.getElementById('btnSubmitRegistro');
   const originalText = btn.textContent;
   
   btn.disabled = true;
