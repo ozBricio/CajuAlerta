@@ -28,7 +28,7 @@ async function initPlatformAccess() {
       if (user) {
         const logoutLi = document.createElement('li');
         logoutLi.className = 'logout-entry';
-        logoutLi.innerHTML = `<button id="globalLogoutBtn" class="nav-link support-logout">Sair</button>`;
+        logoutLi.innerHTML = `<button id="globalLogoutBtn" class="support-logout">Sair</button>`;
         navList.appendChild(logoutLi);
         document.getElementById('globalLogoutBtn').addEventListener('click', async () => { 
             await window.auth.signOut(); 
