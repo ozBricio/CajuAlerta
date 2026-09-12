@@ -11,11 +11,12 @@ const CajuSecurity = {
   
   init: function() {
     this.createModal();
-    const checkboxes = document.querySelectorAll('#captchaCheckbox');
-    checkboxes.forEach(chk => {
-      chk.addEventListener('click', (e) => {
-        e.preventDefault(); // Impede o check direto
-        if (!chk.checked) this.openModal(chk);
+    const captchas = document.querySelectorAll('.native-captcha');
+    captchas.forEach(container => {
+      const chk = container.querySelector('#captchaCheckbox');
+      container.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        if (chk && !chk.checked) this.openModal(chk);
       });
     });
   },
