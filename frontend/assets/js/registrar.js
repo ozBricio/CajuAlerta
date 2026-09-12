@@ -119,6 +119,11 @@
           latitude: coords.latitude,
           longitude: coords.longitude
         },
+        navegador: {
+          userAgent: navigator.userAgent,
+          plataforma: navigator.platform,
+          idioma: navigator.language
+        },
         status: 'ativa' // Permite "desativar" no futuro pelo próprio usuário
       });
 
