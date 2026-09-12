@@ -39,40 +39,80 @@ function initCadastroValidation() {
     e.preventDefault();
     hideError();
 
-    const nome = document.getElementById('nomeCompleto').value.trim();
-    const email = document.getElementById('emailUser').value.trim().toLowerCase();
-    const senha1 = document.getElementById('senhaUser').value;
-    const senha2 = document.getElementById('senhaConfirma').value;
+    // Limpar bordas vermelhas
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+
+    const nomeInput = document.getElementById('nomeCompleto');
+    const emailInput = document.getElementById('emailUser');
+    const senha1Input = document.getElementById('senhaUser');
+    const senha2Input = document.getElementById('senhaConfirma');
+    
+    const termsGroup = document.querySelector('.terms-group');
+    const captchaContainer = document.getElementById('nativeCaptcha');
+
     const aceiteTermos = document.getElementById('aceiteTermos').checked;
     const aceitePrivacidade = document.getElementById('aceitePrivacidade').checked;
     const aceiteProjeto = document.getElementById('aceiteProjeto').checked;
     const isHuman = document.getElementById('captchaCheckbox').checked;
 
-    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:\s[A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
+    const nome = nomeInput.value.trim();
+    const email = emailInput.value.trim().toLowerCase();
+    const senha1 = senha1Input.value;
+    const senha2 = senha2Input.value;
+
+    if (!nome) {
+      nomeInput.classList.add('has-error');
+      return showError('Você esqueceu de preencher o seu nome completo.');
+    }
+    
+    const nameRegex = /^[A-Za-zÁ-Úá-úÂ-Ûâ-ûÃ-Õã-õÇç]+(?:\s[A-Za-zÁ-Úá-úÂ-Ûâ-ûÃ-Õã-õÇç]+)+$/;
     if (!nameRegex.test(nome)) {
+      nomeInput.classList.add('has-error');
       return showError('Nome inválido. Digite Nome e Sobrenome sem utilizar números ou símbolos.');
     }
 
-    if (!isValidEmailForCaju(email)) {
-      return showError('E-mail não permitido. Utilize contas limpas do Gmail, Hotmail ou Outlook. Sem sub-endereços.');
+    if (!email) {
+      emailInput.classList.add('has-error');
+      return showError('Você esqueceu de preencher o seu e-mail.');
     }
 
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}/.test(senha1)) { return showError('A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial.'); }
+    if (!isValidEmailForCaju(email)) {
+      emailInput.classList.add('has-error');
+      return showError('E-mail não permitido. Utilize contas limpas do Gmail, Hotmail ou Outlook.');
+    }
+
+    if (!senha1) {
+      senha1Input.classList.add('has-error');
+      return showError('Você esqueceu de criar a sua senha.');
+    }
+
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}/.test(senha1)) {
+      senha1Input.classList.add('has-error');
+      return showError('Sua senha está fraca. Preencha todos os requisitos solicitados na cor verde.');
+    }
+
+    if (!senha2) {
+      senha2Input.classList.add('has-error');
+      return showError('Você esqueceu de confirmar a sua senha.');
+    }
 
     if (senha1 !== senha2) {
-      return showError('As senhas não coincidem.');
+      senha2Input.classList.add('has-error');
+      return showError('A senha de confirmação está diferente da senha principal.');
     }
 
     if (!aceiteTermos || !aceitePrivacidade || !aceiteProjeto) {
-      document.getElementById('termsRequiredMessage').hidden = false;
-      return showError('Para criar a conta, leia e aceite os três documentos obrigatórios.');
+      termsGroup.classList.add('has-error');
+      return showError('Você esqueceu de aceitar os Termos e Políticas obrigatórios.');
     }
     
     if (!isHuman) {
-      return showError('Por favor, confirme que você não é um robô no desafio do reCAPTCHA.');
+      captchaContainer.classList.add('has-error');
+      return showError('Você esqueceu de realizar a verificação de segurança (Não sou um robô).');
     }
 
     processRegistration(nome, email, senha1, { aceiteTermos, aceitePrivacidade, aceiteProjeto });
+  });
   });
 }
 

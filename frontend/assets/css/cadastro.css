@@ -236,3 +236,8 @@
 .req-item::before { content: '○'; font-size: 13px; opacity: 0.7; }
 .req-item.valid { color: #10b981; }
 .req-item.valid::before { content: '✔'; font-weight: bold; opacity: 1; }
+
+/* Error highlight */
+.has-error { border-color: #ef4444 !important; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important; background-color: #fffbfa !important; }
+.terms-group.has-error { border: 1px solid #ef4444 !important; padding: 10px; border-radius: 4px; background-color: #fffbfa; }
+.native-captcha.has-error { border: 1px solid #ef4444 !important; background-color: #fffbfa; }
