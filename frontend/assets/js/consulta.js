@@ -1,10 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const valueParam = urlParams.get('valor') || urlParams.get('numero');
   const typeParam = urlParams.get('tipo') || 'telefone';
 
   if (!valueParam) {
-    // Acesso direto negado, redireciona para a home
     window.location.replace('/');
     return;
   }
@@ -13,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function formatDisplayMasked(num) {
-  if(num.length === 11) {
-    return `(${num.substring(0,2)}) 9****-**${num.substring(9,11)}`;
-  }
-  return num;
+  let v = num.replace(/\D/g, '');
+  if (v.length > 2) v = `(${v.substring(0,2)}) ${v.substring(2)}`;
+  if (v.length > 13) v = `${v.substring(0,14)}-${v.substring(14,18)}`;
+  return v;
 }
 
 async function performSearch(value, type = 'telefone') {
@@ -30,14 +29,61 @@ async function performSearch(value, type = 'telefone') {
   loading.style.display = 'flex';
 
   try {
-    const response = await fetch(window.apiUrl(`/api/consulta?tipo=${encodeURIComponent(type)}&valor=${encodeURIComponent(value)}`));
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Não foi possível consultar o banco de dados.');
+    let colName = 'denuncias_telefones';
+    if (type === 'email' || type === 'e-mail') colName = 'denuncias_emails';
+    if (type === 'site') colName = 'denuncias_sites';
+
+    const db = firebase.firestore();
+    
+    let buscaAlvo = value;
+    if (colName === 'denuncias_telefones') {
+      buscaAlvo = value.replace(/\D/g, '');
+      if (buscaAlvo.length > 11) buscaAlvo = buscaAlvo.substring(0, 11);
+    }
+    
+    let querySnapshot = await db.collection(colName)
+      .where('status', '==', 'ativa')
+      .get();
+      
+    let docs = [];
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      let alvoDb = data.alvo || '';
+      if (colName === 'denuncias_telefones') {
+         if (alvoDb.replace(/\D/g, '') === buscaAlvo.replace(/\D/g, '')) {
+            docs.push(data);
+         }
+      } else {
+         if (alvoDb.toLowerCase() === buscaAlvo.toLowerCase()) {
+            docs.push(data);
+         }
+      }
+    });
+
+    docs.sort((a, b) => {
+      let t1 = a.dataDenuncia ? a.dataDenuncia.toDate().getTime() : 0;
+      let t2 = b.dataDenuncia ? b.dataDenuncia.toDate().getTime() : 0;
+      return t2 - t1;
+    });
+
+    const quantidade = docs.length;
+    const ultimoRegistro = docs.length > 0 && docs[0].dataDenuncia ? docs[0].dataDenuncia.toDate().toISOString() : null;
+    const categorias = ['Ocorrência Registrada'];
+    
+    const relatos = docs.length > 0 ? [docs[0].motivo] : [];
+
+    const result = {
+      quantidade,
+      ultimoRegistro,
+      categorias,
+      relatos
+    };
+
     loading.style.display = 'none';
     renderResult(value, type, result);
   } catch (error) {
     loading.style.display = 'none';
-    errorMessage.textContent = error.message;
+    errorMessage.textContent = 'Erro de comunicação com o banco de dados seguro: ' + error.message;
     errorState.classList.remove('d-none');
   }
 }
@@ -56,19 +102,19 @@ function renderResult(value, type, result) {
   document.getElementById('resultLabel').textContent = labels[type] || 'Consulta realizada';
   document.getElementById('displayNumber').textContent = type === 'telefone' ? formatDisplayMasked(value) : value;
   banner.className = 'status-banner';
-  btnRegister.href = `registrar.html?numero=${encodeURIComponent(value)}`;
+  btnRegister.href = `perfil.html`;
   reportCount.textContent = String(result.quantidade);
   lastReport.textContent = result.ultimoRegistro ? new Date(result.ultimoRegistro).toLocaleDateString('pt-BR') : '--';
   categories.textContent = result.categorias.length ? result.categorias.join(', ') : '--';
 
   if (result.quantidade === 0) {
     banner.classList.add('safe');
-    statusText.textContent = 'Este número está limpo';
+    statusText.textContent = 'Este alvo parece seguro';
     document.getElementById('alertLevel').textContent = 'Baixo';
-    document.getElementById('reportSummaryText').textContent = `Este ${type === 'e-mail' ? 'e-mail' : type === 'site' ? 'site' : 'telefone'} está limpo. Ele não tem nenhum registro de golpista.`;
+    document.getElementById('reportSummaryText').textContent = `Este ${type === 'e-mail' ? 'e-mail' : type === 'site' ? 'site' : 'telefone'} está limpo. Não há registros de golpes na base pública.`;
   } else {
     banner.classList.add(result.quantidade >= 5 ? 'danger' : 'warning');
-    statusText.textContent = result.quantidade >= 5 ? 'Muitos relatos encontrados' : 'Relatos encontrados';
+    statusText.textContent = result.quantidade >= 5 ? 'Muitos relatos de golpe!' : 'Relatos encontrados';
     document.getElementById('alertLevel').textContent = result.quantidade >= 5 ? 'Alto (Vermelho)' : 'Médio (Amarelo)';
     document.getElementById('reportSummaryText').textContent = result.relatos[0] || `Há ${result.quantidade} relato(s) registrado(s) para esta consulta.`;
   }
