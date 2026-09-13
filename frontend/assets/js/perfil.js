@@ -294,6 +294,26 @@ document.addEventListener("DOMContentLoaded", () => {
     
     btnSubmit.disabled = true;
 
+    
+    // VERIFICAÇÃO ANTI-SPAM (Denúncia Duplicada)
+    const checkCollection = tipo === 'telefone' ? 'denuncias_telefones' : (tipo === 'email' ? 'denuncias_emails' : 'denuncias_sites');
+    try {
+      const duplicateCheck = await firebase.firestore().collection(checkCollection)
+        .where('relator_uid', '==', user.uid)
+        .where('alvo', '==', alvo)
+        .get();
+        
+      if (!duplicateCheck.empty) {
+        errorBox.textContent = 'Erro: Você já registrou uma ocorrência para este alvo. Não é permitido criar denúncias duplicadas para o mesmo golpista.';
+        errorBox.classList.remove('d-none');
+        btnSubmit.disabled = false;
+        if (loadingOverlay) loadingOverlay.classList.add('d-none');
+        return;
+      }
+    } catch (err) {
+      console.error('Erro ao verificar duplicidade', err);
+    }
+
     // Captura Localização Obrigatória
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
