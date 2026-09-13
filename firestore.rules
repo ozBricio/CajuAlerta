@@ -33,21 +33,21 @@ service cloud.firestore {
 
     match /denuncias_emails/{docId} {
       allow create: if isAuth(); 
-      allow read: if isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
+      allow read: if resource.data.status == 'ativa' || isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
       allow update: if isAuth() && resource.data.relator_uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
       allow delete: if false;
     }
 
     match /denuncias_telefones/{docId} {
       allow create: if isAuth();
-      allow read: if isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
+      allow read: if resource.data.status == 'ativa' || isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
       allow update: if isAuth() && resource.data.relator_uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
       allow delete: if false;
     }
 
     match /denuncias_sites/{docId} {
       allow create: if isAuth();
-      allow read: if isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
+      allow read: if resource.data.status == 'ativa' || isStaff() || (isAuth() && resource.data.relator_uid == request.auth.uid);
       allow update: if isAuth() && resource.data.relator_uid == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
       allow delete: if false;
     }
