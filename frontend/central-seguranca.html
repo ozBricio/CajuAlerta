@@ -1,17 +1,44 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="/assets/img/logo2.png">
   <title>Central de Segurança | Caju Alerta</title>
-  <link rel="stylesheet" href="assets/css/common.css?v=5">
+  <link rel="stylesheet" href="assets/css/common.css?v=8">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
-  <link rel="stylesheet" href="assets/css/central.css">
   
-  <link rel="stylesheet" href="assets/css/central-seguranca.css">
+  <style>
+    .security-hero {
+      background: #111827;
+      padding: 140px 0 60px 0;
+      text-align: center;
+      color: #fff;
+    }
+    .security-hero h1 { font-size: 2.5rem; color: #ff9900; margin-bottom: 20px; font-weight: 800; }
+    .security-hero p { font-size: 1.1rem; color: #d1d5db; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+    
+    .security-main { padding: 60px 0; }
+    
+    .sec-section { margin-bottom: 60px; }
+    .sec-title { font-size: 1.8rem; color: #111827; border-bottom: 3px solid #ff9900; padding-bottom: 10px; margin-bottom: 30px; display: inline-block; }
+    
+    .faq-grid { display: grid; gap: 20px; }
+    .faq-card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #f3f4f6; }
+    .faq-card h3 { color: #ff9900; margin-top: 0; font-size: 1.25rem; margin-bottom: 15px; }
+    .faq-card p { color: #4b5563; line-height: 1.7; margin-bottom: 15px; }
+    .faq-card p:last-child { margin-bottom: 0; }
+
+    .danger-alert { background: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; border-radius: 4px; margin: 20px 0; color: #7f1d1d; }
+    .danger-alert strong { color: #991b1b; }
+
+    .prompt-box { background: #1f2937; color: #10b981; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 0.95rem; line-height: 1.5; margin: 15px 0; position: relative; }
+    
+    .btn-copy { position: absolute; top: 10px; right: 10px; background: #374151; color: #fff; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+    .btn-copy:hover { background: #4b5563; }
+  </style>
 </head>
-<body>
+<body style="background: #f9fafb;">
   <header class="site-header">
     <div class="container header-inner">
       <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
@@ -22,46 +49,83 @@
         <ul class="nav-list">
           <li><a href="/" class="nav-link">Início</a></li>
           <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
-          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+          <li class="platform-entry"><a href="/login.html" class="platform-link" id="platformAccessLink">Acessar</a></li>
         </ul>
       </nav>
     </div>
   </header>
-  <main class="security-page">
-    <div class="security-intro">
-      <h1>Central de Segurança</h1>
-      <p>Informações para reconhecer golpes, avaliar relatos e agir com mais segurança antes de fazer uma compra ou responder a um contato.</p>
+
+  <div class="security-hero animate-hidden">
+    <div class="container">
+      <h1>Dicas de Segurança e Mitos Digitais</h1>
+      <p>Entenda a dura realidade sobre vazamentos de dados, aprenda a identificar golpes bancários antes que aconteçam e saiba exatamente como agir (e em qual delegacia ir) se você for uma vítima.</p>
     </div>
-    <div class="security-grid">
-      <article class="security-card">
-        <h2>Recebi um contato suspeito</h2>
-        <p>Não clique em links, não envie códigos e confirme a identidade usando um canal oficial da empresa.</p>
-      </article>
-      <article class="security-card">
-        <h2>Vou comprar em um site</h2>
-        <p>Confira o domínio, o endereço da empresa, os canais de atendimento e os relatos disponíveis antes de pagar.</p>
-      </article>
-      <article class="security-card">
-        <h2>Passei meus dados</h2>
-        <p>Troque senhas, avise seu banco, registre o ocorrido e procure os canais oficiais de atendimento.</p>
-      </article>
-    </div>
-    <section class="security-note">
-      <h2>Como interpretar uma consulta</h2>
-      <p>Os resultados reúnem relatos registrados no Caju Alerta e informações públicas de fontes identificadas. Eles são sinais de atenção, não uma declaração definitiva de crime.</p>
-      <ul class="security-list">
-        <li>Uma denúncia isolada não confirma uma fraude.</li>
-        <li>Relatos independentes e fontes convergentes podem elevar o nível de alerta.</li>
-        <li>A fonte e a data do dado devem aparecer sempre que estiverem disponíveis.</li>
-        <li>Informações de terceiros devem ser verificadas na fonte original.</li>
-      </ul>
+  </div>
+
+  <main class="security-main container animate-hidden">
+
+    <section class="sec-section">
+      <h2 class="sec-title">1. Vazamento de Dados: A Dura Realidade</h2>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h3>Meus dados (CPF, Nome) estão na internet. O que eu faço?</h3>
+          <p>Hoje, podemos afirmar com 99,99% de certeza que a maioria dos dados dos cidadãos brasileiros estão vazados. Nomes, localização, histórico e números vazam constantemente através de grandes empresas ou órgãos do governo.</p>
+          <p>O efeito disso na internet é uma bola de neve incontrolável. <strong>É quase impossível excluir esses dados da internet.</strong> Se alguma empresa ou serviço prometer "limpar seus dados vazados da internet" em troca de dinheiro, não aceite! Isso é mentira.</p>
+          <div class="danger-alert">
+            <strong>O QUE FAZER:</strong> Junte provas da empresa que vazou seus dados (tire prints). Não vá em qualquer delegacia! Um erro comum é ir na delegacia de furtos ou bairros. <strong>Procure a Delegacia Especializada em Crimes Cibernéticos</strong>, faça o B.O. e acione a pequenas causas ou um advogado. A empresa poderá pagar indenização pelo dano causado, mas a remoção 100% dos dados da rede é utópica.
+          </div>
+        </div>
+      </div>
     </section>
-    <section class="security-note mt-18">
-      <h2>Privacidade e remoção</h2>
-      <p>Dados pessoais usados para segurança e prevenção a abusos devem ter acesso restrito e finalidade definida. Para solicitar correção ou remoção de um registro mantido pelo Caju Alerta, entre em contato e informe o endereço consultado e a justificativa. Registros de fontes externas não são apagados por nós; a solicitação deve ser feita também ao responsável pela fonte.</p>
-      <p class="mt-12">Este é um projeto acadêmico em desenvolvimento. As informações não substituem orientação jurídica, atendimento bancário, autoridade policial ou decisão judicial.</p>
+
+    <section class="sec-section">
+      <h2 class="sec-title">2. Golpes Bancários e Biometria</h2>
+      <div class="faq-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="faq-card">
+          <h3>"Alô, é do Banco. Sua conta foi clonada!"</h3>
+          <p>O seu banco <strong>NUNCA</strong> liga para pedir sua senha, solicitar atualizações por telefone ou pedir para você confirmar dados sigilosos do seu cartão.</p>
+          <p>Muito menos pedir para você fazer um PIX para "estornar" um valor bloqueado. Também nunca compartilhe a sua tela em chamadas de vídeo ou instale "módulos de segurança" enviados por link de WhatsApp.</p>
+          <p>Viu algo suspeito? Desligue, bloqueie o número e denuncie o contato diretamente no próprio WhatsApp e aqui no Caju Alerta.</p>
+        </div>
+        <div class="faq-card">
+          <h3>O Perigo das Fotos do seu Rosto</h3>
+          <p>Nunca envie fotos do seu rosto segurando documentos, nem grave vídeos piscando ou sorrindo para estranhos na internet ou processos "não oficiais".</p>
+          <p>Hoje, os golpistas utilizam <strong>Inteligência Artificial (Deepfake)</strong> para animar o seu rosto e passar facilmente pelas aprovações de biometria facial de bancos e carteiras digitais, esvaziando suas contas e pegando empréstimos no seu nome.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-section">
+      <h2 class="sec-title">3. Análise de Sites (Compras e Alertas)</h2>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h3>O alerta no nosso sistema</h3>
+          <p>Quando um site tem 1 denúncia, não significa automaticamente que seja golpe. Porém, o nível de alerta vai subindo na nossa base (ex: 2 a 5 denúncias). Esses registros significam que clientes daquele site tiveram experiências gravíssimas (produtos não entregues, sumiço do vendedor, clonagem de cartão).</p>
+          <p>Dê sempre prioridade para comprar diretamente nos <strong>Aplicativos Oficiais</strong> das lojas (App Store / Play Store). Aqueles que possuem milhões de downloads ficam no topo das lojas de apps e são seguros.</p>
+        </div>
+        <div class="faq-card">
+          <h3>Dúvida se o site é real? Teste no ChatGPT</h3>
+          <p>Se você tem dúvidas, pode pedir para uma inteligência artificial analisar a URL e descobrir se o domínio tenta enganar o cliente com palavras parecidas. Copie o texto abaixo e mande no ChatGPT (junto com o site suspeito):</p>
+          <div class="prompt-box">
+            <button class="btn-copy" onclick="navigator.clipboard.writeText('Analyze this website URL and verify if it belongs to the official company or if it is a phishing/scam site. Please check word by word in the domain name for misspellings. URL: ')">Copiar Prompt</button>
+            Analyze this website URL and verify if it belongs to the official company or if it is a phishing/scam site. Please check word by word in the domain name for misspellings.<br><br>URL: [COLE O SITE AQUI]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-section">
+      <h2 class="sec-title">4. Caí em um golpe. E agora?</h2>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <p><strong>1. Nosso sistema gratuito de denúncias:</strong> Registre imediatamente aqui no Caju Alerta. Seu registro não apaga o que aconteceu, mas ajudará dezenas de outras pessoas a não caírem e inviabiliza o esquema do golpista, forçando ele a abandonar aquele contato ou site.</p>
+          <p><strong>2. Denúncia na Delegacia:</strong> Sempre faça um Boletim de Ocorrência. Não pense "Ah, é só um golpe, não vai dar em nada". A ausência de boletins gera impunidade. O seu caso fortalece os inquéritos e força a criação de mandados de prisão contra a quadrilha.</p>
+          <p><strong>3. Golpistas NÃO SÃO irrastreáveis:</strong> Ninguém na internet vive no completo anonimato. Todo smartphone ou conexão deixa rastros absolutos (GPS, IPs, provedores). Apesar do Caju Alerta não ser polícia, nós apoiamos 100% as investigações das autoridades oficiais, e se houver um mandado, cooperamos integralmente com a lei.</p>
+        </div>
+      </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -74,21 +138,21 @@
           <h4 class="footer-title">Plataforma</h4>
           <ul class="footer-links">
             <li><a href="/" class="footer-link">Início</a></li>
-            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
+            <li><a href="/perfil.html" class="footer-link">Registrar ocorrência</a></li>
           </ul>
         </div>
         <div class="footer-nav">
           <h4 class="footer-title">Conteúdos</h4>
           <ul class="footer-links">
-            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
-            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
+            <li><a href="/central-seguranca.html" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias.html" class="footer-link">Portal de Notícias</a></li>
           </ul>
         </div>
         <div class="footer-nav">
           <h4 class="footer-title">Jurídico</h4>
           <ul class="footer-links">
-            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
-            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
+            <li><a href="/termos-de-uso.html" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade.html" class="footer-link">Política de Privacidade</a></li>
           </ul>
         </div>
       </div>
@@ -98,10 +162,11 @@
       </div>
     </div>
   </footer>
+
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
   <script src="assets/js/firebase-config.js"></script>
-  <script src="assets/js/common.js?v=5"></script>
+  <script src="assets/js/common.js?v=8"></script>
 </body>
 </html>
