@@ -27,7 +27,8 @@
       button.textContent = 'Acessando...';
 
       try {
-        // 1. Tenta fazer o login
+        // 1. Força a persistência e Tenta fazer o login
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
