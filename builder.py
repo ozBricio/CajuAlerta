@@ -1,15 +1,24 @@
 ﻿import io
+import os
 import re
 
-with io.open('frontend/perfil.html', 'r', encoding='utf-8', errors='ignore') as f:
-    html = f.read()
+with io.open('frontend/central-seguranca.html', 'r', encoding='utf-8', errors='ignore') as f:
+    html_central = f.read()
 
-html = html.replace('<h2 style="color: #22c55e; margin-bottom: 10px;">Confirmado</h2>', '<h2 style="color: #ffffff; margin-bottom: 10px;">Confirmado</h2>')
-html = re.sub(r'assets/css/registrar\.css\?v=\d+', 'assets/css/registrar.css?v=8', html)
-if 'registrar.css' in html and '?v=' not in html.split('registrar.css')[1][:5]:
-    html = html.replace('assets/css/registrar.css', 'assets/css/registrar.css?v=8')
+footer_match = re.search(r'(<footer class="site-footer">.*?</footer>)', html_central, re.DOTALL)
+full_footer = footer_match.group(1) if footer_match else None
 
-html = re.sub(r'assets/js/perfil\.js\?v=\d+', 'assets/js/perfil.js?v=14', html)
-
-with io.open('frontend/perfil.html', 'w', encoding='utf-8') as f:
-    f.write(html)
+if full_footer:
+    for filename in os.listdir('frontend'):
+        if filename.endswith('.html'):
+            filepath = os.path.join('frontend', filename)
+            with io.open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                html = f.read()
+            
+            # Check if it has a footer to replace
+            if '<footer class="site-footer">' in html:
+                new_html = re.sub(r'<footer class="site-footer">.*?</footer>', full_footer, html, flags=re.DOTALL)
+                if new_html != html:
+                    with io.open(filepath, 'w', encoding='utf-8') as f:
+                        f.write(new_html)
+                    print(f"Updated footer in {filename}")
