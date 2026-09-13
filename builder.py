@@ -1,10 +1,16 @@
 ﻿import io
 import re
+import os
 
-with io.open('frontend/perfil.html', 'r', encoding='utf-8', errors='ignore') as f:
-    html = f.read()
+files = ['perfil.html', 'admin-dashboard.html', 'noticias.html', 'noticia-completa.html']
 
-html = re.sub(r'assets/js/perfil\.js\?v=\d+', 'assets/js/perfil.js?v=15', html)
-
-with io.open('frontend/perfil.html', 'w', encoding='utf-8') as f:
-    f.write(html)
+for filename in files:
+    filepath = os.path.join('frontend', filename)
+    with io.open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+        html = f.read()
+    
+    html = re.sub(r'\.js\?v=\d+', '.js?v=20', html)
+    html = re.sub(r'\.css\?v=\d+', '.css?v=20', html)
+    
+    with io.open(filepath, 'w', encoding='utf-8') as f:
+        f.write(html)

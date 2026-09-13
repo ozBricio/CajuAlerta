@@ -1,138 +1,112 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-  // Configuração e proteção da página
+  const db = firebase.firestore();
+  
+  // Verifica autenticação primária (pra saber se é Staff)
   firebase.auth().onAuthStateChanged(async (user) => {
     if (!user) {
-      window.location.href = 'login.html';
+      window.location.replace('login.html');
       return;
     }
 
     try {
-      const userDoc = await firebase.firestore().collection('usuarios').doc(user.uid).get();
+      const userDoc = await db.collection('usuarios').doc(user.uid).get();
       const userData = userDoc.data();
 
       // Trava de Segurança Level Staff
       if (!userData || userData.role !== 'staff') {
-        alert('Acesso Negado: Área restrita para membros da equipe.');
-        window.location.href = 'index.html';
+        alert('Acesso Negado: Área restrita para jornalistas/staff.');
+        window.location.replace('perfil.html');
         return;
       }
 
-      // Inicializa Painel
-      document.getElementById('adminNameDisplay').textContent = `Olá, ${userData.nome.split(' ')[0]}`;
-      initAdminPanel();
-      
+      initNewsForm(user, userData.nome);
     } catch (error) {
       console.error(error);
       alert('Erro de permissão.');
-      window.location.href = 'login.html';
+      window.location.replace('perfil.html');
     }
   });
-});
 
-function initAdminPanel() {
-  // Navegação do Menu
-  const navItems = document.querySelectorAll('.nav-item');
-  const sections = document.querySelectorAll('.admin-section');
+  function initNewsForm(user, authorName) {
+    const form = document.getElementById('formPostNews');
+    const imageInput = document.getElementById('newsImage');
+    const imagePreview = document.getElementById('imagePreview');
+    let base64Image = null;
 
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      navItems.forEach(n => n.classList.remove('active'));
-      sections.forEach(s => s.classList.remove('active'));
-
-      item.classList.add('active');
-      const targetId = item.getAttribute('data-target');
-      document.getElementById(targetId).classList.add('active');
+    // Preview e Compressão da Imagem
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          // Comprime a imagem com Canvas para não estourar o limite de 1MB do Firestore
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const scaleSize = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scaleSize;
+          
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+          base64Image = canvas.toDataURL('image/jpeg', 0.7); // 70% quality JPEG
+          imagePreview.src = base64Image;
+          imagePreview.style.display = 'block';
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
     });
-  });
 
-  // Logout
-  document.getElementById('btnSairAdmin').addEventListener('click', () => {
-    firebase.auth().signOut().then(() => {
-      window.location.href = 'login.html';
+    // Submissão do Formulário
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!base64Image) {
+        alert('Por favor, adicione uma imagem de capa.');
+        return;
+      }
+      
+      const btn = document.getElementById('btnSubmitNews');
+      const msg = document.getElementById('newsMsg');
+      
+      btn.disabled = true;
+      btn.textContent = 'Publicando...';
+      msg.textContent = '';
+      
+      const title = document.getElementById('newsTitle').value.trim();
+      const summary = document.getElementById('newsSummary').value.trim();
+      const content = document.getElementById('newsContent').value.trim();
+      
+      try {
+        // SALVA NO BANCO DE DADOS SECUNDÁRIO (appNoticias)
+        await window.dbNoticias.collection('noticias').add({
+          titulo: title,
+          resumo: summary,
+          conteudo: content,
+          imagemCapa: base64Image,
+          autorNome: authorName,
+          autorUid: user.uid,
+          dataPublicacao: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        msg.style.color = '#22c55e';
+        msg.textContent = 'Notícia publicada com sucesso no Portal!';
+        form.reset();
+        base64Image = null;
+        imagePreview.style.display = 'none';
+        
+      } catch (error) {
+        console.error(error);
+        msg.style.color = '#ef4444';
+        msg.textContent = 'Erro ao publicar notícia: ' + error.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Publicar Notícia Oficial';
+      }
     });
-  });
-
-  // Carregar Dados do Banco
-  loadStats();
-  loadUsers();
-  loadHistory();
-}
-
-async function loadStats() {
-  const usersSnap = await firebase.firestore().collection('usuarios').get();
-  let countBlocked = 0;
-  
-  usersSnap.forEach(doc => {
-    if (doc.data().status === 'bloqueado') countBlocked++;
-  });
-
-  document.getElementById('statUsers').textContent = usersSnap.size;
-  document.getElementById('statBlocked').textContent = countBlocked;
-
-  const denunciasEmail = await firebase.firestore().collection('denuncias_emails').get();
-  const denunciasTel = await firebase.firestore().collection('denuncias_telefones').get();
-  const denunciasSite = await firebase.firestore().collection('denuncias_sites').get();
-  
-  document.getElementById('statDenuncias').textContent = denunciasEmail.size + denunciasTel.size + denunciasSite.size;
-}
-
-async function loadUsers() {
-  const tbody = document.getElementById('tableUsersBody');
-  const snap = await firebase.firestore().collection('usuarios').orderBy('criadoEm', 'desc').get();
-  
-  tbody.innerHTML = '';
-  snap.forEach(doc => {
-    const data = doc.data();
-    const isBlocked = data.status === 'bloqueado';
-    const isStaff = data.role === 'staff';
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${data.nome}</td>
-      <td>${data.email}</td>
-      <td><span class="status ${data.status}">${data.status.toUpperCase()}</span></td>
-      <td><span class="status ${data.role}">${data.role.toUpperCase()}</span></td>
-      <td>
-        ${!isStaff ? (
-          isBlocked 
-            ? `<button class="btn-action unblock" onclick="toggleUserStatus('${doc.id}', 'ativo')">Desbloquear</button>`
-            : `<button class="btn-action block" onclick="toggleUserStatus('${doc.id}', 'bloqueado')">Bloquear</button>`
-        ) : '<span style="color:#6b7280; font-size:0.8rem;">Protegido</span>'}
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-window.toggleUserStatus = async function(uid, newStatus) {
-  if (confirm(`Tem certeza que deseja ${newStatus === 'bloqueado' ? 'BLOQUEAR' : 'DESBLOQUEAR'} este usuário?`)) {
-    try {
-      await firebase.firestore().collection('usuarios').doc(uid).update({
-        status: newStatus
-      });
-      loadUsers(); // Recarrega tabela
-      loadStats(); // Recarrega stats
-    } catch(e) {
-      alert('Erro ao atualizar status: ' + e.message);
-    }
   }
-};
-
-async function loadHistory() {
-  const tbody = document.getElementById('tableHistoryBody');
-  const snap = await firebase.firestore().collection('historico_acessos').orderBy('dataAcesso', 'desc').limit(50).get();
-  
-  tbody.innerHTML = '';
-  snap.forEach(doc => {
-    const data = doc.data();
-    const dataFormatada = data.dataAcesso ? data.dataAcesso.toDate().toLocaleString('pt-BR') : 'Data não registrada';
-    
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${data.email}</td>
-      <td>${dataFormatada}</td>
-      <td>${data.ip || 'Desconhecido'}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+});

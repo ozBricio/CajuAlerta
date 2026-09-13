@@ -22,7 +22,7 @@
         const nomeReal = data.nome || 'Usuário';
         document.getElementById('userName').textContent = nomeReal.split(' ')[0];
         document.getElementById('userEmail').textContent = data.email || user.email;
-        document.getElementById('userRole').textContent = data.role === 'staff' ? 'ADMINISTRADOR' : 'USUÁRIO';
+        document.getElementById('userRole').textContent = data.role === 'staff' ? 'JORNALISTA / STAFF' : 'USUÁRIO';
         if (data.role === 'staff') {
           const btnAdmin = document.getElementById('btnAdminDash');
           if (btnAdmin) btnAdmin.classList.remove('d-none');

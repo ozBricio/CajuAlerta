@@ -2,113 +2,58 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel de Controle - Caju Alerta</title>
-  <link rel="stylesheet" href="assets/css/common.css?v=5">
-  <link rel="stylesheet" href="assets/css/admin-dashboard.css">
-  
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
-  <script src="assets/js/firebase-config.js"></script>
+  <title>Painel de Notícias | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css?v=20">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <style>
+    .admin-form-group { margin-bottom: 20px; }
+    .admin-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #111827; }
+    .admin-form-input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-family: inherit; font-size: 1rem; }
+    .image-preview { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-top: 15px; display: none; }
+  </style>
 </head>
-<body class="admin-body">
-  
-  <div class="admin-layout">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <div class="sidebar-header">
-        <h2>🛡️ Caju Admin</h2>
-        <span class="badge-staff">Acesso Restrito</span>
-      </div>
-      <nav class="sidebar-nav">
-        <button class="nav-item active" data-target="visao-geral">Visão Geral</button>
-        <button class="nav-item" data-target="usuarios">Gestão de Usuários</button>
-        <button class="nav-item" data-target="denuncias">Denúncias</button>
-        <button class="nav-item" data-target="historico">Histórico de Acessos</button>
+<body style="background: #f9fafb;">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="perfil.html" class="nav-link">← Voltar ao Perfil</a></li>
+        </ul>
       </nav>
-      <div class="sidebar-footer">
-        <button id="btnSairAdmin" class="btn-logout">Sair do Painel</button>
-      </div>
-    </aside>
+    </div>
+  </header>
 
-    <!-- Main Content -->
-    <main class="admin-main">
-      <header class="admin-topbar">
-        <h1>Painel de Controle</h1>
-        <div class="admin-user-info">
-          <span id="adminNameDisplay">Carregando...</span>
+  <div class="admin-layout container" style="margin-top: 120px; margin-bottom: 60px;">
+    <main class="admin-main" style="width: 100%; max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+      <h1 style="color: #111827; margin-bottom: 30px;">Painel de Jornalismo</h1>
+      <p style="color: #6b7280; margin-bottom: 30px;">Publique novas notícias no portal. As imagens serão otimizadas e salvas no banco de dados secundário.</p>
+      
+      <form id="formPostNews">
+        <div class="admin-form-group">
+          <label for="newsTitle">Título da Notícia</label>
+          <input type="text" id="newsTitle" class="admin-form-input" required placeholder="Ex: Novo vazamento expõe dados...">
         </div>
-      </header>
-
-      <div id="adminContent" class="admin-content-area">
         
-        <!-- SEC 1: Visão Geral -->
-        <section id="visao-geral" class="admin-section active">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h3>Total de Usuários</h3>
-              <p class="stat-value" id="statUsers">0</p>
-            </div>
-            <div class="stat-card">
-              <h3>Denúncias Ativas</h3>
-              <p class="stat-value" id="statDenuncias">0</p>
-            </div>
-            <div class="stat-card">
-              <h3>Usuários Bloqueados</h3>
-              <p class="stat-value" id="statBlocked">0</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- SEC 2: Usuários -->
-        <section id="usuarios" class="admin-section">
-          <h2>Gestão de Usuários</h2>
-          <div class="table-container">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>E-mail</th>
-                  <th>Status</th>
-                  <th>Cargo</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody id="tableUsersBody">
-                <!-- Preenchido via JS -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- SEC 3: Denúncias -->
-        <section id="denuncias" class="admin-section">
-          <h2>Central de Denúncias</h2>
-          <p>Em breve: Visualização cruzada de inteligência.</p>
-        </section>
-
-        <!-- SEC 4: Histórico -->
-        <section id="historico" class="admin-section">
-          <h2>Histórico de Acessos</h2>
-          <div class="table-container">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>E-mail</th>
-                  <th>Data do Acesso</th>
-                  <th>IP / Origem</th>
-                </tr>
-              </thead>
-              <tbody id="tableHistoryBody">
-                <!-- Preenchido via JS -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-      </div>
+        <div class="admin-form-group">
+          <label for="newsSummary">Resumo (Subtítulo)</label>
+          <input type="text" id="newsSummary" class="admin-form-input" required placeholder="Ex: Especialistas alertam sobre os perigos...">
+        </div>
+        
+        <div class="admin-form-group">
+          <label for="newsImage">Imagem de Capa (Obrigatório)</label>
+          <input type="file" id="newsImage" class="admin-form-input" accept="image/*" required>
+          <img id="imagePreview" class="image-preview" src="">
+        </div>
+        
+        <div class="admin-form-group">
+          <label for="newsContent">Conteúdo da Notícia</label>
+          <textarea id="newsContent" class="admin-form-input" rows="10" required placeholder="Escreva o texto completo da notícia aqui..."></textarea>
+        </div>
+        
+        <button type="submit" id="btnSubmitNews" class="btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">Publicar Notícia Oficial</button>
+        <div id="newsMsg" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
+      </form>
     </main>
   </div>
 
@@ -148,6 +93,82 @@
       </div>
     </div>
   </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+          <p class="brand-slogan">Caju Alerta</p>
+          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">Início</a></li>
+            <li><a href="/perfil.html" class="footer-link">Registrar ocorrência</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="/central-seguranca.html" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias.html" class="footer-link">Portal de Notícias</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Jurídico</h4>
+          <ul class="footer-links">
+            <li><a href="/termos-de-uso.html" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade.html" class="footer-link">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
+        <p class="copyright">&copy; 2026 Caju Alerta.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+          <p class="brand-slogan">Caju Alerta</p>
+          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">Início</a></li>
+            <li><a href="/perfil.html" class="footer-link">Registrar ocorrência</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="/central-seguranca.html" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias.html" class="footer-link">Portal de Notícias</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Jurídico</h4>
+          <ul class="footer-links">
+            <li><a href="/termos-de-uso.html" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade.html" class="footer-link">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
+        <p class="copyright">&copy; 2026 Caju Alerta.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
   <script src="assets/js/admin-dashboard.js"></script>
 </body>
 </html>
