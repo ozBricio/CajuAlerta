@@ -1,16 +1,51 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="/assets/img/logo2.png">
-  <title>Alertas | Caju Alerta</title>
-  <link rel="stylesheet" href="assets/css/common.css?v=20">
-  
-  <link rel="stylesheet" href="assets/css/animations.css">
-  <link rel="stylesheet" href="assets/css/responsive.css">
-  <link rel="stylesheet" href="assets/css/noticias.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Notícias | Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css?v=9">
+  <link rel="stylesheet" href="assets/css/noticias.css?v=2">
+  <style>
+    .search-box {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+      display: flex;
+      gap: 10px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 15px 20px;
+      border-radius: 30px;
+      border: 1px solid #d1d5db;
+      font-size: 1.05rem;
+      font-family: inherit;
+      outline: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .search-input:focus {
+      border-color: #ff9900;
+      box-shadow: 0 4px 15px rgba(255, 153, 0, 0.2);
+    }
+    .search-btn {
+      background: #ff9900;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 0 30px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+    }
+    .search-btn:hover {
+      background: #e68a00;
+    }
+  </style>
 </head>
-<body>
+<body style="background: #f9fafb;">
   <header class="site-header">
     <div class="container header-inner">
       <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
@@ -20,25 +55,37 @@
       <nav class="main-nav" id="mainNav">
         <ul class="nav-list">
           <li><a href="/" class="nav-link">Início</a></li>
-          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
-          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+          <li><a href="central-seguranca.html" class="nav-link">Central de Segurança</a></li>
+          <li><a href="noticias.html" class="nav-link" style="color: var(--primary-orange); font-weight: bold;">Portal de Notícias</a></li>
+          <li class="platform-entry"><a href="perfil.html" class="platform-link" id="platformAccessLink">Acessar Painel</a></li>
         </ul>
       </nav>
     </div>
   </header>
-  <main class="news-page">
-    <div class="news-intro">
-      <h1>Portal de Notícias</h1>
-      <p>Entenda como os golpes estão acontecendo, quais estratégias os criminosos usam e como se proteger.</p>
-    </div>
-    
-    <div id="newsContainer" class="alertas-grid" style="display: none;"></div>
 
-    <section id="newsEmptyState" class="news-empty" aria-live="polite">
-      <h2>Nenhuma notícia publicada ainda</h2>
-      <p>Quando houver uma atualização de segurança, ela aparecerá aqui.</p>
+  <main class="page-main animate-hidden" style="padding-top: 120px; padding-bottom: 60px;">
+    <section class="container">
+      <h1 style="text-align: center; color: #111827; margin-bottom: 15px; font-size: 2.5rem;">Portal de Notícias</h1>
+      <p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Acompanhe as últimas atualizações sobre vazamentos, novos golpes e investigações realizadas por nossa equipe.
+      </p>
+
+      <div class="search-box">
+        <input type="text" id="newsSearchInput" class="search-input" placeholder="Buscar por assunto, golpe ou vazamento...">
+        <button id="btnNewsSearch" class="search-btn">Buscar</button>
+      </div>
+
+      <div id="newsEmptyState" style="text-align: center; padding: 60px 20px; background: #fff; border-radius: 12px; border: 1px dashed #d1d5db; display: none;">
+        <h3 style="color: #4b5563; margin-bottom: 10px;">Nenhuma notícia encontrada.</h3>
+        <p style="color: #9ca3af;">Não há publicações correspondentes à sua busca ou o portal ainda está vazio.</p>
+      </div>
+
+      <div id="newsContainer" style="display: grid; gap: 30px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+        <!-- Renderizado via JS -->
+      </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -75,11 +122,12 @@
       </div>
     </div>
   </footer>
+
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
   <script src="assets/js/firebase-config.js"></script>
-  <script src="assets/js/common.js?v=20"></script>
-  <script src="assets/js/noticias.js"></script>
+  <script src="assets/js/common.js?v=5"></script>
+  <script src="assets/js/noticias.js?v=3"></script>
 </body>
 </html>

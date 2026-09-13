@@ -31,18 +31,13 @@
       } else {
         // Auto-cria o documento para usuários antigos (Migração)
         
-        const isWoft = user.email === 'contato.woftgames@gmail.com';
         await db.collection('usuarios').doc(user.uid).set({
           nome: user.displayName || 'Usuário',
           email: user.email,
-          role: isWoft ? 'staff' : 'usuario',
+          role: 'usuario',
           status: 'ativo',
           criadoEm: firebase.firestore.FieldValue.serverTimestamp()
         });
-        
-        if (isWoft) {
-          setTimeout(() => window.location.reload(), 1000); // Reload pra aparecer o botão admin
-        }
 
         document.getElementById('userName').textContent = 'Usuário';
         document.getElementById('userEmail').textContent = user.email;
