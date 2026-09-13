@@ -1,98 +1,6 @@
-﻿
-
-.perfil-sidebar {
-  width: 300px;
-  background: #171a21;
-  border: 1px solid #2d3342;
-  border-radius: 12px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.user-info {
-  text-align: center;
-}
-
-.avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #ff9900;
-  color: #fff;
-  font-size: 2rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 15px auto;
-}
-
-.user-info h2 { color: #fff; margin: 0 0 5px 0; font-size: 1.2rem; }
-.user-info p { color: #9ca3af; margin: 0 0 15px 0; font-size: 0.9rem; }
-.badge { background: rgba(59,130,246,0.2); color: #3b82f6; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
-
-.btn-danger {
-  width: 100%;
-  background: transparent;
-  color: #ef4444;
-  border: 1px solid #ef4444;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.btn-danger:hover { background: #ef4444; color: #fff; }
-
-.perfil-content {
-  flex: 1;
-  background: #171a21;
-  border: 1px solid #2d3342;
-  border-radius: 12px;
-  padding: 40px;
-}
-.perfil-content h2 { color: #fff; margin-top: 0; }
-.subtitle { color: #9ca3af; font-size: 0.95rem; margin-bottom: 30px; }
-
-.denuncias-grid { display: flex; flex-direction: column; gap: 15px; }
-
-.denuncia-card {
-  background: #0b0d10;
-  border: 1px solid #2d3342;
-  padding: 20px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.denuncia-info strong { color: #ff9900; font-size: 1.1rem; display: block; margin-bottom: 5px; }
-.denuncia-info p { margin: 0; color: #d1d5db; font-size: 0.9rem; }
-.status-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-top: 10px; }
-.status-badge.ativa { background: rgba(16,185,129,0.2); color: #10b981; }
-.status-badge.desativada { background: rgba(239,68,68,0.2); color: #ef4444; }
-
-.btn-desativar { background: #2d3342; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; }
-.btn-desativar:hover { background: #ef4444; }
-
-/* Modal */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal-box { background: #171a21; padding: 30px; border-radius: 8px; max-width: 400px; width: 90%; border: 1px solid #2d3342; }
-.modal-box h3 { color: #ef4444; margin-top: 0; }
-.modal-box p { color: #d1d5db; font-size: 0.9rem; line-height: 1.5; }
-.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
-.modal-actions .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: #fff; background: #2d3342; }
-.modal-actions .btn:hover { background: #4b5563; }
-.modal-actions .btn-danger { background: #ef4444; color: #fff; border: none; width: auto; }
-.modal-actions .btn-danger:hover { background: #dc2626; }
-
-@media (max-width: 768px) {
-  
-  .perfil-sidebar { width: 100%; }
-  .denuncia-card { flex-direction: column; align-items: flex-start; gap: 15px; }
-}
+﻿/* ==========================================================================
+   PERFIL CSS (LIGHT MODE MOCKUP)
+   ========================================================================== */
 
 .dashboard-grid {
   display: grid;
@@ -101,34 +9,212 @@
   align-items: start;
 }
 
+/* Sidebar */
+.perfil-sidebar {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.user-info {
+  text-align: center;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 25px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ff9900;
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px auto;
+  box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3);
+}
+
+.user-info h2 {
+  color: #111827;
+  font-size: 1.25rem;
+  margin: 0 0 5px 0;
+  font-weight: 800;
+}
+
+.user-info p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 0 0 15px 0;
+}
+
+.badge {
+  display: inline-block;
+  background: #fff3e0;
+  color: #ff9900;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 20px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Nav Menu */
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-nav .btn-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  background: transparent;
+  color: #6b7280;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.dashboard-nav .btn-tab svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.dashboard-nav .btn-tab:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+.dashboard-nav .btn-tab.active {
+  background: #fff3e0;
+  color: #ff9900;
+}
+
+/* Excluir Conta Button */
+.perfil-actions {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.btn-danger-outline {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #ef4444;
+  border: 1.5px solid #ef4444;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-danger-outline svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.btn-danger-outline:hover {
+  background: #fef2f2;
+}
+
+/* Content Area */
+.perfil-content {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.dash-title {
+  color: #111827;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.welcome-box {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.welcome-text {
+  flex: 1;
+  border-left: 4px solid #ff9900;
+  padding-left: 20px;
+  color: #6b7280;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.welcome-text p {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.welcome-text .highlight-text {
+  color: #ff9900;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.welcome-image {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.welcome-image img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
+}
+
+/* Denuncias */
+.denuncias-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.denuncia-card {
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Responsive */
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
-}
-
-.dashboard-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.dashboard-nav .btn-tab {
-  text-align: left;
-  background: transparent;
-  color: #d1d5db;
-  border: 1px solid transparent;
-  padding: 12px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  border-left: 3px solid transparent;
-}
-
-.dashboard-nav .btn-tab:hover {
-  background: rgba(255, 153, 0, 0.05);
-  color: #ff9900;
+  .welcome-box {
+    flex-direction: column;
+  }
+  .welcome-image {
+    width: 200px;
+    margin: 0 auto;
+  }
 }
