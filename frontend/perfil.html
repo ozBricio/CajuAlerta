@@ -158,8 +158,20 @@
 
         <!-- Aba: Meus Registros -->
         <div id="tab-registros" class="dash-tab d-none">
-          <h2 class="dash-title">Meus Registros</h2>
-          <p style="color: #6b7280; font-size: 1rem; margin-bottom: 30px;">Abaixo está o histórico de ocorrências que você registrou. Se você desativar um registro, a denúncia sai do sistema de contagem imediatamente, como se tivesse sido excluída.</p>
+                    <h2 class="dash-title">Meus Registros</h2>
+          <p style="color: #6b7280; font-size: 1rem; margin-bottom: 20px;">Abaixo está o histórico de ocorrências que você registrou. Se você desativar um registro, a denúncia sai do sistema de contagem imediatamente, como se tivesse sido excluída.</p>
+          
+          <!-- Filtro e Busca -->
+          <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+            <input type="text" id="searchDenuncias" placeholder="Buscar alvo (ex: 11999999999)..." style="flex: 1; padding: 10px 15px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-family: inherit;">
+            <select id="filterTipo" style="padding: 10px 15px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-family: inherit; background: #fff;">
+              <option value="todos">Todos os Tipos</option>
+              <option value="Telefone">Telefone</option>
+              <option value="E-mail">E-mail</option>
+              <option value="Site">Site / Link</option>
+            </select>
+          </div>
+
           
           <div id="denunciasList" class="denuncias-grid">
             <p style="color: #9ca3af;">Carregando ocorrências...</p>
@@ -206,7 +218,7 @@
   </footer>
 
   <script src="assets/js/common.js?v=7"></script>
-  <script src="assets/js/perfil.js?v=9"></script>
+  <script src="assets/js/perfil.js?v=11"></script>
   
   <script>
     function showTab(tabId, btnElement) {

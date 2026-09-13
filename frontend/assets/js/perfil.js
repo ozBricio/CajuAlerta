@@ -40,6 +40,8 @@
     }
   }
 
+  let allDenuncias = [];
+
   async function loadUserDenuncias(user) {
     const list = document.getElementById('denunciasList');
     list.innerHTML = '<p style="color: #9ca3af;">Buscando ocorrências...</p>';
@@ -52,49 +54,77 @@
       ];
 
       const results = await Promise.all(queries);
-      let denuncias = [];
+      allDenuncias = [];
 
-      results[0].forEach(doc => denuncias.push({id: doc.id, collection: 'denuncias_telefones', tipo: 'Telefone', ...doc.data()}));
-      results[1].forEach(doc => denuncias.push({id: doc.id, collection: 'denuncias_emails', tipo: 'E-mail', ...doc.data()}));
-      results[2].forEach(doc => denuncias.push({id: doc.id, collection: 'denuncias_sites', tipo: 'Site', ...doc.data()}));
+      results[0].forEach(doc => allDenuncias.push({id: doc.id, collection: 'denuncias_telefones', tipo: 'Telefone', ...doc.data()}));
+      results[1].forEach(doc => allDenuncias.push({id: doc.id, collection: 'denuncias_emails', tipo: 'E-mail', ...doc.data()}));
+      results[2].forEach(doc => allDenuncias.push({id: doc.id, collection: 'denuncias_sites', tipo: 'Site', ...doc.data()}));
 
-      denuncias.sort((a, b) => b.dataDenuncia?.toDate() - a.dataDenuncia?.toDate());
+      allDenuncias.sort((a, b) => b.dataDenuncia?.toDate() - a.dataDenuncia?.toDate());
 
-      if (denuncias.length === 0) {
-        list.innerHTML = '<p style="color: #9ca3af;">Nenhuma ocorrência registrada por você.</p>';
-        return;
-      }
-
-      list.innerHTML = '';
-      denuncias.forEach(d => {
-        const div = document.createElement('div');
-        div.className = 'denuncia-card';
-        div.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-            <div>
-              <span class="badge" style="background: #2d3342; color: #d1d5db; border: none;">${d.tipo}</span>
-              <h4 style="margin: 10px 0 5px 0; color: #111827;">${d.alvo}</h4>
-            </div>
-            <span class="badge" style="background: ${d.status === 'ativa' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; color: ${d.status === 'ativa' ? '#22c55e' : '#ef4444'}">
-              ${d.status === 'ativa' ? 'Ativa' : 'Desativada'}
-            </span>
-          </div>
-          <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 15px;">${d.motivo}</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f3f4f6; padding-top: 15px;">
-            <span style="font-size: 0.8rem; color: #9ca3af;">Registrado em ${d.dataDenuncia ? d.dataDenuncia.toDate().toLocaleDateString('pt-BR') : 'Data desconhecida'}</span>
-            ${d.status === 'ativa' ? `<button class="btn" style="padding: 6px 12px; font-size: 0.85rem; background: #2d3342;" onclick="desativarDenuncia('${d.collection}', '${d.id}')">Desativar Ocorrência</button>` : ''}
-          </div>
-        `;
-        list.appendChild(div);
-      });
+      renderDenuncias(allDenuncias);
     } catch (error) {
       console.error('Erro ao buscar denúncias:', error);
       list.innerHTML = '<p style="color: #ef4444;">Erro ao carregar seu histórico.</p>';
     }
   }
 
+  function renderDenuncias(denunciasArray) {
+    const list = document.getElementById('denunciasList');
+    list.innerHTML = '';
+
+    if (denunciasArray.length === 0) {
+      list.innerHTML = '<p style="color: #9ca3af;">Nenhuma ocorrência encontrada para esta busca.</p>';
+      return;
+    }
+
+    denunciasArray.forEach(d => {
+      const div = document.createElement('div');
+      div.className = 'denuncia-card';
+      div.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+          <div>
+            <span class="badge" style="background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb;">${d.tipo}</span>
+            <h4 style="margin: 10px 0 5px 0; color: #111827;">${d.alvo}</h4>
+          </div>
+          <span class="badge" style="background: ${d.status === 'ativa' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; color: ${d.status === 'ativa' ? '#22c55e' : '#ef4444'}">
+            ${d.status === 'ativa' ? 'Ativa' : 'Desativada'}
+          </span>
+        </div>
+        <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 15px;">${d.motivo}</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f3f4f6; padding-top: 15px;">
+          <span style="font-size: 0.8rem; color: #9ca3af;">Registrado em ${d.dataDenuncia ? d.dataDenuncia.toDate().toLocaleDateString('pt-BR') : 'Data desconhecida'}</span>
+          ${d.status === 'ativa' ? `<button style="padding: 6px 12px; font-size: 0.85rem; background: transparent; color: #ef4444; border: 1.5px solid #ef4444; border-radius: 6px; cursor: pointer; font-weight: 600;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'" onclick="desativarDenuncia('${d.collection}', '${d.id}')">Desativar Ocorrência</button>` : ''}
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  // Lógica de Filtro
+  const searchInput = document.getElementById('searchDenuncias');
+  const typeFilter = document.getElementById('filterTipo');
+
+  function filterData() {
+    if (!searchInput || !typeFilter) return;
+    const term = searchInput.value.toLowerCase();
+    const type = typeFilter.value;
+
+    const filtered = allDenuncias.filter(d => {
+      const matchText = d.alvo.toLowerCase().includes(term) || d.motivo.toLowerCase().includes(term);
+      const matchType = type === 'todos' || d.tipo === type;
+      return matchText && matchType;
+    });
+
+    renderDenuncias(filtered);
+  }
+
+  if (searchInput) searchInput.addEventListener('input', filterData);
+  if (typeFilter) typeFilter.addEventListener('change', filterData);
+
+
   window.desativarDenuncia = async (collection, id) => {
-    if (!confirm('Tem certeza que deseja desativar este registro? Ele sairá da nossa base pública.')) return;
+    if (!confirm('Você realmente deseja desativar esta denúncia?\n\nSe desativar, ela será ocultada e você NÃO conseguirá ativá-la novamente!')) return;
     try {
       await db.collection(collection).doc(id).update({
         status: 'desativada',
