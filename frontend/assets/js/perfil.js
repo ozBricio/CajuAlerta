@@ -19,17 +19,24 @@
       const doc = await db.collection('usuarios').doc(user.uid).get();
       if (doc.exists) {
         const data = doc.data();
-        document.getElementById('userName').textContent = data.nome.split(' ')[0]; // Pega sempre o primeiro nome, garantindo compatibilidade com registros antigos
-        document.getElementById('userEmail').textContent = data.email;
-        document.getElementById('userRole').textContent = data.role === 'staff' ? 'Administrador (Staff)' : 'Usuário';
+        const nomeReal = data.nome || 'Usuário';
+        document.getElementById('userName').textContent = nomeReal.split(' ')[0];
+        document.getElementById('userEmail').textContent = data.email || user.email;
+        document.getElementById('userRole').textContent = data.role === 'staff' ? 'ADMINISTRADOR' : 'USUÁRIO';
         if (data.role === 'staff') {
           const btnAdmin = document.getElementById('btnAdminDash');
           if (btnAdmin) btnAdmin.classList.remove('d-none');
         }
-        document.getElementById('userInitial').textContent = data.nome.charAt(0).toUpperCase();
+        document.getElementById('userInitial').textContent = nomeReal.charAt(0).toUpperCase();
+      } else {
+        document.getElementById('userName').textContent = 'Usuário';
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('userRole').textContent = 'USUÁRIO';
+        document.getElementById('userInitial').textContent = 'U';
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error('Erro ao carregar perfil:', error);
+      document.getElementById('userName').textContent = 'Erro';
     }
   }
 
@@ -38,8 +45,6 @@
     list.innerHTML = '<p style="color: #9ca3af;">Buscando ocorrências...</p>';
 
     try {
-      // Buscar em todas as 3 coleções (em produção complexa usaríamos cloud functions ou uma coleção central, 
-      // mas aqui fazemos 3 queries rápidas pois Firebase é rápido)
       const queries = [
         db.collection('denuncias_telefones').where('relator_uid', '==', user.uid).get(),
         db.collection('denuncias_emails').where('relator_uid', '==', user.uid).get(),
@@ -53,7 +58,6 @@
       results[1].forEach(doc => denuncias.push({id: doc.id, collection: 'denuncias_emails', tipo: 'E-mail', ...doc.data()}));
       results[2].forEach(doc => denuncias.push({id: doc.id, collection: 'denuncias_sites', tipo: 'Site', ...doc.data()}));
 
-      // Ordenar por data
       denuncias.sort((a, b) => b.dataDenuncia?.toDate() - a.dataDenuncia?.toDate());
 
       if (denuncias.length === 0) {
@@ -63,83 +67,87 @@
 
       list.innerHTML = '';
       denuncias.forEach(d => {
-        const dataStr = d.dataDenuncia ? d.dataDenuncia.toDate().toLocaleDateString('pt-BR') : 'Data não registrada';
-        const isAtiva = d.status !== 'desativada';
-        
-        list.innerHTML += `
-          <div class="denuncia-card">
-            <div class="denuncia-info">
-              <strong>${d.tipo}: ${d.alvo}</strong>
-              <p>Motivo: ${d.motivo.length > 50 ? d.motivo.substring(0,50)+'...' : d.motivo}</p>
-              <p style="font-size:0.8rem; margin-top:5px; color:#6b7280;">Registrado em: ${dataStr}</p>
-              <span class="status-badge ${isAtiva ? 'ativa' : 'desativada'}">${isAtiva ? 'ATIVA (Processando)' : 'DESATIVADA'}</span>
+        const div = document.createElement('div');
+        div.className = 'denuncia-card';
+        div.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+            <div>
+              <span class="badge" style="background: #2d3342; color: #d1d5db; border: none;">${d.tipo}</span>
+              <h4 style="margin: 10px 0 5px 0; color: #111827;">${d.alvo}</h4>
             </div>
-            ${isAtiva ? `<button class="btn-desativar" onclick="desativarDenuncia('${d.collection}', '${d.id}')">Desativar / Retirar</button>` : ''}
+            <span class="badge" style="background: ${d.status === 'ativa' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; color: ${d.status === 'ativa' ? '#22c55e' : '#ef4444'}">
+              ${d.status === 'ativa' ? 'Ativa' : 'Desativada'}
+            </span>
+          </div>
+          <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 15px;">${d.motivo}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f3f4f6; padding-top: 15px;">
+            <span style="font-size: 0.8rem; color: #9ca3af;">Registrado em ${d.dataDenuncia ? d.dataDenuncia.toDate().toLocaleDateString('pt-BR') : 'Data desconhecida'}</span>
+            ${d.status === 'ativa' ? `<button class="btn" style="padding: 6px 12px; font-size: 0.85rem; background: #2d3342;" onclick="desativarDenuncia('${d.collection}', '${d.id}')">Desativar Ocorrência</button>` : ''}
           </div>
         `;
+        list.appendChild(div);
       });
-    } catch(e) {
-      list.innerHTML = '<p style="color: #ef4444;">Erro ao carregar denúncias.</p>';
+    } catch (error) {
+      console.error('Erro ao buscar denúncias:', error);
+      list.innerHTML = '<p style="color: #ef4444;">Erro ao carregar seu histórico.</p>';
     }
   }
 
-  // Desativar Denúncia Global Function
-  window.desativarDenuncia = async function(collection, id) {
-    if (confirm('Tem certeza que deseja desativar esta ocorrência? Ela não será mais processada juridicamente.')) {
-      try {
-        await db.collection(collection).doc(id).update({ status: 'desativada' });
-        loadUserDenuncias(currentUser);
-      } catch (e) {
-        alert('Erro ao desativar: ' + e.message);
-      }
+  window.desativarDenuncia = async (collection, id) => {
+    if (!confirm('Tem certeza que deseja desativar este registro? Ele sairá da nossa base pública.')) return;
+    try {
+      await db.collection(collection).doc(id).update({
+        status: 'desativada',
+        dataDesativacao: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      alert('Registro desativado com sucesso!');
+      loadUserDenuncias(currentUser);
+    } catch (error) {
+      alert('Erro ao desativar: ' + error.message);
     }
   };
 
-  // Lógica de Exclusão de Conta
+  const btnDeleteAccount = document.getElementById('btnDeleteAccount');
   const modalDelete = document.getElementById('modalDelete');
-  document.getElementById('btnDeleteAccount').addEventListener('click', () => {
-    modalDelete.classList.remove('d-none');
-  });
-  document.getElementById('btnCancelDelete').addEventListener('click', () => {
-    modalDelete.classList.add('d-none');
-  });
+  const btnCancelDelete = document.getElementById('btnCancelDelete');
+  const btnConfirmDelete = document.getElementById('btnConfirmDelete');
 
-  document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
-    try {
-      // 1. Gravar Log de Exclusão (Para fins legais)
-      await db.collection('logs_exclusao').add({
-        uid: currentUser.uid,
-        email: currentUser.email,
-        dataExclusao: firebase.firestore.FieldValue.serverTimestamp()
-      });
+  if (btnDeleteAccount && modalDelete) {
+    btnDeleteAccount.addEventListener('click', () => modalDelete.classList.remove('d-none'));
+    btnCancelDelete.addEventListener('click', () => modalDelete.classList.add('d-none'));
 
-      // 2. Apagar documento do usuário (Opcional, ou mudar status para 'excluido')
-      // Decidimos alterar o status para não perder as FKs das denúncias.
-      await db.collection('usuarios').doc(currentUser.uid).update({
-        status: 'excluido_pelo_usuario',
-        nome: 'Conta Excluída',
-        email: 'excluido@cajualerta.com' // Mascara o email
-      });
+    btnConfirmDelete.addEventListener('click', async () => {
+      btnConfirmDelete.disabled = true;
+      btnConfirmDelete.textContent = 'Processando...';
 
-      // 3. Excluir conta do Auth
-      await currentUser.delete();
-      
-      alert('Sua conta foi excluída com sucesso. Um log foi mantido para fins judiciais conforme a Lei.');
-      window.location.href = 'index.html';
-    } catch(e) {
-      if (e.code === 'auth/requires-recent-login') {
-        alert('Por segurança, faça login novamente antes de excluir a conta.');
-        firebase.auth().signOut().then(() => window.location.href = 'login.html');
-      } else {
-        alert('Erro ao excluir: ' + e.message);
+      try {
+        const uid = currentUser.uid;
+        
+        await db.collection('logs_exclusao').add({
+          uid: uid,
+          email: currentUser.email,
+          data_solicitacao: firebase.firestore.FieldValue.serverTimestamp(),
+          motivo: 'Exclusão voluntária pelo painel'
+        });
+
+        await db.collection('usuarios').doc(uid).update({
+          status: 'excluido',
+          data_exclusao: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        try {
+          await currentUser.delete();
+        } catch (authErr) {
+          await window.auth.signOut();
+        }
+
+        alert('Ok, sua conta foi excluída com sucesso.');
+        window.location.replace('index.html');
+      } catch (error) {
+        alert('Erro: ' + error.message);
+        btnConfirmDelete.disabled = false;
+        btnConfirmDelete.textContent = 'Sim, exclui minha conta';
       }
-    }
-  });
-
-  // Logout Sidebar
-  document.getElementById('btnSairPerfil').addEventListener('click', () => {
-    firebase.auth().signOut().then(() => {
-      window.location.href = 'index.html';
     });
-  });
+  }
 });
