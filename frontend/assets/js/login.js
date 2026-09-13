@@ -1,69 +1,73 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('loginForm');
-  const errorBox = document.getElementById('loginErrorBox');
+﻿document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  const errorBox = document.getElementById('loginError');
   const errorMessage = document.getElementById('loginErrorMessage');
+  let failedAttempts = 0;
 
-  if (!form) return;
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const button = loginForm.querySelector('button[type="submit"]');
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
     errorBox.style.display = 'none';
-
-    const button = form.querySelector('button[type="submit"]');
-    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-    const senha = document.getElementById('loginSenha').value;
     button.disabled = true;
-    button.textContent = 'Entrando...';
+    button.textContent = 'Acessando...';
 
     try {
-            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, senha);
+      // 1. Tenta fazer o login
+      const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
-      
-      // Busca o perfil no Firestore
-      const userDoc = await firebase.firestore().collection('usuarios').doc(user.uid).get();
-      let userData = userDoc.data();
-      
-      // Se não existir (legacy admins), ignora
-      if (userData) {
+
+      // 2. Verifica se a conta está excluída ou bloqueada no Firestore
+      const doc = await firebase.firestore().collection('usuarios').doc(user.uid).get();
+      if (doc.exists) {
+        const userData = doc.data();
+        if (userData.status === 'excluido') {
+          await firebase.auth().signOut();
+          throw new Error('Conta excluída.');
+        }
         if (userData.status === 'bloqueado') {
           await firebase.auth().signOut();
-          throw new Error('Perfil bloqueado. Entre em contato com o suporte para saber mais informações.');
+          throw new Error('Conta bloqueada por violação de termos.');
         }
-        
-        // Atualiza histórico de acessos
-        await firebase.firestore().collection('historico_acessos').add({
-          uid: user.uid,
-          email: user.email,
-          dataAcesso: firebase.firestore.FieldValue.serverTimestamp(),
-          ip: 'via-cliente' // Client-side IP tracking varies, just placeholder
-        });
-        
-        // Atualiza último acesso no perfil
-        await firebase.firestore().collection('usuarios').doc(user.uid).update({
-          ultimoAcesso: firebase.firestore.FieldValue.serverTimestamp()
-        });
       }
-      
-      // Bloqueio de e-mail não verificado
-      if (!user.emailVerified && !email.includes('admin')) {
-        await window.auth.signOut();
-        throw new Error('Acesso negado: Você ainda não confirmou seu e-mail. Verifique sua caixa de entrada.');
-      }
-      
-      const returnTo = new URLSearchParams(window.location.search).get('returnTo');
-      
-      // Checa se é admin
-      if (email.includes('admin')) {
-        window.location.href = '/admin/dashboard.html';
-      } else {
-        window.location.href = returnTo || '/';
-      }
+
+      // Sucesso no login - reseta tentativas e redireciona
+      failedAttempts = 0;
+      const urlParams = new URLSearchParams(window.location.search);
+      const returnTo = urlParams.get('returnTo');
+      window.location.href = returnTo || 'perfil.html';
+
     } catch (error) {
-      errorMessage.textContent = error.message;
+      console.error(error);
+      failedAttempts++;
+      
+      let msg = "Ocorreu um erro ao tentar entrar. Tente novamente.";
+      
+      // Mapeamento de erros do Firebase
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        msg = "Usuário ou senha incorretos, tente novamente.";
+      } else if (error.code === 'auth/too-many-requests') {
+        msg = "O acesso a esta conta foi temporariamente desativado devido a muitas tentativas falhas. Redefina sua senha ou tente mais tarde.";
+      } else if (error.message === 'Conta excluída.') {
+        msg = "Essa conta não possui registro ativo em nosso portal.";
+      } else if (error.message.includes('bloqueada')) {
+        msg = "Sua conta foi bloqueada. Entre em contato com o suporte.";
+      }
+
+      // Regra da 10ª tentativa
+      if (failedAttempts >= 10) {
+        msg = "Muitas tentativas falhas. Recomendamos que você clique em 'Esqueci minha senha' abaixo e coloque seu e-mail para redefinir o acesso.";
+      }
+
+      errorMessage.textContent = msg;
       errorBox.style.display = 'flex';
+      
     } finally {
       button.disabled = false;
-      button.textContent = 'Entrar';
+      button.textContent = 'Acessar Conta';
     }
   });
 });
