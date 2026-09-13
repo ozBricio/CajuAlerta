@@ -1,38 +1,16 @@
 ﻿import io
 import re
 
-with io.open('frontend/assets/js/login.js', 'r', encoding='utf-8', errors='ignore') as f:
-    js = f.read()
+with io.open('frontend/cadastro.html', 'r', encoding='utf-8', errors='ignore') as f:
+    html = f.read()
 
-# Add status == excluido logic
-old_block = """        if (userData && userData.status === 'bloqueado') {
-          await window.auth.signOut();
-          errorBox.innerHTML = '<strong>Acesso Bloqueado</strong><br>Sua conta foi suspensa pela moderação.';
-          errorBox.classList.remove('d-none');
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Acessar Plataforma';
-          return;
-        }"""
+html = re.sub(r'assets/js/cadastro\.js\?v=\d+', 'assets/js/cadastro.js?v=2', html)
+with io.open('frontend/cadastro.html', 'w', encoding='utf-8') as f:
+    f.write(html)
 
-new_block = """        if (userData && userData.status === 'bloqueado') {
-          await window.auth.signOut();
-          errorBox.innerHTML = '<strong>Acesso Bloqueado</strong><br>Sua conta foi suspensa pela moderação.';
-          errorBox.classList.remove('d-none');
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Acessar Plataforma';
-          return;
-        }
-        
-        if (userData && userData.status === 'excluido') {
-          await window.auth.signOut();
-          errorBox.innerHTML = 'Essa conta não possui registro ativo em nosso portal.';
-          errorBox.classList.remove('d-none');
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Acessar Plataforma';
-          return;
-        }"""
+with io.open('frontend/perfil.html', 'r', encoding='utf-8', errors='ignore') as f:
+    html = f.read()
 
-js = js.replace(old_block, new_block)
-
-with io.open('frontend/assets/js/login.js', 'w', encoding='utf-8') as f:
-    f.write(js)
+html = re.sub(r'assets/js/perfil\.js\?v=\d+', 'assets/js/perfil.js?v=7', html)
+with io.open('frontend/perfil.html', 'w', encoding='utf-8') as f:
+    f.write(html)

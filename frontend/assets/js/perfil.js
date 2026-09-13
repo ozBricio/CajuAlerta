@@ -19,7 +19,7 @@
       const doc = await db.collection('usuarios').doc(user.uid).get();
       if (doc.exists) {
         const data = doc.data();
-        document.getElementById('userName').textContent = data.nome;
+        document.getElementById('userName').textContent = data.nome.split(' ')[0]; // Pega sempre o primeiro nome, garantindo compatibilidade com registros antigos
         document.getElementById('userEmail').textContent = data.email;
         document.getElementById('userRole').textContent = data.role === 'staff' ? 'Administrador (Staff)' : 'Usuário';
         if (data.role === 'staff') {
