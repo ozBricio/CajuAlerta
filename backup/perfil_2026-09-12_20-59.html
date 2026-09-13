@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="assets/css/common.css?v=6">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
-  <link rel="stylesheet" href="assets/css/perfil.css?v=8">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=6">
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
@@ -33,31 +33,31 @@
   </header>
 
   <main class="page-main animate-hidden">
-    <section class="container dashboard-grid d-none" id="protectedContent" style="margin-top: 40px; margin-bottom: 60px;">
+    <section class="container" id="protectedContent" style="display:none; gap: 30px; margin-top: 40px; margin-bottom: 60px;">
       
       <!-- MENU LATERAL -->
-      <div class="perfil-sidebar" >
-        <div class="user-info" >
+      <div class="perfil-sidebar" style="display: flex; flex-direction: column; justify-content: flex-start; gap: 20px;">
+        <div class="user-info" style="border-bottom: 1px solid #2d3342; padding-bottom: 20px; text-align: center;">
           <div class="avatar" id="userInitial">C</div>
           <h2 id="userName">Carregando...</h2>
           <p id="userEmail">...</p>
           <span class="badge" id="userRole">Usuário</span>
         </div>
         
-        <nav class="dashboard-nav" >
-          <button class="btn btn-tab active" onclick="showTab('tab-inicio', this)" style="background: rgba(255, 153, 0, 0.05); color: #ff9900; border-left: 3px solid #ff9900;">Painel Inicial</button>
-          <button class="btn btn-tab" onclick="window.location.href='registrar.html'" >Registrar Ocorrência</button>
-          <button class="btn btn-tab" onclick="showTab('tab-registros', this)" >Meus Registros</button>
-          <button class="btn btn-tab d-none" id="btnAdminDash" onclick="window.location.href='admin-dashboard.html'" style="color: #3b82f6;">Painel Admin</button>
+        <nav class="dashboard-nav" style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn btn-tab active" onclick="showTab('tab-inicio', this)" style="text-align: left; background: rgba(255, 153, 0, 0.05); color: #ff9900; border: 1px solid transparent; border-left: 3px solid #ff9900; padding: 10px; cursor:pointer;">🏠 Painel Inicial</button>
+          <button class="btn btn-tab" onclick="window.location.href='registrar.html'" style="text-align: left; background: transparent; color: #d1d5db; border: 1px solid transparent; padding: 10px; cursor:pointer;">📝 Registrar Ocorrência</button>
+          <button class="btn btn-tab" onclick="showTab('tab-registros', this)" style="text-align: left; background: transparent; color: #d1d5db; border: 1px solid transparent; padding: 10px; cursor:pointer;">📋 Meus Registros</button>
+          <button class="btn btn-tab d-none" id="btnAdminDash" onclick="window.location.href='admin-dashboard.html'" style="text-align: left; background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid transparent; padding: 10px; cursor:pointer;">🛡️ Painel Admin</button>
         </nav>
         
-        <div class="perfil-actions" >
+        <div class="perfil-actions" style="margin-top: auto; border-top: 1px solid #2d3342; padding-top: 20px;">
           <button class="btn-danger" id="btnDeleteAccount">Excluir Minha Conta</button>
         </div>
       </div>
 
       <!-- ÁREA DE CONTEÚDO (INFORMAÇÕES) -->
-      <div class="perfil-content" >
+      <div class="perfil-content" style="flex: 1; background: #171a21; border: 1px solid #2d3342; border-radius: 12px; padding: 40px;">
         
         <!-- Aba: Painel Inicial -->
         <div id="tab-inicio" class="dash-tab">
@@ -65,7 +65,7 @@
           <div style="background: rgba(255, 153, 0, 0.05); border-left: 4px solid #ff9900; padding: 20px; border-radius: 4px; margin-top: 20px; color: #d1d5db; line-height: 1.6;">
             <p style="margin-top: 0;">Aqui é um local passivo de <strong>denúncia aberta</strong>. Nossa missão é proteger a comunidade digital, onde cada denúncia ajuda outras pessoas a não caírem em golpes virtuais.</p>
             <p>Lembrando que esta plataforma surgiu como um <strong>projeto acadêmico (TCC)</strong>. Antes de prosseguir com qualquer registro, pedimos que leia atentamente nossos Termos de Uso e entenda como suas informações judiciais são tratadas com extrema seriedade.</p>
-            <p style="margin-bottom: 0; color:#ff9900; font-weight:bold;">Utilize o menu ao lado para iniciar uma nova denúncia ou consultar seus registros ativos.</p>
+            <p style="margin-bottom: 0; color:#ff9900; font-weight:bold;">👉 Utilize o menu ao lado para iniciar uma nova denúncia ou consultar seus registros ativos.</p>
           </div>
         </div>
 

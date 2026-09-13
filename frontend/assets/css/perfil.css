@@ -93,3 +93,42 @@
   .perfil-sidebar { width: 100%; }
   .denuncia-card { flex-direction: column; align-items: flex-start; gap: 15px; }
 }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.dashboard-nav .btn-tab {
+  text-align: left;
+  background: transparent;
+  color: #d1d5db;
+  border: 1px solid transparent;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+}
+
+.dashboard-nav .btn-tab:hover {
+  background: rgba(255, 153, 0, 0.05);
+  color: #ff9900;
+}

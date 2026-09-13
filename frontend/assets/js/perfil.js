@@ -8,7 +8,7 @@
       return;
     }
     const pc = document.getElementById('protectedContent');
-    if (pc) pc.style.display = 'flex';
+    if (pc) { pc.classList.remove('d-none'); pc.style.display = ''; }
     currentUser = user;
     loadUserProfile(user);
     loadUserDenuncias(user);
