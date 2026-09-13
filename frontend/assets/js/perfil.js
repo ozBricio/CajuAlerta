@@ -365,12 +365,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
       form.reset();
       groupAlvo.classList.add('d-none');
-      successBox.classList.remove('d-none');
-      btnSubmit.textContent = 'Registrar Nova Denúncia';
+      // Esconder success box inline (agora é no overlay)
+      successBox.classList.add('d-none');
+      btnSubmit.textContent = 'Registrar Ocorrência Oficial';
+      
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const loadingContent = document.getElementById('loadingContent');
+      const successContent = document.getElementById('successContent');
+      
+      if (loadingOverlay && loadingContent && successContent) {
+        // Mostra tela de sucesso
+        loadingContent.classList.add('d-none');
+        loadingContent.style.display = 'none';
+        
+        successContent.classList.remove('d-none');
+        successContent.style.display = 'flex';
+        
+        // Função para fechar overlay e recarregar denúncias
+        const closeOverlay = () => {
+          loadingOverlay.classList.add('d-none');
+          loadingContent.classList.remove('d-none');
+          loadingContent.style.display = 'flex';
+          successContent.classList.add('d-none');
+          successContent.style.display = 'none';
+          loadingOverlay.removeEventListener('click', closeOverlay);
+          btnSubmit.disabled = false;
+          loadUserDenuncias(user);
+        };
+        
+        // Fecha no clique ou espera 2 segundos
+        loadingOverlay.addEventListener('click', closeOverlay);
+        setTimeout(() => {
+          if (!loadingOverlay.classList.contains('d-none')) {
+            closeOverlay();
+          }
+        }, 2000);
+      } else {
+        btnSubmit.disabled = false;
+        loadUserDenuncias(user);
+      }
+      
     } catch (error) {
       errorBox.textContent = 'Erro ao salvar denúncia: ' + error.message;
       errorBox.classList.remove('d-none');
-    } finally {
       const loadingOverlay = document.getElementById('loadingOverlay');
       if (loadingOverlay) loadingOverlay.classList.add('d-none');
       btnSubmit.disabled = false;

@@ -14,7 +14,7 @@
 
 .terms-group legend {
   padding: 0 10px;
-  color: #ff9900;
+  color: #ffffff;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -33,7 +33,7 @@
   width: 18px;
   height: 18px;
   margin-top: 2px;
-  accent-color: #ff9900;
+  accent-color: #ffffff;
 }
 
 textarea.form-input {
@@ -47,7 +47,7 @@ textarea.form-input {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(11, 13, 16, 0.95);
+  background: rgba(255, 153, 0, 0.95);
   backdrop-filter: blur(10px);
   z-index: 9999;
   display: flex;
@@ -66,7 +66,7 @@ textarea.form-input {
   font-size: 2rem;
   margin-top: 25px;
   margin-bottom: 10px;
-  color: #ff9900;
+  color: #ffffff;
   animation: pulse 1.5s infinite;
 }
 
@@ -78,8 +78,8 @@ textarea.form-input {
 .spinner {
   width: 60px;
   height: 60px;
-  border: 6px solid rgba(255, 153, 0, 0.2);
-  border-top-color: #ff9900;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

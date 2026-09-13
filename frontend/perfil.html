@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/cadastro.css">
-  <link rel="stylesheet" href="assets/css/registrar.css?v=7">
+  <link rel="stylesheet" href="assets/css/registrar.css?v=8">
   <link rel="stylesheet" href="assets/css/perfil.css?v=12">
   
   <!-- Firebase SDK -->
@@ -218,7 +218,7 @@
   </footer>
 
   <script src="assets/js/common.js?v=7"></script>
-  <script src="assets/js/perfil.js?v=13"></script>
+  <script src="assets/js/perfil.js?v=14"></script>
   
   <script>
     function showTab(tabId, btnElement) {
@@ -232,7 +232,19 @@
       btnElement.classList.add('active');
     }
   </script>
+
+
+<!-- Novo Loading Overlay -->
 <div id="loadingOverlay" class="loading-overlay d-none">
+  <div id="loadingContent" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
     <div class="spinner"></div>
+    <h2>Carregando</h2>
+    <p>não feche a página</p>
+  </div>
+  <div id="successContent" class="d-none" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <h2 style="color: #ffffff; margin-bottom: 10px;">Confirmado</h2>
+    <p>Denúncia registrada com sucesso</p>
+  </div>
+</div>
 </body>
 </html>
