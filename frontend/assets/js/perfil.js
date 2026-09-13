@@ -29,6 +29,14 @@
         }
         document.getElementById('userInitial').textContent = nomeReal.charAt(0).toUpperCase();
       } else {
+        // Auto-cria o documento para usuários antigos (Migração)
+        await db.collection('usuarios').doc(user.uid).set({
+          nome: user.displayName || 'Usuário',
+          email: user.email,
+          role: 'usuario',
+          status: 'ativo',
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
         document.getElementById('userName').textContent = 'Usuário';
         document.getElementById('userEmail').textContent = user.email;
         document.getElementById('userRole').textContent = 'USUÁRIO';
