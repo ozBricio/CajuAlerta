@@ -254,14 +254,7 @@ async function processRegistration(nome, email, senha, consentimentos) {
     // 3. Disparar E-mail de Verificação
     await user.sendEmailVerification();
 
-    // 3. Salvar os dados no Firestore (Banco de Dados)
-    await firebase.firestore().collection('usuarios').doc(user.uid).set({
-      nome: nome,
-      email: email,
-      consentimentos: consentimentos,
-      criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
-      authRole: 'user'
-    });
+    
 
     // Desloga para obrigar a validar o e-mail antes de logar
     await firebase.auth().signOut();
