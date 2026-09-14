@@ -164,6 +164,8 @@
 }
 
 .hero-logo {
+  max-width: 100%;
+  height: auto;
   width: 100%;
   max-width: 450px;
   height: auto;
