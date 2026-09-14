@@ -90,6 +90,13 @@ function initCadastroValidation() {
   }
 
 
+  const nomeInputGlob = document.getElementById('nomeCompleto');
+  if (nomeInputGlob) {
+    nomeInputGlob.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^A-Za-zÁ-Úá-úÂ-Ûâ-ûÃ-Õã-õÇç\s]/g, '');
+    });
+  }
+
   if (senhaConfirma) {
     senhaConfirma.addEventListener('input', (e) => {
       const v1 = senhaInput.value;
@@ -130,7 +137,12 @@ function initCadastroValidation() {
 
     if (!nome) {
       nomeInput.classList.add('has-error');
-      return showError('Você esqueceu de preencher o seu nome completo.');
+      return showError('Você esqueceu de preencher o seu nome.');
+    }
+    
+    if (nome.split(' ').filter(n => n.length > 0).length < 2) {
+      nomeInput.classList.add('has-error');
+      return showError('Você esqueceu de colocar o seu sobrenome.');
     }
     
     const nameRegex = /^[A-Za-zÁ-Úá-úÂ-Ûâ-ûÃ-Õã-õÇç]+(?:\s[A-Za-zÁ-Úá-úÂ-Ûâ-ûÃ-Õã-õÇç]+)+$/;
