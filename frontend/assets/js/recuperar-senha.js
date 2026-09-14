@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('recuperarForm');
   if (!form) return;
 
@@ -62,7 +62,7 @@
       } else if (error.code === 'auth/invalid-email') {
         errorMessage.textContent = 'Formato de e-mail inválido.';
       } else {
-        errorMessage.textContent = 'Erro ao enviar. Tente novamente mais tarde.';
+        errorMessage.textContent = 'Erro: ' + (error.code || error.message);
       }
       errorBox.classList.remove('d-none');
       btn.disabled = false;
