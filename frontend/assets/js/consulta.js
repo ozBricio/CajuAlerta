@@ -73,7 +73,7 @@ async function performSearch(value, type = 'telefone') {
 
     const quantidade = docs.length;
     const ultimoRegistro = docs.length > 0 && docs[0].dataDenuncia ? docs[0].dataDenuncia.toDate().toISOString() : null;
-    const categorias = ['Ocorrência Registrada'];
+    const categorias = docs.length > 0 ? ['Ocorrência Registrada'] : [];
     
     const relatos = docs.length > 0 ? [docs[0].motivo] : [];
 
