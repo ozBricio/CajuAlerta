@@ -68,7 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const value = e.target.value.replace(/\D/g, '').slice(0, 11);
-      e.target.value = value.length > 0 ? `(${value.substring(0, 2)}${value.length > 2 ? ') ' : ''}${value.substring(2, 7)}${value.length > 7 ? '-' : ''}${value.substring(7, 11)}` : '';
+      let formatted = value;
+      if (value.length > 2) {
+        if (value.length < 11) {
+          formatted = `(${value.substring(0, 2)}) ${value.substring(2, 6)}${value.length > 6 ? '-' + value.substring(6) : ''}`;
+        } else {
+          formatted = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7)}`;
+        }
+      } else if (value.length > 0) {
+        formatted = `(${value}`;
+      }
+      e.target.value = formatted;
     });
 
     searchForm.addEventListener('submit', (e) => {

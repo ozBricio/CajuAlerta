@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const valueParam = urlParams.get('valor') || urlParams.get('numero');
   const typeParam = urlParams.get('tipo') || 'telefone';
@@ -13,8 +13,13 @@
 
 function formatDisplayMasked(num) {
   let v = num.replace(/\D/g, '');
-  if (v.length > 2) v = `(${v.substring(0,2)}) ${v.substring(2)}`;
-  if (v.length > 13) v = `${v.substring(0,14)}-${v.substring(14,18)}`;
+  if (v.length === 11) {
+    return `(${v.substring(0, 2)}) ${v.substring(2, 7)}-${v.substring(7, 11)}`;
+  } else if (v.length === 10) {
+    return `(${v.substring(0, 2)}) ${v.substring(2, 6)}-${v.substring(6, 10)}`;
+  } else if (v.length > 2) {
+    return `(${v.substring(0, 2)}) ${v.substring(2)}`;
+  }
   return v;
 }
 
@@ -109,7 +114,7 @@ function renderResult(value, type, result) {
 
   if (result.quantidade === 0) {
     banner.classList.add('safe');
-    statusText.textContent = 'Este alvo parece seguro';
+    statusText.textContent = type === 'e-mail' ? 'Este e-mail não tem registro' : type === 'site' ? 'Este site não tem registro' : 'Este número não tem registro';
     document.getElementById('alertLevel').textContent = 'Baixo';
     document.getElementById('reportSummaryText').textContent = `Este ${type === 'e-mail' ? 'e-mail' : type === 'site' ? 'site' : 'telefone'} está limpo. Não há registros de golpes na base pública.`;
   } else {

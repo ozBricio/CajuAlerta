@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const db = firebase.firestore();
   let currentUser = null;
 
@@ -233,11 +233,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   inputAlvo.addEventListener('input', (e) => {
     if (tipoSelect.value === 'telefone') {
-      let v = e.target.value.replace(/\D/g, '');
-      if (v.length > 11) v = v.substring(0, 11);
-      if (v.length > 2) v = `(${v.substring(0,2)}) ${v.substring(2)}`;
-      if (v.length > 9) v = `${v.substring(0,10)}-${v.substring(10)}`;
-      e.target.value = v;
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      let formatted = v;
+      if (v.length > 2) {
+        if (v.length < 11) {
+          formatted = `(${v.substring(0, 2)}) ${v.substring(2, 6)}${v.length > 6 ? '-' + v.substring(6) : ''}`;
+        } else {
+          formatted = `(${v.substring(0, 2)}) ${v.substring(2, 7)}-${v.substring(7)}`;
+        }
+      } else if (v.length > 0) {
+        formatted = `(${v}`;
+      }
+      e.target.value = formatted;
     }
   });
 
