@@ -73,14 +73,12 @@ async function performSearch(value, type = 'telefone') {
 
     const quantidade = docs.length;
     const ultimoRegistro = docs.length > 0 && docs[0].dataDenuncia ? docs[0].dataDenuncia.toDate().toISOString() : null;
-    const categorias = docs.length > 0 ? ['Ocorrência Registrada'] : [];
     
     const relatos = docs.length > 0 ? [docs[0].motivo] : [];
 
     const result = {
       quantidade,
       ultimoRegistro,
-      categorias,
       relatos
     };
 
@@ -100,7 +98,6 @@ function renderResult(value, type, result) {
   const statusText = document.getElementById('statusText');
   const reportCount = document.getElementById('reportCount');
   const lastReport = document.getElementById('lastReport');
-  const categories = document.getElementById('categories');
 
   card.classList.remove('d-none');
   const labels = { telefone: 'Número consultado', 'e-mail': 'E-mail consultado', site: 'Site consultado' };
@@ -110,7 +107,6 @@ function renderResult(value, type, result) {
   btnRegister.href = `perfil.html`;
   reportCount.textContent = String(result.quantidade);
   lastReport.textContent = result.ultimoRegistro ? new Date(result.ultimoRegistro).toLocaleDateString('pt-BR') : '--';
-  categories.textContent = result.categorias.length ? result.categorias.join(', ') : '--';
 
   if (result.quantidade === 0) {
     banner.classList.add('safe');
