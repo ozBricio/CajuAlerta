@@ -251,13 +251,9 @@ async function processRegistration(nome, email, senha, consentimentos) {
       consentimentos: consentimentos
     });
 
-    // 3. Disparar E-mail de Verificação
-    await user.sendEmailVerification();
-
-    
-
-    // Desloga para obrigar a validar o e-mail antes de logar
-    await firebase.auth().signOut();
+    // 3. Disparar E-mail de Verificação (Desativado temporariamente a pedido)
+    // await user.sendEmailVerification();
+    // await firebase.auth().signOut();
 
     // Mostra o quadro verde na própria página
     document.getElementById('cadastroForm').style.display = 'none';
@@ -266,6 +262,11 @@ async function processRegistration(nome, email, senha, consentimentos) {
     
     // Rola pro topo
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Redireciona após 2 segundos já logado
+    setTimeout(() => {
+      window.location.replace('perfil.html');
+    }, 2000);
     
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {
