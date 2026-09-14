@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   loadNoticiaCompleta();
 });
 
@@ -50,7 +50,7 @@ async function loadNoticiaCompleta() {
     }
 
     const badgeHtml = noticia.fonteOficial 
-      ? `<div style="background:#fff3e0; color:#ff9900; font-size:0.9rem; font-weight:bold; padding:8px 15px; border-radius:8px; display:inline-block; margin-bottom:20px;">🛡️ Investigação Oficial Caju Alerta</div>`
+      ? `<div style="background:#fff3e0; color:#ff9900; font-size:0.9rem; font-weight:bold; padding:8px 15px; border-radius:8px; display:inline-block; margin-bottom:20px;">Investigação Oficial Caju Alerta</div>`
       : `<div style="background:#f3f4f6; color:#4b5563; font-size:0.9rem; font-weight:bold; padding:8px 15px; border-radius:8px; display:inline-block; margin-bottom:20px;">📰 Fonte: ${escapeHtml(noticia.fonte || 'Externa')}</div>`;
 
     container.innerHTML = `

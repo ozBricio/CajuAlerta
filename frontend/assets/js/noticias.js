@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   let allNews = [];
   loadNoticias();
 
@@ -84,7 +84,7 @@
         : 'Data desconhecida';
 
       const badgeHtml = noticia.fonteOficial 
-        ? `<div style="background:#fff3e0; color:#ff9900; font-size:0.75rem; font-weight:bold; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:10px;">🛡️ Investigação Oficial</div>`
+        ? `<div style="background:#fff3e0; color:#ff9900; font-size:0.75rem; font-weight:bold; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:10px;">Investigação Oficial</div>`
         : `<div style="background:#f3f4f6; color:#4b5563; font-size:0.75rem; font-weight:bold; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:10px;">📰 Fonte: ${escapeHtml(noticia.fonte || 'Externa')}</div>`;
 
       return `
