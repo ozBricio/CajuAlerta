@@ -9,19 +9,19 @@
   }
 }
 
-/* ===== DESKTOP: 1280–2559px ===== */
+/* ===== DESKTOP: 1280â2559px ===== */
 @media (min-width: 1280px) and (max-width: 2559px) {
   /* Default handled by common.css */
 }
 
-/* ===== NOTEBOOK: 1024–1279px ===== */
+/* ===== NOTEBOOK: 1024â1279px ===== */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .hero-title {
     font-size: 3.5rem;
   }
 }
 
-/* ===== TABLET: 768–1023px ===== */
+/* ===== TABLET: 768â1023px ===== */
 @media (min-width: 768px) and (max-width: 1023px) {
   .hero-title {
     font-size: 3rem;
@@ -47,7 +47,7 @@
   }
 }
 
-/* ===== MOBILE: 320–767px ===== */
+/* ===== MOBILE: 320â767px ===== */
 @media (max-width: 767px) {
   .menu-toggle {
     display: block;
@@ -100,7 +100,7 @@
 
   .search-form {
     flex-direction: column;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     padding: 16px;
   }
 
