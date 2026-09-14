@@ -109,14 +109,28 @@ function renderResult(value, type, result) {
   lastReport.textContent = result.ultimoRegistro ? new Date(result.ultimoRegistro).toLocaleDateString('pt-BR') : '--';
 
   if (result.quantidade === 0) {
-    banner.classList.add('safe');
+    banner.classList.add('status-safe');
     statusText.textContent = type === 'e-mail' ? 'Este e-mail não tem registro' : type === 'site' ? 'Este site não tem registro' : 'Este número não tem registro';
-    document.getElementById('alertLevel').textContent = 'Baixo';
+    document.getElementById('alertLevel').textContent = 'Seguro';
     document.getElementById('reportSummaryText').textContent = `Este ${type === 'e-mail' ? 'e-mail' : type === 'site' ? 'site' : 'telefone'} está limpo. Não há registros de golpes na base pública.`;
   } else {
-    banner.classList.add(result.quantidade >= 5 ? 'danger' : 'warning');
-    statusText.textContent = result.quantidade >= 5 ? 'Muitos relatos de golpe!' : 'Relatos encontrados';
-    document.getElementById('alertLevel').textContent = result.quantidade >= 5 ? 'Alto (Vermelho)' : 'Médio (Amarelo)';
+    let alertText = '';
+    
+    if (result.quantidade <= 2) {
+      banner.classList.add('status-warning');
+      alertText = 'Baixo (Amarelo)';
+      statusText.textContent = 'Relatos encontrados';
+    } else if (result.quantidade <= 5) {
+      banner.classList.add('status-orange');
+      alertText = 'Médio (Laranja)';
+      statusText.textContent = 'Vários relatos encontrados';
+    } else {
+      banner.classList.add('status-danger');
+      alertText = 'Alto (Vermelho)';
+      statusText.textContent = 'Muitos relatos de golpe!';
+    }
+    
+    document.getElementById('alertLevel').textContent = alertText;
     document.getElementById('reportSummaryText').textContent = result.relatos[0] || `Há ${result.quantidade} relato(s) registrado(s) para esta consulta.`;
   }
 }

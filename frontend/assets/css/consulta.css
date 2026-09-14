@@ -92,6 +92,11 @@
   color: var(--accent-yellow);
 }
 
+.status-banner.status-orange {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+}
+
 .status-banner.status-danger {
   background: rgba(239, 68, 68, 0.15); /* Red-500 */
   color: #ef4444;
