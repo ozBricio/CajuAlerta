@@ -263,7 +263,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Validações Específicas
+    const aceiteLegal = document.getElementById('aceiteLegal');
+    if (aceiteLegal && !aceiteLegal.checked) {
+      errorBox.textContent = 'Erro: Você precisa ler e concordar com os Termos Jurídicos para registrar a denúncia.';
+      errorBox.classList.remove('d-none');
+      btnSubmit.disabled = false;
+      return;
+    }
+
     const tipo = tipoSelect.value;
+    if (!tipo) {
+      errorBox.textContent = 'Erro: Selecione o que deseja denunciar.';
+      errorBox.classList.remove('d-none');
+      return;
+    }
+
     const alvo = inputAlvo.value.trim();
 
     if (tipo === 'telefone') {
