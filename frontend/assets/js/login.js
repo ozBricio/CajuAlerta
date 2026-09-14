@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   const errorBox = document.getElementById('loginErrorBox');
   const errorMessage = document.getElementById('loginErrorMessage');
@@ -56,10 +56,10 @@
         console.error(error);
         failedAttempts++;
         
-        let msg = "Ocorreu um erro ao tentar entrar. Tente novamente.";
+        let msg = "Ocorreu um erro: " + (error.code || "Desconhecido") + ". Tente novamente.";
         
         // Mapeamento de erros do Firebase
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-login-credentials') {
           msg = "Usuário ou senha incorretos, tente novamente.";
         } else if (error.code === 'auth/too-many-requests') {
           msg = "Acesso temporariamente desativado devido a muitas tentativas falhas. Redefina sua senha ou tente mais tarde.";
