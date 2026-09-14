@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recuperar Senha - Caju Alerta</title>
+  <title>Nova Senha - Caju Alerta</title>
   <link rel="stylesheet" href="assets/css/common.css?v=6">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/cadastro.css?v=2">
@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <!-- CABEÇALHO (Igual ao Index/Login) -->
+  <!-- CABEÇALHO -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
@@ -33,25 +33,37 @@
     <section class="container">
       <div class="auth-wrapper animate-hidden">
         <div class="auth-header">
-          <h1>Recuperação de Acesso</h1>
-          <p>Digite o e-mail cadastrado. Enviaremos um link seguro oficial para você redefinir sua senha.</p>
+          <h1>Criar Nova Senha</h1>
+          <p>Defina sua nova senha de acesso seguro.</p>
         </div>
 
         <div class="auth-body-content">
           <!-- Success Box -->
           <div id="successBox" class="alert-box success d-none">
-            <strong>✅ Solicitação Recebida</strong>
-            Se o seu e-mail estiver cadastrado em nosso sistema, enviaremos o link de recuperação para você. Verifique sua caixa de entrada (e a pasta de Spam).
+            <strong>✅ Senha redefinida!</strong>
+            Sua senha foi alterada com sucesso. Você já pode fazer login com a nova senha.
           </div>
 
-          <form id="recuperarForm" class="auth-form" novalidate>
+          <form id="novaSenhaForm" class="auth-form" novalidate>
             <div class="form-group">
-              <label for="emailUser">E-mail Cadastrado</label>
-              <input type="email" id="emailUser" class="form-input" placeholder="seu.email@gmail.com" required autocomplete="email">
-              <div class="field-error-msg d-none" id="err-emailUser">⚠ E-mail inválido ou necessário.</div>
+              <label for="newPassword">Nova Senha</label>
+              <div class="input-wrapper">
+                <input type="password" id="newPassword" class="form-input" placeholder="Min. 8 caracteres" required minlength="8">
+                <button type="button" class="toggle-eye" id="toggleNewPwd" aria-label="Mostrar senha">👁</button>
+              </div>
+              <div class="field-error-msg d-none" id="err-newPassword">⚠ Senha muito curta (mínimo 8 caracteres).</div>
             </div>
 
-            <button type="submit" id="btnSubmitRecuperar" class="btn-primary btn-full">Enviar Link de Recuperação</button>
+            <div class="form-group">
+              <label for="confirmPassword">Confirmar Nova Senha</label>
+              <div class="input-wrapper">
+                <input type="password" id="confirmPassword" class="form-input" placeholder="Repita a senha" required minlength="8">
+                <button type="button" class="toggle-eye" id="toggleConfirmPwd" aria-label="Mostrar senha">👁</button>
+              </div>
+              <div class="field-error-msg d-none" id="err-confirmPassword">⚠ As senhas não coincidem.</div>
+            </div>
+
+            <button type="submit" id="btnSubmitNovaSenha" class="btn-primary btn-full">Redefinir Senha</button>
             
             <div id="errorBox" class="alert-box error d-none">
               <span id="errorMessage"></span>
@@ -59,7 +71,7 @@
           </form>
 
           <div class="auth-footer">
-            <p><a href="login.html">← Voltar para o Login</a></p>
+            <p><a href="login.html">← Ir para o Login</a></p>
             <p class="support-contact">
               Problemas? <a href="https://wa.me/5585972627292" target="_blank" class="whatsapp-link">Fale com o Suporte (WhatsApp)</a>
             </p>
@@ -110,6 +122,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
   <script src="assets/js/firebase-config.js"></script>
   <script src="assets/js/common.js?v=6"></script>
-  <script src="assets/js/recuperar-senha.js?v=3?v=3?v=2"></script>
+  <script src="assets/js/nova-senha.js"></script>
 </body>
 </html>
