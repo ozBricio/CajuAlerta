@@ -270,7 +270,7 @@ async function processRegistration(nome, email, senha, consentimentos) {
     
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {
-      showError('Esse e-mail já está cadastrado em nossa base.');
+      showError('Não foi possível criar sua conta. Não foi possível cadastrar você no Caju Alerta.');
     } else {
       showError('Erro ao criar conta: ' + error.message);
     }
