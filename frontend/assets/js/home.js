@@ -40,13 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const normalizedValue = value.trim().toLowerCase();
       const phoneDigits = normalizedValue.replace(/\D/g, '');
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedValue);
-      const isSite = /^(https?:\/\/)?(www\.)?[a-z0-9-]+(\.[a-z0-9-]+)+(\/[^\s]*)?$/i.test(normalizedValue);
+      const isPhone = /^[\d\s().-]+$/.test(normalizedValue) && phoneDigits.length >= 10 && phoneDigits.length <= 11;
 
       if (isEmail) return { type: 'e-mail', value: normalizedValue };
-      if (isSite) return { type: 'site', value: normalizedValue.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '') };
-      if (/^[\d\s().-]+$/.test(normalizedValue) && phoneDigits.length >= 10 && phoneDigits.length <= 11) {
-        return { type: 'telefone', value: phoneDigits };
+      if (isPhone) return { type: 'telefone', value: phoneDigits };
+      
+      if (normalizedValue.includes('.') && !/\s/.test(normalizedValue)) {
+        return { type: 'site', value: normalizedValue.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '') };
       }
+      
       return null;
     }
 
