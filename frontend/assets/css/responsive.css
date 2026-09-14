@@ -49,6 +49,10 @@
 
 /* ===== MOBILE: 320â767px ===== */
 @media (max-width: 767px) {
+  .hero-logo {
+    max-width: 250px;
+  }
+
   .menu-toggle {
     display: block;
   }
