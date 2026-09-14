@@ -5,45 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal de Notícias | Caju Alerta</title>
   <link rel="stylesheet" href="assets/css/common.css?v=9">
-  <link rel="stylesheet" href="assets/css/noticias.css?v=2">
-  <style>
-    .search-box {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 40px auto;
-      display: flex;
-      gap: 10px;
-    }
-    .search-input {
-      flex: 1;
-      padding: 15px 20px;
-      border-radius: 30px;
-      border: 1px solid #d1d5db;
-      font-size: 1.05rem;
-      font-family: inherit;
-      outline: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-    }
-    .search-input:focus {
-      border-color: #ff9900;
-      box-shadow: 0 4px 15px rgba(255, 153, 0, 0.2);
-    }
-    .search-btn {
-      background: #ff9900;
-      color: #fff;
-      border: none;
-      border-radius: 30px;
-      padding: 0 30px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1.05rem;
-      transition: all 0.3s ease;
-    }
-    .search-btn:hover {
-      background: #e68a00;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/noticias.css?v=3">
+  
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css?v=6">
 </head>
 <body style="background: #f9fafb;">
   <header class="site-header">
@@ -55,9 +20,8 @@
       <nav class="main-nav" id="mainNav">
         <ul class="nav-list">
           <li><a href="/" class="nav-link">Início</a></li>
-          <li><a href="central-seguranca.html" class="nav-link">Central de Segurança</a></li>
-          <li><a href="noticias.html" class="nav-link" style="color: var(--primary-orange); font-weight: bold;">Portal de Notícias</a></li>
-          <li class="platform-entry"><a href="perfil.html" class="platform-link" id="platformAccessLink">Acessar Painel</a></li>
+          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
         </ul>
       </nav>
     </div>
@@ -98,21 +62,21 @@
           <h4 class="footer-title">Plataforma</h4>
           <ul class="footer-links">
             <li><a href="/" class="footer-link">Início</a></li>
-            <li><a href="/perfil.html" class="footer-link">Registrar ocorrência</a></li>
+            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
           </ul>
         </div>
         <div class="footer-nav">
           <h4 class="footer-title">Conteúdos</h4>
           <ul class="footer-links">
-            <li><a href="/central-seguranca.html" class="footer-link">Central de Segurança</a></li>
-            <li><a href="/noticias.html" class="footer-link">Portal de Notícias</a></li>
+            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
           </ul>
         </div>
         <div class="footer-nav">
           <h4 class="footer-title">Jurídico</h4>
           <ul class="footer-links">
-            <li><a href="/termos-de-uso.html" class="footer-link">Termos de Uso</a></li>
-            <li><a href="/politica-de-privacidade.html" class="footer-link">Política de Privacidade</a></li>
+            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
           </ul>
         </div>
       </div>
