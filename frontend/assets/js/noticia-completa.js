@@ -98,3 +98,18 @@ function escapeHtml(value) {
   if (!value) return '';
   return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 }
+
+function shareArticle() {
+  if (navigator.share) {
+    navigator.share({
+      title: document.title,
+      url: window.location.href
+    }).catch(console.error);
+  } else {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link copiado para a área de transferência!');
+    }).catch(() => {
+      alert('Copie o link na barra de endereços para compartilhar.');
+    });
+  }
+}
