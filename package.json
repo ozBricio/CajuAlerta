@@ -1,0 +1,11 @@
+{
+  "name": "caju-alerta",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "echo \"This is a static site with Vercel serverless functions.\""
+  },
+  "dependencies": {
+    "firebase-admin": "^11.11.0",
+    "rss-parser": "^3.13.0"
+  }
+}

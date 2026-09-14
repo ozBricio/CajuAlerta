@@ -2,8 +2,14 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/frontend/$1"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/robo-noticias",
+      "schedule": "0 */4 * * *"
     }
   ]
 }
