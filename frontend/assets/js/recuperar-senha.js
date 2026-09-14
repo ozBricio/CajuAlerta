@@ -57,7 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } catch (error) {
       // Firebase errors
-      if (error.code === 'auth/user-not-found') {
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-login-credentials') {
+        // Tratar como sucesso por segurança (evitar enumeração de e-mails)
+        form.style.display = 'none';
+        successBox.classList.remove('d-none');
+        return;
+      } else if (error.code === 'auth/user-not-found') { // fallback
         errorMessage.textContent = 'Nenhuma conta encontrada com este e-mail.';
       } else if (error.code === 'auth/invalid-email') {
         errorMessage.textContent = 'Formato de e-mail inválido.';
