@@ -228,6 +228,10 @@
     grid-template-columns: 1fr 1fr;
   }
   
+  .details-grid .detail-box:last-child {
+    grid-column: span 2;
+  }
+  
   .result-actions {
     flex-direction: column;
   }
