@@ -65,8 +65,8 @@
     height: 100vh;
     background: var(--bg-color);
     flex-direction: column;
-    justify-content: center;
-    padding: 40px;
+    justify-content: flex-start;
+    padding: 150px 40px 40px;
     transition: right var(--transition);
     border-left: 1px solid var(--surface-border);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
@@ -78,13 +78,18 @@
 
   .nav-list {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
-    gap: 30px;
+    gap: 35px;
   }
 
   .nav-link {
     font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .platform-entry, .support-logout {
+    margin-left: 0 !important;
   }
 
   .hero-title {
