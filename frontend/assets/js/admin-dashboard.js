@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const db = firebase.firestore();
   let base64Images = [null, null, null];
   
@@ -109,6 +109,7 @@
       const content = document.getElementById('newsContent').value.trim();
       const fonte = document.getElementById('newsFonte').value.trim();
       const isOficial = document.getElementById('newsFonteOficial').checked;
+      const inputSchedule = document.getElementById('newsSchedule') ? document.getElementById('newsSchedule').value : '';
       
       try {
         const payload = {
@@ -123,6 +124,9 @@
         };
 
         if (editId) {
+          if (inputSchedule) {
+            payload.dataPublicacao = firebase.firestore.Timestamp.fromDate(new Date(inputSchedule));
+          }
           // Edição (se enviou fotos novas, substitui, senão ignora atualização de fotos)
           if (payload.imagens.length > 0) {
             await window.dbNoticias.collection('noticias').doc(editId).update(payload);
@@ -133,9 +137,13 @@
           msg.textContent = 'Notícia atualizada com sucesso!';
         } else {
           // Criação
-          payload.dataPublicacao = firebase.firestore.FieldValue.serverTimestamp();
+          if (inputSchedule) {
+            payload.dataPublicacao = firebase.firestore.Timestamp.fromDate(new Date(inputSchedule));
+          } else {
+            payload.dataPublicacao = firebase.firestore.FieldValue.serverTimestamp();
+          }
           await window.dbNoticias.collection('noticias').add(payload);
-          msg.textContent = 'Notícia publicada com sucesso no Portal!';
+          msg.textContent = 'Notícia publicada/agendada com sucesso!';
         }
         
         msg.style.color = '#22c55e';
@@ -157,6 +165,9 @@
   function resetForm() {
     document.getElementById('formPostNews').reset();
     document.getElementById('editNewsId').value = '';
+    if (document.getElementById('newsSchedule')) {
+      document.getElementById('newsSchedule').value = '';
+    }
     document.getElementById('formTitle').textContent = 'Criar Nova Matéria';
     document.getElementById('btnSubmitNews').textContent = 'Publicar Notícia';
     document.getElementById('btnCancelEdit').classList.add('d-none');
@@ -183,18 +194,35 @@
       let html = '';
       snapshot.forEach(doc => {
         const data = doc.data();
-        const date = data.dataPublicacao ? data.dataPublicacao.toDate().toLocaleDateString('pt-BR') : '';
+        let dateStr = '';
+        let isFuture = false;
+        if (data.dataPublicacao) {
+          const pubDate = data.dataPublicacao.toDate();
+          dateStr = pubDate.toLocaleDateString('pt-BR') + ' ' + pubDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+          if (pubDate > new Date()) {
+            isFuture = true;
+          }
+        }
+        const badgeAgendada = isFuture ? '<span class="badge-agendada">(Agendada)</span>' : '';
         html += `
           <div class="news-item">
             <div>
-              <h4>${data.titulo}</h4>
-              <p>${date} &bull; Fonte: ${data.fonteOficial ? 'Sistema' : (data.fonte || 'Externa')}</p>
+              <h4>${data.titulo} ${badgeAgendada}</h4>
+              <p>${dateStr} &bull; Fonte: ${data.fonteOficial ? 'Sistema' : (data.fonte || 'Externa')}</p>
             </div>
-            <button class="btn" style="background:#fff3e0; color:#ff9900; font-weight:bold; border-radius:8px;" onclick="window.editNews('${doc.id}')">Editar</button>
+            <button class="btn btn-edit-news" data-id="${doc.id}">Editar</button>
           </div>
         `;
       });
       container.innerHTML = html;
+      
+      const editBtns = container.querySelectorAll('.btn-edit-news');
+      editBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const docId = e.target.getAttribute('data-id');
+          window.editNews(docId);
+        });
+      });
       
     } catch (error) {
       container.innerHTML = '<p style="color:red;">Erro ao carregar notícias.</p>';
@@ -215,6 +243,16 @@
       document.getElementById('newsContent').value = data.conteudo || '';
       document.getElementById('newsFonte').value = data.fonte || '';
       document.getElementById('newsFonteOficial').checked = data.fonteOficial || false;
+      
+      if (document.getElementById('newsSchedule')) {
+        if (data.dataPublicacao && data.dataPublicacao.toDate) {
+          const d = data.dataPublicacao.toDate();
+          const localIso = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0,16);
+          document.getElementById('newsSchedule').value = localIso;
+        } else {
+          document.getElementById('newsSchedule').value = '';
+        }
+      }
       
       document.getElementById('formTitle').textContent = 'Editando Matéria';
       document.getElementById('btnSubmitNews').textContent = 'Salvar Edição';

@@ -4,25 +4,11 @@
   <meta charset="UTF-8">
   <title>Painel de Notícias | Caju Alerta</title>
   <link rel="stylesheet" href="assets/css/common.css?v=9">
-  <style>
-    .admin-form-group { margin-bottom: 20px; }
-    .admin-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #111827; }
-    .admin-form-input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-family: inherit; font-size: 1rem; }
-    .image-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 15px; display: none; }
-    
-    .admin-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
-    .admin-tab { background: none; border: none; font-size: 1.1rem; font-weight: bold; color: #6b7280; cursor: pointer; padding: 10px 20px; border-radius: 8px; }
-    .admin-tab.active { background: #fff3e0; color: #ff9900; }
-    
-    .news-list { display: flex; flex-direction: column; gap: 15px; }
-    .news-item { background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
-    .news-item h4 { margin: 0 0 5px 0; color: #111827; }
-    .news-item p { margin: 0; color: #6b7280; font-size: 0.9rem; }
-  </style>
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/responsive.css?v=6">
+  <link rel="stylesheet" href="assets/css/painel-noticias.css">
 </head>
-<body style="background: #f9fafb;">
+<body class="bg-light-gray">
   <header class="site-header">
     <div class="container header-inner">
       <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
@@ -39,10 +25,10 @@
     </div>
   </header>
 
-  <div class="admin-layout container" style="margin-top: 120px; margin-bottom: 60px;">
-    <main class="admin-main" style="width: 100%; max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-      <h1 style="color: #111827; margin-bottom: 10px;">Painel de Jornalismo</h1>
-      <p style="color: #6b7280; margin-bottom: 30px;">Gerencie o Portal de Notícias. Você pode postar novas matérias ou editar existentes.</p>
+  <div class="admin-layout container container-margin">
+    <main class="admin-main painel-box">
+      <h1 class="painel-title">Painel de Jornalismo</h1>
+      <p class="painel-desc">Gerencie o Portal de Notícias. Você pode postar novas matérias ou editar existentes.</p>
       
       <div class="admin-tabs">
         <button class="admin-tab active" id="btnTabPost">Nova Postagem</button>
@@ -51,7 +37,7 @@
 
       <!-- ABA: NOVA POSTAGEM / EDITAR -->
       <div id="tabPost">
-        <h2 id="formTitle" style="margin-bottom: 20px;">Criar Nova Matéria</h2>
+        <h2 id="formTitle" class="form-title">Criar Nova Matéria</h2>
         <form id="formPostNews">
           <input type="hidden" id="editNewsId" value="">
           
@@ -65,7 +51,7 @@
             <input type="text" id="newsSummary" class="admin-form-input" required placeholder="Ex: Especialistas alertam sobre os perigos...">
           </div>
           
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+          <div class="grid-3-cols">
             <div class="admin-form-group">
               <label for="newsImage1">Foto 1 (Capa)*</label>
               <input type="file" id="newsImage1" class="admin-form-input" accept="image/*">
@@ -88,27 +74,33 @@
             <textarea id="newsContent" class="admin-form-input" rows="10" required placeholder="Escreva o texto completo da notícia aqui..."></textarea>
           </div>
 
-          <div class="admin-form-group" style="background: #f3f4f6; padding: 15px; border-radius: 8px;">
+          <div class="admin-form-group bg-gray-box">
             <label for="newsFonte">Fontes da Notícia</label>
             <input type="text" id="newsFonte" class="admin-form-input" placeholder="Ex: G1, TechTudo, Polícia Federal...">
             
-            <label style="display: flex; align-items: center; gap: 10px; margin-top: 15px; cursor: pointer;">
-              <input type="checkbox" id="newsFonteOficial" style="width: 20px; height: 20px; accent-color: #ff9900;">
-              <span style="font-weight: 700; color: #ff9900;">Fonte Oficial do Nosso Sistema (Investigação Própria)</span>
+            <label class="checkbox-label">
+              <input type="checkbox" id="newsFonteOficial" class="checkbox-input">
+              <span class="checkbox-text">Fonte Oficial do Nosso Sistema (Investigação Própria)</span>
             </label>
           </div>
-          
-          <div style="display: flex; gap: 15px;">
-            <button type="button" id="btnCancelEdit" class="btn d-none" style="background: #e5e7eb; color: #111827; padding: 15px; font-weight: bold; border-radius: 8px;">Cancelar Edição</button>
-            <button type="submit" id="btnSubmitNews" class="btn-primary" style="flex: 1; padding: 15px; font-size: 1.1rem;">Publicar Notícia</button>
+
+          <div class="admin-form-group bg-orange-box">
+            <label for="newsSchedule" class="label-orange">Data e Hora de Agendamento</label>
+            <p class="desc-small">Deixe em branco para publicar agora. Se definir uma data futura, a notícia só aparecerá no portal no dia e horário escolhidos.</p>
+            <input type="datetime-local" id="newsSchedule" class="admin-form-input input-orange-border">
           </div>
-          <div id="newsMsg" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
+          
+          <div class="flex-gap-15">
+            <button type="button" id="btnCancelEdit" class="btn btn-cancel d-none">Cancelar Edição</button>
+            <button type="submit" id="btnSubmitNews" class="btn-primary btn-submit">Publicar Notícia</button>
+          </div>
+          <div id="newsMsg" class="msg-box"></div>
         </form>
       </div>
 
       <!-- ABA: CONSULTAR -->
       <div id="tabList" class="d-none">
-        <h2 style="margin-bottom: 20px;">Matérias Publicadas</h2>
+        <h2 class="form-title">Matérias Publicadas</h2>
         <div id="newsListContainer" class="news-list">
           <p>Carregando...</p>
         </div>

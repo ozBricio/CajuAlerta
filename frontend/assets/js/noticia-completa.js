@@ -19,6 +19,13 @@ async function loadNoticiaCompleta() {
     }
 
     const noticia = doc.data();
+    
+    if (noticia.dataPublicacao) {
+      const pubDate = noticia.dataPublicacao.toDate();
+      if (pubDate > new Date()) {
+        throw new Error('Notícia não encontrada');
+      }
+    }
 
     const titleEl = document.getElementById('articleTitle');
     const badgeEl = document.getElementById('articleBadge');
@@ -48,9 +55,7 @@ async function loadNoticiaCompleta() {
       } else {
         badgeEl.textContent = `Fonte: ${noticia.fonte || 'Externa'}`;
         badgeEl.className = 'alerta-badge';
-        badgeEl.style.background = '#f3f4f6';
-        badgeEl.style.color = '#4b5563';
-        badgeEl.style.border = '1px solid #d1d5db';
+        badgeEl.classList.add('badge-external-full');
       }
     }
 
@@ -64,12 +69,12 @@ async function loadNoticiaCompleta() {
     const imgs = noticia.imagens || (noticia.imagemCapa ? [noticia.imagemCapa] : []);
     
     if (imgs.length > 0) {
-      imagesHtml += `<img src="${imgs[0]}" alt="Capa" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-bottom: 30px;">`;
+      imagesHtml += `<img src="${imgs[0]}" alt="Capa" class="full-news-cover">`;
       
       if (imgs.length > 1) {
-        imagesHtml += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">`;
+        imagesHtml += `<div class="full-news-gallery">`;
         for(let i=1; i<imgs.length; i++) {
-          imagesHtml += `<img src="${imgs[i]}" alt="Foto ${i+1}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">`;
+          imagesHtml += `<img src="${imgs[i]}" alt="Foto ${i+1}" class="full-news-gallery-img">`;
         }
         imagesHtml += `</div>`;
       }
@@ -78,7 +83,7 @@ async function loadNoticiaCompleta() {
     if (contentEl) {
       contentEl.innerHTML = `
         ${imagesHtml}
-        ${noticia.resumo ? `<h2 style="color: #6b7280; font-size: 1.25rem; font-weight: 400; margin-bottom: 20px;">${escapeHtml(noticia.resumo)}</h2>` : ''}
+        ${noticia.resumo ? `<h2 class="full-news-summary">${escapeHtml(noticia.resumo)}</h2>` : ''}
         ${contentHtml}
       `;
     }
@@ -86,7 +91,7 @@ async function loadNoticiaCompleta() {
   } catch (error) {
     console.error(error);
     const contentEl = document.getElementById('articleContent');
-    if (contentEl) contentEl.innerHTML = `<p style="color:red;">Erro ao carregar a notícia. Ela pode ter sido removida ou ocorreu um problema de conexão.</p>`;
+    if (contentEl) contentEl.innerHTML = `<p class="full-news-error">Erro ao carregar a notícia. Ela pode ter sido removida ou ocorreu um problema de conexão.</p>`;
     const titleEl = document.getElementById('articleTitle');
     if (titleEl) titleEl.textContent = 'Notícia não encontrada';
     const badgeEl = document.getElementById('articleBadge');

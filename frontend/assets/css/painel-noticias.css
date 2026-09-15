@@ -1,0 +1,45 @@
+/* =========================================
+   CAJU ALERTA - PAINEL DE NOTÍCIAS (ADMIN)
+   ========================================= */
+body.bg-light-gray { background: #f9fafb; }
+.admin-layout.container-margin { margin-top: 120px; margin-bottom: 60px; }
+.admin-main.painel-box { width: 100%; max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+.painel-title { color: #111827; margin-bottom: 10px; }
+.painel-desc { color: #6b7280; margin-bottom: 30px; }
+.form-title { margin-bottom: 20px; }
+
+.admin-form-group { margin-bottom: 20px; }
+.admin-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #111827; }
+.admin-form-input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-family: inherit; font-size: 1rem; }
+.image-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 15px; display: none; }
+
+.admin-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+.admin-tab { background: none; border: none; font-size: 1.1rem; font-weight: bold; color: #6b7280; cursor: pointer; padding: 10px 20px; border-radius: 8px; }
+.admin-tab.active { background: #fff3e0; color: #ff9900; }
+
+.news-list { display: flex; flex-direction: column; gap: 15px; }
+.news-item { background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+.news-item h4 { margin: 0 0 5px 0; color: #111827; }
+.news-item p { margin: 0; color: #6b7280; font-size: 0.9rem; }
+
+.grid-3-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+.bg-gray-box { background: #f3f4f6; padding: 15px; border-radius: 8px; }
+.checkbox-label { display: flex; align-items: center; gap: 10px; margin-top: 15px; cursor: pointer; }
+.checkbox-input { width: 20px; height: 20px; accent-color: #ff9900; }
+.checkbox-text { font-weight: 700; color: #ff9900; }
+
+.bg-orange-box { background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 20px; }
+.label-orange { color: #ff9900; }
+.desc-small { font-size: 0.85rem; color: #6b7280; margin-bottom: 10px; margin-top: 0; }
+.input-orange-border { border-color: #ffcc80; }
+
+.flex-gap-15 { display: flex; gap: 15px; }
+.btn-cancel { background: #e5e7eb; color: #111827; padding: 15px; font-weight: bold; border-radius: 8px; }
+.btn-submit { flex: 1; padding: 15px; font-size: 1.1rem; }
+.msg-box { margin-top: 15px; font-weight: bold; text-align: center; }
+
+/* Adicionado para corrigir estilo do dashboard list via JS */
+.badge-agendada { color: #ff9900; font-weight: bold; }
+.btn-edit-news { background: #fff3e0; color: #ff9900; font-weight: bold; border-radius: 8px; border: none; padding: 8px 16px; cursor: pointer; }
+.btn-edit-news:hover { background: #ffcc80; color: #fff; }

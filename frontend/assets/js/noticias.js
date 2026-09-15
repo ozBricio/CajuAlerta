@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!container) return;
 
     try {
+      const now = firebase.firestore.Timestamp.now();
       const snapshot = await window.dbNoticias.collection('noticias')
+        .where('dataPublicacao', '<=', now)
         .orderBy('dataPublicacao', 'desc')
         .get();
         
@@ -74,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const coverHtml = coverImg 
-        ? `<div style="width:100%; height:200px; overflow:hidden; border-radius:12px 12px 0 0; margin-bottom: 15px;">
-             <img src="${coverImg}" alt="Capa" style="width:100%; height:100%; object-fit:cover;">
+        ? `<div class="news-card-cover">
+             <img src="${coverImg}" alt="Capa" class="news-card-img">
            </div>`
         : '';
         
@@ -84,20 +86,20 @@ document.addEventListener('DOMContentLoaded', () => {
         : 'Data desconhecida';
 
       const badgeHtml = noticia.fonteOficial 
-        ? `<div style="background:#fff3e0; color:#ff9900; font-size:0.75rem; font-weight:bold; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:10px;">Investigação Oficial</div>`
-        : `<div style="background:#f3f4f6; color:#4b5563; font-size:0.75rem; font-weight:bold; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:10px;">📰 Fonte: ${escapeHtml(noticia.fonte || 'Externa')}</div>`;
+        ? `<div class="news-badge badge-official">Investigação Oficial</div>`
+        : `<div class="news-badge badge-external">📰 Fonte: ${escapeHtml(noticia.fonte || 'Externa')}</div>`;
 
       return `
-      <article class="alerta-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+      <article class="alerta-card news-card">
         ${coverHtml}
-        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+        <div class="news-card-body">
           ${badgeHtml}
-          <h2 style="margin-top: 0; font-size: 1.3rem;">${escapeHtml(noticia.titulo)}</h2>
-          <div class="alerta-meta" style="margin-bottom: 15px; font-size: 0.85rem;">
+          <h2 class="news-card-title">${escapeHtml(noticia.titulo)}</h2>
+          <div class="alerta-meta news-card-meta">
             ${date} &bull; Por ${escapeHtml(noticia.autorNome || 'Equipe Caju')}
           </div>
-          <p style="flex: 1; font-size: 0.95rem;">${escapeHtml(noticia.resumo || 'Clique para ler a matéria completa.')}</p>
-          <div class="alerta-footer" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+          <p class="news-card-desc">${escapeHtml(noticia.resumo || 'Clique para ler a matéria completa.')}</p>
+          <div class="alerta-footer news-card-footer">
             <a href="noticia-completa.html?id=${noticia.id}" class="read-more">Ler matéria completa &rarr;</a>
           </div>
         </div>
