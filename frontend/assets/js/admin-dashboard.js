@@ -254,6 +254,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
+      // Carregar as imagens na visualização
+      base64Images = [null, null, null]; // Reset state just in case
+      for (let i = 1; i <= 3; i++) {
+        const p = document.getElementById('imagePreview' + i);
+        if (data.imagens && data.imagens[i-1]) {
+          p.src = data.imagens[i-1];
+          p.style.display = 'block';
+        } else if (i === 1 && data.imagemCapa) { // Fallback para modelo antigo
+          p.src = data.imagemCapa;
+          p.style.display = 'block';
+        } else {
+          p.src = '';
+          p.style.display = 'none';
+        }
+      }
+      
       document.getElementById('formTitle').textContent = 'Editando Matéria';
       document.getElementById('btnSubmitNews').textContent = 'Salvar Edição';
       document.getElementById('btnCancelEdit').classList.remove('d-none');

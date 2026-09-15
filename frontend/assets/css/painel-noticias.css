@@ -41,5 +41,23 @@ body.bg-light-gray { background: #f9fafb; }
 
 /* Adicionado para corrigir estilo do dashboard list via JS */
 .badge-agendada { color: #ff9900; font-weight: bold; }
-.btn-edit-news { background: #fff3e0; color: #ff9900; font-weight: bold; border-radius: 8px; border: none; padding: 8px 16px; cursor: pointer; }
-.btn-edit-news:hover { background: #ffcc80; color: #fff; }
+.btn-edit-news { 
+  background: linear-gradient(135deg, #ff9900 0%, #ff7700 100%); 
+  color: #fff; 
+  font-weight: bold; 
+  border-radius: 8px; 
+  border: none; 
+  padding: 8px 20px; 
+  cursor: pointer; 
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 153, 0, 0.3);
+}
+.btn-edit-news:hover { 
+  background: linear-gradient(135deg, #ffaa33 0%, #ff8811 100%); 
+  box-shadow: 0 6px 15px rgba(255, 153, 0, 0.4);
+  transform: translateY(-2px);
+}
+.btn-edit-news:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
+}
