@@ -376,6 +376,8 @@
     width: 136px;
     height: 136px;
     transform: none;
+    align-self: center;
+    margin-top: 20px;
   }
 
   .free-visual img {
