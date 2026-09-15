@@ -137,4 +137,44 @@
     transform: rotate(-45deg);
     top: 11px;
   }
+
+  /* --- Painel Admin Mobile --- */
+  .admin-main.painel-box {
+    padding: 20px;
+  }
+  
+  .grid-3-cols {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .admin-tabs {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .admin-tab {
+    width: 100%;
+    text-align: center;
+  }
+
+  .flex-gap-15 {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-submit, .btn-cancel {
+    width: 100%;
+  }
+
+  .news-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .btn-edit-news {
+    width: 100%;
+    text-align: center;
+  }
 }
