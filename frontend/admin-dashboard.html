@@ -28,7 +28,7 @@
   <div class="admin-layout container container-margin">
     <main class="admin-main painel-box">
       <h1 class="painel-title">Painel de Jornalismo</h1>
-      <p class="painel-desc">Gerencie o Portal de Notícias. Você pode postar novas matérias ou editar existentes.</p>
+      <p class="painel-desc">Gerencie o Portal de Noticias. Crie novas materias ou edite as existentes.</p>
       
       <div class="admin-tabs">
         <button class="admin-tab active" id="btnTabPost">Nova Postagem</button>
@@ -37,20 +37,23 @@
 
       <!-- ABA: NOVA POSTAGEM / EDITAR -->
       <div id="tabPost">
-        <h2 id="formTitle" class="form-title">Criar Nova Matéria</h2>
+        <h2 id="formTitle" class="form-title">Criar Nova Materia</h2>
         <form id="formPostNews">
           <input type="hidden" id="editNewsId" value="">
           
           <div class="admin-form-group">
-            <label for="newsTitle">Título da Notícia</label>
-            <input type="text" id="newsTitle" class="admin-form-input" required placeholder="Ex: Novo vazamento expõe dados...">
+            <label for="newsTitle">Titulo da Noticia</label>
+            <input type="text" id="newsTitle" class="admin-form-input" required placeholder="Ex: Novo vazamento expoe dados...">
           </div>
           
           <div class="admin-form-group">
-            <label for="newsSummary">Resumo (Subtítulo)</label>
+            <label for="newsSummary">Resumo (Subtitulo)</label>
             <input type="text" id="newsSummary" class="admin-form-input" required placeholder="Ex: Especialistas alertam sobre os perigos...">
           </div>
           
+          <div class="admin-form-group">
+            <label>Fotos da Materia</label>
+          </div>
           <div class="grid-3-cols">
             <div class="admin-form-group">
               <label for="newsImage1">Foto 1 (Capa)*</label>
@@ -70,34 +73,34 @@
           </div>
           
           <div class="admin-form-group">
-            <label for="newsContent">Conteúdo da Notícia</label>
-            <textarea id="newsContent" class="admin-form-input" rows="10" required placeholder="Escreva o texto completo da notícia aqui..."></textarea>
+            <label for="newsContent">Conteudo da Noticia</label>
+            <textarea id="newsContent" class="admin-form-input" rows="10" required placeholder="Escreva o texto completo da noticia aqui..."></textarea>
           </div>
 
           <div class="admin-form-group bg-gray-box">
-            <label for="newsFonte">Fontes da Notícia</label>
-            <input type="text" id="newsFonte" class="admin-form-input" placeholder="Ex: G1, TechTudo, Polícia Federal...">
+            <label for="newsFonte">Fontes da Noticia</label>
+            <input type="text" id="newsFonte" class="admin-form-input" placeholder="Ex: G1, TechTudo, Policia Federal...">
             
             <label class="checkbox-label">
               <input type="checkbox" id="newsFonteOficial" class="checkbox-input">
-              <span class="checkbox-text">Fonte Oficial do Nosso Sistema (Investigação Própria)</span>
+              <span class="checkbox-text">Fonte Oficial do Nosso Sistema (Investigacao Propria)</span>
             </label>
 
             <label class="checkbox-label">
               <input type="checkbox" id="newsPrivada" class="checkbox-input">
-              <span class="checkbox-text" style="color: #ef4444;">Notícia Privada (não aparece no portal)</span>
+              <span class="checkbox-text" style="color: #dc2626;">Noticia Privada (nao aparece no portal)</span>
             </label>
           </div>
 
           <div class="admin-form-group bg-orange-box">
-            <label for="newsSchedule" class="label-orange">Data e Hora de Agendamento</label>
-            <p class="desc-small">Deixe em branco para publicar agora. Se definir uma data futura, a notícia só aparecerá no portal no dia e horário escolhidos.</p>
+            <label for="newsSchedule" class="label-orange">Agendamento de Publicacao</label>
+            <p class="desc-small">Deixe em branco para publicar agora. Se definir uma data futura, a noticia so aparecera no portal no dia e horario escolhidos.</p>
             <input type="datetime-local" id="newsSchedule" class="admin-form-input input-orange-border">
           </div>
           
           <div class="flex-gap-15">
-            <button type="button" id="btnCancelEdit" class="btn btn-cancel d-none">Cancelar Edição</button>
-            <button type="submit" id="btnSubmitNews" class="btn-primary btn-submit">Publicar Notícia</button>
+            <button type="button" id="btnCancelEdit" class="btn btn-cancel d-none">Cancelar Edicao</button>
+            <button type="submit" id="btnSubmitNews" class="btn-primary btn-submit">Publicar Noticia</button>
           </div>
           <div id="newsMsg" class="msg-box"></div>
         </form>
@@ -105,7 +108,7 @@
 
       <!-- ABA: CONSULTAR -->
       <div id="tabList" class="d-none">
-        <h2 class="form-title">Matérias Publicadas</h2>
+        <h2 class="form-title">Materias Publicadas</h2>
         <div id="newsListContainer" class="news-list">
           <p>Carregando...</p>
         </div>
