@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const content = document.getElementById('newsContent').value.trim();
       const fonte = document.getElementById('newsFonte').value.trim();
       const isOficial = document.getElementById('newsFonteOficial').checked;
+      const isPrivada = document.getElementById('newsPrivada').checked;
       const inputSchedule = document.getElementById('newsSchedule') ? document.getElementById('newsSchedule').value : '';
       
       try {
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
           conteudo: content,
           fonte: fonte,
           fonteOficial: isOficial,
+          privada: isPrivada,
           imagens: base64Images.filter(img => img !== null),
           autorNome: authorName,
           autorUid: user.uid
@@ -206,18 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const badgeAgendada = isFuture ? '<span class="badge-agendada">(Agendada)</span>' : '';
         const isPrivada = data.privada === true;
         const badgePrivada = isPrivada ? '<span class="badge-privada">(Privada)</span>' : '';
-        const btnPrivarLabel = isPrivada ? 'Tornar Pública' : 'Privar';
-        const btnPrivarClass = isPrivada ? 'btn btn-privar-news ativo' : 'btn btn-privar-news';
         html += `
           <div class="news-item">
             <div>
               <h4>${data.titulo} ${badgeAgendada} ${badgePrivada}</h4>
               <p>${dateStr} &bull; Fonte: ${data.fonteOficial ? 'Sistema' : (data.fonte || 'Externa')}</p>
             </div>
-            <div class="news-item-actions">
-              <button class="${btnPrivarClass}" data-id="${doc.id}">${btnPrivarLabel}</button>
-              <button class="btn btn-edit-news" data-id="${doc.id}">Editar</button>
-            </div>
+            <button class="btn btn-edit-news" data-id="${doc.id}">Editar</button>
           </div>
         `;
       });
@@ -230,38 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
           window.editNews(docId);
         });
       });
-
-      const privarBtns = container.querySelectorAll('.btn-privar-news');
-      privarBtns.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const docId = e.target.getAttribute('data-id');
-          await togglePrivacidade(docId);
-        });
-      });
       
     } catch (error) {
       container.innerHTML = '<p style="color:red;">Erro ao carregar notícias.</p>';
       console.error(error);
-    }
-  }
-
-  async function togglePrivacidade(docId) {
-    try {
-      const doc = await window.dbNoticias.collection('noticias').doc(docId).get();
-      if (!doc.exists) return;
-
-      const data = doc.data();
-      const novoValor = data.privada !== true;
-
-      await window.dbNoticias.collection('noticias').doc(docId).update({
-        privada: novoValor
-      });
-
-      alert(novoValor ? 'Notícia tornada privada.' : 'Notícia tornada pública.');
-      loadNewsList();
-    } catch (error) {
-      console.error(error);
-      alert('Erro ao alterar privacidade: ' + error.message);
     }
   }
 
@@ -277,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('newsContent').value = data.conteudo || '';
       document.getElementById('newsFonte').value = data.fonte || '';
       document.getElementById('newsFonteOficial').checked = data.fonteOficial || false;
+      document.getElementById('newsPrivada').checked = data.privada === true;
       
       if (document.getElementById('newsSchedule')) {
         if (data.dataPublicacao && data.dataPublicacao.toDate) {

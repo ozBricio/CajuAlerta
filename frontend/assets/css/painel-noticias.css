@@ -1,5 +1,5 @@
 /* =========================================
-   CAJU ALERTA - PAINEL DE NOTÍCIAS (ADMIN)
+   CAJU ALERTA - PAINEL DE NOTICIAS (ADMIN)
    ========================================= */
 body.bg-light-gray { background: #f9fafb; }
 .admin-layout.container-margin { margin-top: 120px; margin-bottom: 60px; }
@@ -20,8 +20,8 @@ body.bg-light-gray { background: #f9fafb; }
 
 .news-list { display: flex; flex-direction: column; gap: 15px; }
 .news-item { background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
-.news-item h4 { margin: 0 0 5px 0; color: #111827; }
-.news-item p { margin: 0; color: #6b7280; font-size: 0.9rem; }
+.news-item h4 { margin: 0 0 5px 0; color: #111827; font-size: 1rem; }
+.news-item p { margin: 0; color: #6b7280; font-size: 0.85rem; }
 
 .grid-3-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
 .bg-gray-box { background: #f3f4f6; padding: 15px; border-radius: 8px; }
@@ -39,8 +39,9 @@ body.bg-light-gray { background: #f9fafb; }
 .btn-submit { flex: 1; padding: 15px; font-size: 1.1rem; }
 .msg-box { margin-top: 15px; font-weight: bold; text-align: center; }
 
-/* Adicionado para corrigir estilo do dashboard list via JS */
 .badge-agendada { color: #ff9900; font-weight: bold; }
+.badge-privada { color: #ef4444; font-weight: bold; }
+
 .btn-edit-news { 
   background: linear-gradient(135deg, #ff9900 0%, #ff7700 100%); 
   color: #fff; 
@@ -51,6 +52,7 @@ body.bg-light-gray { background: #f9fafb; }
   cursor: pointer; 
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(255, 153, 0, 0.3);
+  white-space: nowrap;
 }
 .btn-edit-news:hover { 
   background: linear-gradient(135deg, #ffaa33 0%, #ff8811 100%); 
@@ -60,35 +62,4 @@ body.bg-light-gray { background: #f9fafb; }
 .btn-edit-news:active {
   transform: translateY(0);
   box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
-}
-
-.news-item-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.badge-privada { color: #ef4444; font-weight: bold; }
-
-.btn-privar-news {
-  background: #e5e7eb;
-  color: #374151;
-  font-weight: bold;
-  border-radius: 8px;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-.btn-privar-news:hover {
-  background: #d1d5db;
-}
-.btn-privar-news.ativo {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fca5a5;
-}
-.btn-privar-news.ativo:hover {
-  background: #fee2e2;
 }

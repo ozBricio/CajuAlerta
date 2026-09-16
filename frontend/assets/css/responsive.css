@@ -144,15 +144,23 @@
   }
 
   /* --- Painel Admin Mobile --- */
+  .admin-layout.container-margin {
+    margin-top: 80px;
+    padding: 0 10px;
+  }
+
   .admin-main.painel-box {
-    padding: 20px;
+    padding: 20px 15px;
   }
-  
-  .grid-3-cols {
-    grid-template-columns: 1fr;
-    gap: 20px;
+
+  .painel-title {
+    font-size: 1.4rem;
   }
-  
+
+  .painel-desc {
+    font-size: 0.9rem;
+  }
+
   .admin-tabs {
     flex-direction: column;
     gap: 10px;
@@ -161,6 +169,30 @@
   .admin-tab {
     width: 100%;
     text-align: center;
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .grid-3-cols {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .admin-form-group label {
+    font-size: 0.9rem;
+  }
+
+  .admin-form-input {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .checkbox-label {
+    flex-wrap: wrap;
+  }
+
+  .checkbox-text {
+    font-size: 0.85rem;
   }
 
   .flex-gap-15 {
@@ -170,16 +202,36 @@
   
   .btn-submit, .btn-cancel {
     width: 100%;
+    text-align: center;
+    font-size: 1rem;
   }
 
   .news-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 15px;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .news-item h4 {
+    font-size: 0.95rem;
+  }
+
+  .news-item p {
+    font-size: 0.8rem;
   }
   
   .btn-edit-news {
     width: 100%;
     text-align: center;
+    padding: 10px;
+  }
+
+  .bg-gray-box, .bg-orange-box {
+    padding: 12px;
+  }
+
+  .desc-small {
+    font-size: 0.8rem;
   }
 }
