@@ -20,6 +20,10 @@ async function loadNoticiaCompleta() {
 
     const noticia = doc.data();
     
+    if (noticia.privada === true) {
+      throw new Error('Notícia não encontrada');
+    }
+    
     if (noticia.dataPublicacao) {
       const pubDate = noticia.dataPublicacao.toDate();
       if (pubDate > new Date()) {

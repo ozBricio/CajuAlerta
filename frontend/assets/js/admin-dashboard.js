@@ -204,13 +204,20 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         const badgeAgendada = isFuture ? '<span class="badge-agendada">(Agendada)</span>' : '';
+        const isPrivada = data.privada === true;
+        const badgePrivada = isPrivada ? '<span class="badge-privada">(Privada)</span>' : '';
+        const btnPrivarLabel = isPrivada ? 'Tornar Pública' : 'Privar';
+        const btnPrivarClass = isPrivada ? 'btn btn-privar-news ativo' : 'btn btn-privar-news';
         html += `
           <div class="news-item">
             <div>
-              <h4>${data.titulo} ${badgeAgendada}</h4>
+              <h4>${data.titulo} ${badgeAgendada} ${badgePrivada}</h4>
               <p>${dateStr} &bull; Fonte: ${data.fonteOficial ? 'Sistema' : (data.fonte || 'Externa')}</p>
             </div>
-            <button class="btn btn-edit-news" data-id="${doc.id}">Editar</button>
+            <div class="news-item-actions">
+              <button class="${btnPrivarClass}" data-id="${doc.id}">${btnPrivarLabel}</button>
+              <button class="btn btn-edit-news" data-id="${doc.id}">Editar</button>
+            </div>
           </div>
         `;
       });
@@ -223,6 +230,14 @@ document.addEventListener('DOMContentLoaded', () => {
           window.editNews(docId);
         });
       });
+
+      const privarBtns = container.querySelectorAll('.btn-privar-news');
+      privarBtns.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const docId = e.target.getAttribute('data-id');
+          await togglePrivacidade(docId);
+        });
+      });
       
     } catch (error) {
       container.innerHTML = '<p style="color:red;">Erro ao carregar notícias.</p>';
@@ -230,7 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Tornar global para o botão funcionar
+  async function togglePrivacidade(docId) {
+    try {
+      const doc = await window.dbNoticias.collection('noticias').doc(docId).get();
+      if (!doc.exists) return;
+
+      const data = doc.data();
+      const novoValor = data.privada !== true;
+
+      await window.dbNoticias.collection('noticias').doc(docId).update({
+        privada: novoValor
+      });
+
+      alert(novoValor ? 'Notícia tornada privada.' : 'Notícia tornada pública.');
+      loadNewsList();
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao alterar privacidade: ' + error.message);
+    }
+  }
+
   window.editNews = async function(id) {
     try {
       const doc = await window.dbNoticias.collection('noticias').doc(id).get();

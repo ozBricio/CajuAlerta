@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
       allNews = [];
       snapshot.forEach(doc => {
-        allNews.push({ id: doc.id, ...doc.data() });
+        const noticiaData = doc.data();
+        if (noticiaData.privada !== true) {
+          allNews.push({ id: doc.id, ...noticiaData });
+        }
       });
 
       renderNews(allNews);

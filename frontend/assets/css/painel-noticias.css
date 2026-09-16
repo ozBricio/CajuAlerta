@@ -61,3 +61,34 @@ body.bg-light-gray { background: #f9fafb; }
   transform: translateY(0);
   box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
 }
+
+.news-item-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge-privada { color: #ef4444; font-weight: bold; }
+
+.btn-privar-news {
+  background: #e5e7eb;
+  color: #374151;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.btn-privar-news:hover {
+  background: #d1d5db;
+}
+.btn-privar-news.ativo {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+.btn-privar-news.ativo:hover {
+  background: #fee2e2;
+}
