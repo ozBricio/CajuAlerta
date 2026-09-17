@@ -60,20 +60,21 @@
   .main-nav {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
+    transform: translateX(100%);
     width: 80%;
     height: 100vh;
     background: var(--bg-color);
     flex-direction: column;
     justify-content: flex-start;
     padding: 150px 40px 40px;
-    transition: right var(--transition);
+    transition: transform var(--transition);
     border-left: 1px solid var(--surface-border);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
   }
 
   .main-nav.active {
-    right: 0;
+    transform: translateX(0);
   }
 
   .nav-list {
