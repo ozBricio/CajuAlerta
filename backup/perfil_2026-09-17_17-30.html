@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Usuário - Caju Alerta</title>
+  <link rel="stylesheet" href="assets/css/common.css?v=20">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/cadastro.css">
+  <link rel="stylesheet" href="assets/css/registrar.css?v=20">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=20">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <link rel="stylesheet" href="assets/css/responsive.css?v=12">
+</head>
+<body style="background: #f9fafb;">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Início</a></li>
+          <li><a href="/noticias" class="nav-link">Portal de Notícias</a></li>
+          <li class="platform-entry"><a href="/login" class="platform-link" id="platformAccessLink">Acessar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main animate-hidden" style="padding-top: 120px;">
+    <section class="container dashboard-grid d-none" id="protectedContent" style="margin-top: 20px; margin-bottom: 60px;">
+      
+      <!-- MENU LATERAL -->
+      <div class="perfil-sidebar">
+        <div class="user-info">
+          <div class="avatar" id="userInitial">C</div>
+          <h2 id="userName">Carregando...</h2>
+          <p id="userEmail">...</p>
+          <span class="badge" id="userRole">USUÁRIO</span>
+        </div>
+        
+        <nav class="dashboard-nav">
+          <button class="btn-tab active" onclick="showTab('tab-inicio', this)">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Painel Inicial
+          </button>
+          
+          <button class="btn-tab" onclick="showTab('tab-registrar', this)">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            Registrar Ocorrência
+          </button>
+          
+          <button class="btn-tab" onclick="showTab('tab-registros', this)">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            Meus Registros
+          </button>
+          
+          <button class="btn-tab d-none" id="btnAdminDash" onclick="window.location.href='admin-dashboard.html'" style="color:#3b82f6;">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            Painel de Jornalismo
+          </button>
+        </nav>
+        
+        <div class="perfil-actions">
+          <button class="btn-danger-outline" id="btnDeleteAccount">
+            <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            Excluir Minha Conta
+          </button>
+        </div>
+      </div>
+
+      <!-- ÁREA DE CONTEÚDO -->
+      <div class="perfil-content">
+        
+        <!-- Aba: Painel Inicial -->
+        <div id="tab-inicio" class="dash-tab">
+          <h2 class="dash-title">Seja bem-vindo ao Caju Alerta!</h2>
+          
+          <div class="welcome-box">
+            <div class="welcome-text">
+              <p>Aqui é um local passivo de <strong>denúncia aberta</strong>. Nossa missão é proteger a comunidade digital, onde cada denúncia ajuda outras pessoas a não caírem em golpes virtuais.</p>
+              <p>Lembrando que esta plataforma surgiu como um <strong>projeto acadêmico (TCC)</strong>. Antes de prosseguir com qualquer registro, pedimos que leia atentamente nossos <strong>Termos de Uso</strong> e entenda como suas informações judiciais são tratadas com extrema seriedade.</p>
+              <p class="highlight-text">Utilize o menu ao lado para iniciar uma nova denúncia ou consultar seus registros ativos.</p>
+            </div>
+            <div class="welcome-image">
+              <img src="/assets/img/logo3.png" alt="Caju Mascote" onerror="this.src='/assets/img/logo2.png'">
+            </div>
+          </div>
+        </div>
+
+        
+        <!-- Aba: Registrar -->
+        <div id="tab-registrar" class="dash-tab d-none">
+          <h2 class="dash-title">Registrar Ocorrência</h2>
+          <p style="color: #6b7280; margin-bottom: 25px;">Forneça os dados do golpe. Estas informações poderão ser enviadas às autoridades judiciais em caso de mandado.</p>
+          <form id="formDenuncia" novalidate>
+          <div class="form-group">
+            <label for="tipoDenuncia">O que você deseja denunciar?</label>
+            <select id="tipoDenuncia" class="form-input" required>
+              <option value="" disabled selected>Selecione o tipo...</option>
+              <option value="telefone">Número de Telefone / WhatsApp</option>
+              <option value="email">Endereço de E-mail</option>
+              <option value="site">Site / Link Falso</option>
+            </select>
+          </div>
+
+          <div class="form-group d-none" id="groupAlvo">
+            <label id="labelAlvo" for="inputAlvo">Alvo</label>
+            <input type="text" id="inputAlvo" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="inputMotivo">Motivo da Denúncia (Mínimo de 5 palavras)</label>
+            <textarea id="inputMotivo" class="form-input" rows="4" placeholder="Descreva detalhadamente o que aconteceu..." required></textarea>
+            <div class="field-error-msg d-none" id="err-motivo">⚠️ A descrição deve ter pelo menos 5 palavras.</div>
+          </div>
+
+          <div class="legal-box" style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.3); padding: 20px; border-radius: 8px; margin-top: 30px; margin-bottom: 20px;">
+            <h3 style="color: #ef4444; margin-top: 0; margin-bottom: 15px; font-size: 1.1rem;">⚠️ Contrato de Registro Jurídico</h3>
+            <div style="font-size: 0.95rem; color: #000000; font-weight: 600; line-height: 1.6; height: 200px; overflow-y: auto; padding-right: 10px; border-right: 2px solid rgba(0,0,0,0.1);">
+              <p style="color: #ef4444; font-weight: 800; font-size: 1.05rem;">Ao realizar esta denúncia por livre e espontânea vontade, você concorda com a coleta das seguintes informações para evitar denúncias falsas: Localização Geográfica (GPS), Informações do Navegador, Endereço IP e Dados do Sistema Operacional.</p>
+              
+              <p style="color: #000000; font-weight: 700; font-size: 1rem;">Nossos dados <strong>NÃO são vendidos a terceiros</strong>, diferente de muitas empresas. Suas informações são criptografadas e mantidas sob extremo sigilo em nossos servidores.</p>
+              
+              <p style="color: #ff9900; font-weight: bold;">QUEBRA DE CRIPTOGRAFIA JUDICIAL:</p>
+              <p>Nosso sistema descriptografará e repassará 100% dos seus dados (incluindo o que foi citado acima) de forma integral caso haja Mandado Judicial ou Ordem da Polícia, respeitando as leis brasileiras.</p>
+              
+              <div style="background: #fff3e0; color: #000; padding: 10px; border-left: 3px solid #ff9900; margin: 10px 0;">
+                <strong>EXEMPLO PRÁTICO PERANTE A LEI:</strong><br>
+                Vamos supor que você denunciou uma pessoa. A pessoa se sentiu lesada e abriu um processo judicial. O Juiz pode solicitar que todas as pessoas que fizeram a denúncia sejam intimadas. Nossos sistemas enviarão seus dados entregues nesta plataforma diretamente ao Juiz, para que você seja intimado legalmente a prestar esclarecimentos.
+              </div>
+              
+              <p>Se você não quer que seus dados integrem nosso sistema, a regra é simples: <strong>Não registre esta denúncia e não crie uma conta.</strong> Ninguém está sendo forçado a integrar a plataforma.</p>
+              
+              <p style="color: #ef4444; font-weight: bold;">Antes de confirmar, recomendamos que leia com atenção. Ao marcar a caixa e concordar, não há como voltar atrás.</p>
+            </div>
+            
+            <label class="checkbox-label" style="margin-top: 20px; border-top: 1px solid rgba(239, 68, 68, 0.2); padding-top: 15px;">
+              <input type="checkbox" id="aceiteLegal" required>
+              <div class="checkbox-custom"></div>
+              <span style="font-weight: 700; color: #000000; font-size: 0.95rem;">Li o termo acima, compreendi o exemplo jurídico e aceito por livre e espontânea vontade registrar minha denúncia e meus dados de conexão.</span>
+            </label>
+          </div>
+
+          <button type="submit" id="btnSubmitDenuncia" class="btn-primary btn-full">Registrar Denúncia Oficial</button>
+          <div id="errorBox" class="alert-box error d-none" style="margin-top: 15px;"></div>
+          <div id="successBox" class="alert-box success d-none" style="margin-top: 15px;">
+            ✅ Denúncia registrada com sucesso! Ela já consta em nossos sistemas de inteligência.
+          </div>
+        </form>
+        </div>
+
+        <!-- Aba: Meus Registros -->
+        <div id="tab-registros" class="dash-tab d-none">
+                    <h2 class="dash-title">Meus Registros</h2>
+          <p style="color: #6b7280; font-size: 1rem; margin-bottom: 20px;">Abaixo está o histórico de ocorrências que você registrou. Se você desativar um registro, a denúncia sai do sistema de contagem imediatamente, como se tivesse sido excluída.</p>
+          
+          <!-- Filtro e Busca -->
+          <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+            <input type="text" id="searchDenuncias" placeholder="Buscar alvo (ex: 11999999999)..." style="flex: 1; padding: 10px 15px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-family: inherit;">
+            <select id="filterTipo" style="padding: 10px 15px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-family: inherit; background: #fff;">
+              <option value="todos">Todos os Tipos</option>
+              <option value="Telefone">Telefone</option>
+              <option value="E-mail">E-mail</option>
+              <option value="Site">Site / Link</option>
+            </select>
+          </div>
+
+          
+          <div id="denunciasList" class="denuncias-grid">
+            <p style="color: #9ca3af;">Carregando ocorrências...</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de Exclusão -->
+  <div id="modalDelete" class="modal-overlay d-none">
+    <div class="modal-box" style="background:#fff; color:#111827;">
+      <h3 style="color:#ef4444;">Atenção: Exclusão de Conta</h3>
+      <p style="color:#4b5563;">Você realmente deseja excluir sua conta? Depois disso você não vai conseguir ter acesso novamente.</p>
+      <div class="modal-actions">
+        <button id="btnCancelDelete" class="btn" style="background:#f3f4f6; color:#111827;">Cancelar</button>
+        <button id="btnConfirmDelete" class="btn btn-danger">Sim, exclui minha conta</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo"><img src="/assets/img/logo2.png" alt="Caju Alerta" class="site-logo"></a>
+          <p class="brand-slogan">Caju Alerta</p>
+          <p class="footer-slogan">Consulte. Entenda. Proteja-se.</p>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Plataforma</h4>
+          <ul class="footer-links">
+            <li><a href="/" class="footer-link">Início</a></li>
+            <li><a href="/registrar" class="footer-link">Registrar ocorrência</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Conteúdos</h4>
+          <ul class="footer-links">
+            <li><a href="/central-seguranca" class="footer-link">Central de Segurança</a></li>
+            <li><a href="/noticias" class="footer-link">Portal de Notícias</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav">
+          <h4 class="footer-title">Jurídico</h4>
+          <ul class="footer-links">
+            <li><a href="/termos-de-uso" class="footer-link">Termos de Uso</a></li>
+            <li><a href="/politica-de-privacidade" class="footer-link">Política de Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="legal-warning">As informações apresentadas são baseadas em registros e fontes disponíveis.</p>
+        <p class="copyright">&copy; 2026 Caju Alerta.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js?v=20"></script>
+  <script src="assets/js/perfil.js?v=26"></script>
+  
+  <script>
+    function showTab(tabId, btnElement) {
+      document.querySelectorAll('.dash-tab').forEach(el => el.classList.add('d-none'));
+      document.getElementById(tabId).classList.remove('d-none');
+      
+      document.querySelectorAll('.btn-tab').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      btnElement.classList.add('active');
+    }
+  </script>
+
+
+<!-- Novo Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay d-none">
+  <div id="loadingContent" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="spinner"></div>
+    <h2>Carregando</h2>
+    <p>não feche a página</p>
+  </div>
+  <div id="successContent" class="d-none" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <h2 style="color: #ffffff; margin-bottom: 10px;">Confirmado</h2>
+    <p>Denúncia registrada com sucesso</p>
+  </div>
+</div>
+</body>
+</html>

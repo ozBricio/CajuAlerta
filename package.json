@@ -5,7 +5,9 @@
     "start": "echo \"This is a static site with Vercel serverless functions.\""
   },
   "dependencies": {
+    "file-type": "^22.1.1",
     "firebase-admin": "^11.11.0",
-    "rss-parser": "^3.13.0"
+    "rss-parser": "^3.13.0",
+    "zod": "^4.6.5"
   }
 }
