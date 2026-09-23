@@ -11,10 +11,10 @@ service cloud.firestore {
     }
 
     match /usuarios/{userId} {
-      allow create: if isAuth() && request.auth.uid == userId;
+      allow create: if isAuth() && request.auth.uid == userId && (!request.resource.data.keys().hasAll(['role']) || request.resource.data.role != 'staff');
       allow read: if isAuth() && request.auth.uid == userId;
-      // Permite atualizar ultimoAcesso OU status (exclusão)
-      allow update: if isAuth() && request.auth.uid == userId;
+      // Impede que o usuário altere seu próprio role para staff na atualização
+      allow update: if isAuth() && request.auth.uid == userId && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']));
       allow read, update: if isStaff();
       allow delete: if false;
     }

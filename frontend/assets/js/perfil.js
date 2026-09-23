@@ -446,3 +446,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+// Lógica extraída do HTML (showTab)
+function showTab(tabId, btnElement) {
+  document.querySelectorAll('.dash-tab').forEach(el => el.classList.add('d-none'));
+  document.getElementById(tabId).classList.remove('d-none');
+  
+  document.querySelectorAll('.btn-tab').forEach(el => {
+    el.classList.remove('active');
+  });
+  
+  btnElement.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnTabInicio = document.getElementById('btnTabInicio');
+    if(btnTabInicio) btnTabInicio.addEventListener('click', function() { showTab('tab-inicio', this); });
+    
+    const btnTabRegistrar = document.getElementById('btnTabRegistrar');
+    if(btnTabRegistrar) btnTabRegistrar.addEventListener('click', function() { showTab('tab-registrar', this); });
+    
+    const btnTabRegistros = document.getElementById('btnTabRegistros');
+    if(btnTabRegistros) btnTabRegistros.addEventListener('click', function() { showTab('tab-registros', this); });
+    
+    const btnAdminDash = document.getElementById('btnAdminDash');
+    if(btnAdminDash) btnAdminDash.addEventListener('click', function() { window.location.href='admin-dashboard.html'; });
+});
